@@ -1,22 +1,70 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="stylesheet" href="/styles.css">
-  <meta charset="UTF-8">
-  <title>YouTube Video Downloader</title>
+    <link rel="stylesheet" href="styles/styles.css">
+    <meta charset="UTF-8">
+    <title>YouTube Video Downloader</title>
+    <style>
+        .error-message {
+            color: red;
+        }
+    </style>
 </head>
 <body>
-  <h1>YouTube Video Downloader</h1>
-  <form action="/download" method="post">
-    <label for="videoURL">Enter YouTube Video URL:</label><br>
-    <input type="text" id="videoURL" name="videoURL" required><br><br>
-    <label for="format">Select format:</label><br>
-    <select id="format" name="format" required>
-      <option value="mp4">MP4</option>
-      <option value="mp3">MP3</option>
-    </select><br><br>
-    <button type="submit">Download</button>
-  </form>
+    <h1>YouTube Video Downloader</h1>
+    <form action="/download" method="post" id="downloadForm">
+        <label for="videoURL">Enter YouTube Video URL:</label><br>
+        <input type="text" id="videoURL" name="videoURL" required><br><br>
+        <label for="format">Select format:</label><br>
+        <select id="format" name="format" required>
+            <option value="mp4">MP4</option>
+            <option value="mp3">MP3</option>
+        </select><br><br>
+        <button type="submit">Download</button>
+    </form>
+
+    <div id="downloadedVideo" style="display: none;">
+        <h2>Downloaded Video:</h2>
+        <video controls id="videoPlayer" width="480" height="270">
+            <!-- Video player will be displayed here -->
+            Your browser does not support the video tag.
+        </video>
+    </div>
+
+    <div id="errorMessage" class="error-message" style="display: none;"></div>
+
+    <script>
+        document.getElementById('downloadForm').addEventListener('submit', async function(event) {
+            event.preventDefault();
+            
+            const videoURL = document.getElementById('videoURL').value;
+            const format = document.getElementById('format').value;
+
+            try {
+                const response = await fetch('/download', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ videoURL, format })
+                });
+
+                if (!response.ok) {
+                    throw new Error('Error downloading video');
+                }
+
+                const blob = await response.blob();
+                const videoPlayer = document.getElementById('videoPlayer');
+                const downloadedVideo = document.getElementById('downloadedVideo');
+
+                videoPlayer.src = URL.createObjectURL(blob);
+                downloadedVideo.style.display = 'block';
+            } catch (error) {
+                const errorMessage = document.getElementById('errorMessage');
+                errorMessage.textContent = error.message;
+                errorMessage.style.display = 'block';
+            }
+        });
+    </script>
 </body>
 </html>

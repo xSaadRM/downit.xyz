@@ -13,8 +13,17 @@ const sanitizeFilename = (filename) => {
   // Replace non-alphanumeric characters, including spaces, with underscores
 };
 
+// Serve static files from the 'public' directory with custom MIME type setting
+app.use('/styles', express.static(path.join(__dirname, 'public/styles'), {
+    setHeaders: (res, filePath) => {
+      if (path.extname(filePath) === '.css') {
+        res.setHeader('Content-Type', 'text/css');
+      }
+    }
+  }));
+
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'index.html'));
+    res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
 app.post('/download', async (req, res) => {
