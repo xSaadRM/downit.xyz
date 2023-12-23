@@ -13,7 +13,6 @@ const sanitizeFilename = (filename) => {
   // Replace non-alphanumeric characters, including spaces, with underscores
 };
 
-// Serve static files from the 'public' directory with custom MIME type setting
 app.use('/styles', express.static(path.join(__dirname, 'public/styles'), {
     setHeaders: (res, filePath) => {
       if (path.extname(filePath) === '.css') {
@@ -24,7 +23,7 @@ app.use('/styles', express.static(path.join(__dirname, 'public/styles'), {
 
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'index.html'));
-});
+  });
 
 app.post('/download', async (req, res) => {
   try {
@@ -61,7 +60,7 @@ app.post('/download', async (req, res) => {
       console.log('Conversion finished');
 
       try {
-        const filePath = path.join(__dirname, `${sanitizedTitle}.${fileExtension}`);
+        const filePath = path.join(__dirname, `${originalTitle}.${fileExtension}`);
 
         // Set appropriate headers and send the file for download
         res.setHeader('Content-Disposition', `attachment; filename=untitled.${fileExtension}`);
