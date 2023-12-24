@@ -1,21 +1,87 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="stylesheet" href="styles/styles.css">
   <meta charset="UTF-8">
-  <title>YouTube Video Downloader</title>
+  <title>YouTube Video Info</title>
+  <link rel="stylesheet" href="./styles/styles.css">
+  <style>
+    /* Additional CSS styles for the video information */
+    #videoInfo {
+      margin-top: 20px;
+      padding: 20px;
+      background-color: #fff;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    #videoInfo h2 {
+      font-size: 24px;
+      margin-bottom: 10px;
+      color: #333;
+    }
+
+    #videoInfo p {
+      font-size: 16px;
+      color: #666;
+      margin-bottom: 8px;
+    }
+  </style>
 </head>
 <body>
-  <h1>YouTube Video Downloader</h1>
-  <form action="/download" method="post">
-    <label for="videoURL">Enter YouTube Video URL:</label><br>
-    <input type="text" id="videoURL" name="videoURL" required><br><br>
-    <label for="format">Select format:</label><br>
-    <select id="format" name="format" required>
-      <option value="mp4">MP4</option>
-      <option value="mp3">MP3</option>
-    </select><br><br>
-    <button type="submit">Download</button>
+  <h1>YouTube Video Information</h1>
+  <form id="videoForm">
+    <label for="videoURL">Enter YouTube Video URL:</label>
+    <input type="text" id="videoURL" name="videoURL" required>
+    <button type="submit">Get Video Info</button>
   </form>
+
+  <div id="videoInfo"></div>
+
+  <!-- Loading animation markup -->
+  <div id="loadingAnimation" style="display: none;">
+    <div class="loader"></div>
+  </div>
+
+  <script>
+    document.getElementById('videoForm').addEventListener('submit', async function(event) {
+      event.preventDefault();
+      const videoURL = document.getElementById('videoURL').value;
+      const videoInfoDiv = document.getElementById('videoInfo');
+      const loadingAnimation = document.getElementById('loadingAnimation');
+
+      // Show loading animation
+      loadingAnimation.style.display = 'block';
+      videoInfoDiv.innerHTML = ''; // Clear any existing content
+
+      try {
+        const response = await fetch(`/getVideoInfo?videoURL=${encodeURIComponent(videoURL)}`);
+        const data = await response.json();
+        displayVideoInfo(data);
+      } catch (error) {
+        videoInfoDiv.textContent = `Error: ${error.message}`;
+      } finally {
+        // Hide loading animation after fetching data
+        loadingAnimation.style.display = 'none';
+      }
+    });
+
+    function displayVideoInfo(data) {
+      const videoInfoDiv = document.getElementById('videoInfo');
+      if (data.error) {
+        videoInfoDiv.textContent = `Error: ${data.error}`;
+      } else {
+        const title = data.videoDetails.title;
+        const author = data.videoDetails.author.name;
+        const description = data.videoDetails.description;
+
+        const infoHTML = `
+          <h2>Title: ${title}</h2>
+          <p>Author: ${author}</p>
+          <p>Description: ${description}</p>
+        `;
+        videoInfoDiv.innerHTML = infoHTML;
+      }
+    }
+  </script>
 </body>
 </html>
