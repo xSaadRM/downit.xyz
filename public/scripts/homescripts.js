@@ -1,4 +1,12 @@
 document.addEventListener('DOMContentLoaded', () => {
+    // Dark Mode
+    const darkModeToggle = document.getElementById('darkModeToggle');
+    const body = document.body;
+
+    darkModeToggle.addEventListener('click', () => {
+        body.classList.toggle('dark-mode');
+        // Save user's preference to localStorage or a cookie if needed
+    });
     const videoThumbnailElem = document.getElementById('videoThumbnail');
     const htmlidkThumbnail = document.getElementById('videoThumbnail'); // Fixed variable name for consistency
     htmlidkThumbnail.style.display = 'none';
