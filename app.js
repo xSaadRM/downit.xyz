@@ -97,7 +97,7 @@ app.get('/download-yt', async (req, res) => {
     }
 });
 
-const PORT = process.env.PORT || 80; // Use port 3000 by default if PORT is not specified in environment variables
+const PORT = process.env.PORT || 80; 
 app.listen(PORT, () => {
     console.log(`Server listening on port ${PORT}`);
 });

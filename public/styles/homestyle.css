@@ -149,15 +149,16 @@ h2#videoTitle {
 }
 
 .modal-content {
-    background-color: #fefefe;
+    color: #000;
+    background-color: #a71e1e;
     margin: 15% auto;
     padding: 20px;
-    border: 1px solid #888;
+    border: 1px solid #fc8b8b;
     width: 80%;
 }
 
 .close {
-    color: #aaa;
+    color: #000000;
     float: right;
     font-size: 28px;
     font-weight: bold;
@@ -216,7 +217,7 @@ h2#videoTitle {
     color: #000;
 }
 .dark-mode .modal-content {
-    background-color: #000;
+    background-color: #636060;
 }
 
 /* CSS for dark mode toggle icon */
