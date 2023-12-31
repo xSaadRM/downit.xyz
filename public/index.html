@@ -14,13 +14,14 @@
             <input type="text" id="urlInput" name="ytUrl">
             <button type="submit" id="downloadBtn">Download</button>
         </form>
+        <h2 id="videoTitle"></h2>
         <div id="videoInfo" class="hidden">
-            <h2 id="videoTitle"></h2>
             <div class="thumbnail-container">
                 <img src="" id="videoThumbnail" alt="Video Thumbnail">
+                <div id="formatsBtns" class="infoButtons"></div>
             </div>
-            <div id="formatsBtns" class="infoButtons"></div>
         </div>
+        
         <div id="loadingIndicator" class="loading"></div>
         <div id="myModal" class="modal">
             <div class="modal-content">

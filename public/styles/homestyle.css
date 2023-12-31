@@ -16,7 +16,7 @@ body {
     padding: 20px;
     background-color: #ffffff; /* White container background */
     border-radius: 8px;
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 25px rgba(0, 0, 0, 0.301);
 }
 
 h1 {
@@ -59,9 +59,13 @@ button:hover {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 }
 
+h2#videoTitle {
+    margin-bottom: 20px;
+}
+
 .thumbnail-container {
     display: flex;
-    align-items: flex-start; /* Align items to the top */
+    align-items: center; /* Align items to the center */
     margin-bottom: 30px;
 }
 
@@ -74,15 +78,14 @@ button:hover {
 }
 
 .infoButtons {
-    display: flex;
+    display: inline;
     flex-direction: column;
-    align-items: flex-start;
-    flex: 1;
+    align-items: center;
 }
 
 .infoButtons button {
     padding: 10px 15px;
-    margin-bottom: 10px;
+    margin-right: 10px; /* Add margin between buttons */
     font-size: 14px;
     border: 1px solid #3498db;
     border-radius: 5px;
@@ -93,14 +96,12 @@ button:hover {
 }
 
 .infoButtons button:last-child {
-    margin-bottom: 0; /* Remove bottom margin for the last button */
+    margin-right: 0; /* Remove margin for the last button */
 }
 
 .infoButtons button:hover {
     background-color: #2980b9;
 }
-
-
 
 .loading {
     display: none;
@@ -236,3 +237,62 @@ button:hover {
     color: #fff; /* Icon color in dark mode */
 }
 
+/* Existing CSS remains unchanged */
+
+/* Add a media query for mobile devices */
+@media only screen and (max-width: 600px) {
+    .container {
+        padding: 10px; /* Adjust padding for smaller screens */
+    }
+
+    h1 {
+        font-size: 24px; /* Decrease heading font size */
+        margin-bottom: 20px; /* Adjust margin for smaller screens */
+    }
+
+    input#urlInput,
+    button {
+        width: 100%; /* Make input and button full width */
+    }
+
+    #videoThumbnail {
+        max-width: 100%; /* Make thumbnail responsive */
+        margin-right: 0; /* Remove right margin */
+        margin-bottom: 10px; /* Adjust margin for smaller screens */
+    }
+
+    .thumbnail-container {
+        flex-direction: column; /* Stack thumbnail on top of the buttons */
+        align-items: flex-start; /* Align items to the start */
+    }
+
+    .infoButtons {
+        margin-top: 10px; /* Add space between buttons and thumbnail */
+    }
+
+    .infoButtons button {
+        margin-right: 0;
+        margin-bottom: 5px; /* Adjust margin for smaller screens */
+        width: 100%; /* Make buttons full width */
+    }
+
+    .loading,
+    #loadingIndicator {
+        width: 30px;
+        height: 30px;
+        border-width: 3px;
+    }
+
+    .modal-content {
+        width: 90%; /* Adjust modal width for smaller screens */
+    }
+
+    .dark-mode-toggle-container {
+        top: 10px; /* Adjust position of dark mode toggle */
+        right: 10px;
+    }
+
+    .fa-moon {
+        font-size: 20px; /* Decrease toggle icon size */
+    }
+}
