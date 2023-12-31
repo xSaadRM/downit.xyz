@@ -1,6 +1,6 @@
 const express = require('express');
 const path = require('path');
-const { video } = require('tiktok-scraper');
+const tiktokDl = require("@sasmeee/tkdl");
 const ytdl = require('ytdl-core');
 const app = express();
 
@@ -96,6 +96,41 @@ app.get('/download-yt', async (req, res) => {
         res.status(500).send('Internal Server Error');
     }
 });
+
+app.get('/tikinfo', async (req, res) => {
+    try {
+      const tikUrl = req.query.tikUrl;
+  
+      if (!tikUrl) {
+        return res.status(400).json({ error: 'Missing TikTok URL' });
+      }
+  
+      const dataList = await tiktokDl(tikUrl);
+  
+      if (Array.isArray(dataList) && dataList.length > 0) {
+        const firstItem = dataList[0];
+  
+        const info = {
+          title: firstItem.title || "Title not found in the fetched data.",
+          thumbnail: firstItem.thumbnail || "Thumbnail not found in the fetched data.",
+          sd: firstItem.sd || "SD link not found in the fetched data.",
+          hd: firstItem.hd || "HD link not found in the fetched data.",
+          audio: firstItem.audio || "Audio link not found in the fetched data.",
+          author: firstItem.author || "Author not found in the fetched data."
+        };
+  
+        res.json(info);
+  
+      } else {
+        res.status(404).json({ error: 'Empty or invalid data received.' });
+      }
+      
+    } catch (error) {
+      console.error("Error occurred:", error);
+      res.status(500).json({ error: 'An error occurred while fetching TikTok data.' });
+      // Handle errors here
+    }
+  });
 
 const PORT = process.env.PORT || 80; 
 app.listen(PORT, () => {

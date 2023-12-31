@@ -72,9 +72,54 @@ document.addEventListener('DOMContentLoaded', () => {
                     });
                 }
             } else if (urlType === 'tiktok') {
-                // Handle TikTok URL processing
-                // Add your TikTok URL processing logic here
+            const response = await fetch(`/tikinfo?tikUrl=${inputUrl}`);
+            const data = await response.json();
+        
+            if (data.title) {
+                const { title, thumbnail, sd, hd, audio, author } = data;
+        
+                videoTitleElem.textContent = title;
+                videoThumbnailElem.src = thumbnail;
+                videoThumbnailElem.style.display = 'block'; // Show video thumbnail
+                videoInfo.style.display = 'block';
+        
+                if (sd) {
+                    const formatButtonSD = document.createElement('button');
+                    formatButtonSD.textContent = `Download SD - No Watermark - video/mp4`;
+                    formatButtonSD.addEventListener('click', () => {
+                        window.open(sd);
+                    });
+                    formatsBtnsElm.appendChild(formatButtonSD);
+                }
+        
+                if (hd) {
+                    const formatButtonHD = document.createElement('button');
+                    formatButtonHD.textContent = `Download HD - No Watermark - video/mp4`;
+                    formatButtonHD.addEventListener('click', () => {
+                        window.open(hd);
+                    });
+                    formatsBtnsElm.appendChild(formatButtonHD);
+                }
+        
+                if (audio) {
+                    const formatButtonAudio = document.createElement('button');
+                    formatButtonAudio.textContent = `Download Audio/mp3`;
+                    formatButtonAudio.addEventListener('click', () => {
+                        window.open(audio);
+                    });
+                    formatsBtnsElm.appendChild(formatButtonAudio);
+                }
+        
+                // Display author information if available
+                if (author) {
+                    const authorElem = document.createElement('p');
+                    authorElem.textContent = `Author: ${author}`;
+                    videoInfo.appendChild(authorElem);
+                }
             }
+        }
+        
+        
         } catch (error) {
             console.error('Error:', error);
             // Handle error display if needed
