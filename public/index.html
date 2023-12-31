@@ -6,24 +6,28 @@
     <link rel="stylesheet" href="./styles/homestyle.css">
 </head>
 <body>
-<h1>Download YouTube Video</h1>
-<form>
-    <label for="urlInput">Enter a YouTube Link</label>
-    <input type="text" id="urlInput" name="ytUrl">
-    <button type="submit" id="downloadBtn">Download</button>
-</form>
-<div id="videoInfo">
-    <h2 id="videoTitle"></h2>
-    <img src="" id="videoThumbnail" alt="Video Thumbnail">
-</div>
-<div id="formatsBtns"></div>
-<div id="loadingIndicator"></div>
-<div id="myModal" class="modal">
-    <div class="modal-content">
-        <span class="close">&times;</span>
-        <p>Invalid URL. Please provide a YouTube or TikTok URL.</p>
+    <div class="container">
+        <h1>Download YouTube Video</h1>
+        <form>
+            <label for="urlInput">Enter a YouTube Link</label>
+            <input type="text" id="urlInput" name="ytUrl">
+            <button type="submit" id="downloadBtn">Download</button>
+        </form>
+        <div id="videoInfo" class="hidden">
+            <h2 id="videoTitle"></h2>
+            <div class="thumbnail-container">
+                <img src="" id="videoThumbnail" alt="Video Thumbnail">
+            </div>
+            <div id="formatsBtns" class="infoButtons"></div>
+        </div>
+        <div id="loadingIndicator" class="loading"></div>
+        <div id="myModal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <p>Invalid URL. Please provide a YouTube or TikTok URL.</p>
+            </div>
+        </div>
     </div>
-</div>
-<script src="./scripts/homescripts.js"></script>
+    <script src="./scripts/homescripts.js"></script>
 </body>
 </html>
