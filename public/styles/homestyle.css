@@ -1,0 +1,150 @@
+.loading {
+    display: none;
+    border: 4px solid rgba(0, 0, 0, 0.1);
+    border-top: 4px solid #3498db;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: spin 1s linear infinite;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+@keyframes spin {
+    0% { transform: translate(-50%, -50%) rotate(0deg); }
+    100% { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+/* Loading animation styles */
+#loadingIndicator {
+    display: none; /* Initially hide the loading indicator */
+    width: 50px; /* Adjust width */
+    height: 50px; /* Adjust height */
+    border: 4px solid rgba(0, 0, 0, 0.1); /* Border color and thickness */
+    border-top: 4px solid #3498db; /* Color of the spinning element */
+    border-radius: 50%; /* Rounded border */
+    animation: spin 1s linear infinite; /* Animation properties */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  
+  /* Keyframes for the spinning animation */
+  @keyframes spin {
+    0% {
+      transform: translate(-50%, -50%) rotate(0deg);
+    }
+    100% {
+      transform: translate(-50%, -50%) rotate(360deg);
+    }
+  }
+  /* Style the modal */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+  }
+  
+  /* Modal content */
+  .modal-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+  }
+  
+  /* Close button */
+  .close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+  }
+  
+  .close:hover,
+  .close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+  }
+  
+  /* Center container */
+  form {
+    text-align: center;
+    margin-top: 100px; /* Adjust top margin as needed */
+}
+/* Style for the input and button */
+#urlInput,
+button {
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    transition: all 0.3s ease;
+}
+
+#urlInput:focus,
+button:hover {
+    transform: scale(1.1);
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Animations for videoInfo */
+#videoInfo {
+    display: none;
+}
+
+#videoInfo.show {
+    animation: fadeIn 1s ease forwards;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+#videoInfo {
+    display: flex;
+    align-items: center;
+    /* Add other styles for video info container */
+}
+
+#videoThumbnail {
+    max-width: 200px; /* Set the maximum width for the thumbnail */
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+    margin-right: 20px; /* Add margin for spacing from other content */
+}
+
+.infoButtons {
+    display: flex;
+    flex-direction: column; /* Arrange buttons vertically */
+    /* Adjust margin or padding as needed */
+}
+
+/* Style for buttons */
+.infoButtons button {
+    padding: 8px 12px;
+    margin-bottom: 5px;
+    font-size: 14px;
+    /* Add other button styles */
+}
