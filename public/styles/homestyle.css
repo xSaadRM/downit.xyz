@@ -205,16 +205,34 @@ h2#videoTitle {
 
 /* Dark mode styles */
 .dark-mode {
-    background-color: #242121; /* Change to your preferred dark mode background color */
+    background-color: #333; /* Change to your preferred dark mode background color */
     color: #fff; /* Change text color in dark mode if needed */
 }
-
+.dark-mode h1 {
+    color: #ccc;
+}
+.dark-mode .infoButtons button {
+    padding: 10px 15px;
+    margin-right: 10px; /* Add margin between buttons */
+    font-size: 14px;
+    border: 1px solid #3498db;
+    border-radius: 5px;
+    background-color: #3498db;
+    color: #fff;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+.dark-mode input#urlInput {
+    color: #ece3e3;
+    background-color: #333;
+}
 .dark-mode .container {
-    background-color: #111111;
+    background-color: #131212;
+    color: #fff;
 }
 .dark-mode button {
-    background-color: #4a5053;
-    color: #000;
+    background-color: #131212;
+    color: #838282;
 }
 .dark-mode .modal-content {
     background-color: #636060;
@@ -244,6 +262,11 @@ h2#videoTitle {
 @media only screen and (max-width: 600px) {
     .container {
         padding: 10px; /* Adjust padding for smaller screens */
+        display: flex;
+        flex-direction: column; /* Stack elements vertically */
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh; /* Use min-height to occupy full viewport height */
     }
 
     h1 {

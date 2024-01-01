@@ -85,7 +85,7 @@ document.addEventListener('DOMContentLoaded', () => {
         
                 if (sd) {
                     const formatButtonSD = document.createElement('button');
-                    formatButtonSD.textContent = `Download SD Without-Watermark`;
+                    formatButtonSD.textContent = `Download SD ___ Without-Watermark`;
                     formatButtonSD.addEventListener('click', () => {
                         window.open(sd);
                     });
@@ -94,7 +94,7 @@ document.addEventListener('DOMContentLoaded', () => {
         
                 if (hd) {
                     const formatButtonHD = document.createElement('button');
-                    formatButtonHD.textContent = `Download HD Without-Watermark`;
+                    formatButtonHD.textContent = `Download HD ___ Without-Watermark`;
                     formatButtonHD.addEventListener('click', () => {
                         window.open(hd);
                     });
@@ -103,7 +103,7 @@ document.addEventListener('DOMContentLoaded', () => {
         
                 if (audio) {
                     const formatButtonAudio = document.createElement('button');
-                    formatButtonAudio.textContent = `Download Audio/mp3`;
+                    formatButtonAudio.textContent = `Download Sound Audio/mp3`;
                     formatButtonAudio.addEventListener('click', () => {
                         window.open(audio);
                         console.log('Audio link: ', audio)
