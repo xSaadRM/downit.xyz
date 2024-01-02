@@ -260,47 +260,55 @@ h2#videoTitle {
 /* Mobile styles */
 @media screen and (max-width: 767px) {
     .container {
-        max-width: 90%; /* Adjust container width for smaller screens */
-        padding: 10px; /* Decrease padding for smaller screens */
+        max-width: 90%;
+        padding: 10px;
+        margin-bottom: 0; /* Remove margin bottom */
     }
 
     h1 {
-        font-size: 24px; /* Adjust heading font size for smaller screens */
-        margin-bottom: 20px; /* Decrease margin for smaller screens */
+        font-size: 24px;
+        margin-bottom: 20px;
     }
 
     input#urlInput,
     button {
-        width: 100%; /* Make input and button full width for smaller screens */
+        width: 100%;
     }
 
     #videoThumbnail {
-        max-width: 100%; /* Make the thumbnail responsive */
-        margin-right: 0; /* Remove margin for smaller screens */
+        max-width: 100%;
+        margin-right: 0;
     }
 
     .thumbnail-container {
-        flex-direction: column; /* Stack thumbnail and info vertically on smaller screens */
-        align-items: flex-start; /* Adjust alignment */
+        flex-direction: column;
+        align-items: flex-start;
     }
 
     .infoButtons {
-        display: flex; /* Display buttons in a row */
-        flex-wrap: wrap; /* Allow buttons to wrap on smaller screens */
-        justify-content: center; /* Center-align buttons */
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
     }
 
     .infoButtons button {
-        margin-right: 10px; /* Adjust margin between buttons */
-        margin-bottom: 10px; /* Add margin bottom between buttons */
+        margin-right: 10px;
+        margin-bottom: 10px;
     }
 
     .dark-mode-toggle-container {
-        top: 10px; /* Adjust position of dark mode toggle for smaller screens */
+        top: 10px;
         right: 10px;
     }
 
     .fa-moon {
-        font-size: 20px; /* Adjust dark mode toggle icon size for smaller screens */
+        font-size: 20px;
+    }
+
+    /* Add this rule to remove margin/padding from body and HTML */
+    body, html {
+        margin: 0;
+        padding: 0;
+        overflow-x: hidden; /* Prevent horizontal scrolling on smaller screens */
     }
 }
