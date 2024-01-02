@@ -255,68 +255,52 @@ h2#videoTitle {
 .dark-mode .fa-moon {
     color: #fff; /* Icon color in dark mode */
 }
+/* Existing styles... */
 
-/* Existing CSS remains unchanged */
-
-/* Add a media query for mobile devices */
-@media only screen and (max-width: 600px) {
+/* Mobile styles */
+@media screen and (max-width: 767px) {
     .container {
-        padding: 10px; /* Adjust padding for smaller screens */
-        display: flex;
-        flex-direction: column; /* Stack elements vertically */
-        justify-content: center;
-        align-items: center;
-        /*min-height: 100vh;*/ /* Use min-height to occupy full viewport height */
+        max-width: 90%; /* Adjust container width for smaller screens */
+        padding: 10px; /* Decrease padding for smaller screens */
     }
 
     h1 {
-        font-size: 24px; /* Decrease heading font size */
-        margin-bottom: 20px; /* Adjust margin for smaller screens */
+        font-size: 24px; /* Adjust heading font size for smaller screens */
+        margin-bottom: 20px; /* Decrease margin for smaller screens */
     }
 
     input#urlInput,
     button {
-        width: 100%; /* Make input and button full width */
+        width: 100%; /* Make input and button full width for smaller screens */
     }
 
     #videoThumbnail {
-        max-width: 100%; /* Make thumbnail responsive */
-        margin-right: 0; /* Remove right margin */
-        margin-bottom: 10px; /* Adjust margin for smaller screens */
+        max-width: 100%; /* Make the thumbnail responsive */
+        margin-right: 0; /* Remove margin for smaller screens */
     }
 
     .thumbnail-container {
-        flex-direction: column; /* Stack thumbnail on top of the buttons */
-        align-items: flex-start; /* Align items to the start */
+        flex-direction: column; /* Stack thumbnail and info vertically on smaller screens */
+        align-items: flex-start; /* Adjust alignment */
     }
 
     .infoButtons {
-        margin-top: 10px; /* Add space between buttons and thumbnail */
+        display: flex; /* Display buttons in a row */
+        flex-wrap: wrap; /* Allow buttons to wrap on smaller screens */
+        justify-content: center; /* Center-align buttons */
     }
 
     .infoButtons button {
-        margin-right: 0;
-        margin-bottom: 5px; /* Adjust margin for smaller screens */
-        width: 100%; /* Make buttons full width */
-    }
-
-    .loading,
-    #loadingIndicator {
-        width: 30px;
-        height: 30px;
-        border-width: 3px;
-    }
-
-    .modal-content {
-        width: 90%; /* Adjust modal width for smaller screens */
+        margin-right: 10px; /* Adjust margin between buttons */
+        margin-bottom: 10px; /* Add margin bottom between buttons */
     }
 
     .dark-mode-toggle-container {
-        top: 10px; /* Adjust position of dark mode toggle */
+        top: 10px; /* Adjust position of dark mode toggle for smaller screens */
         right: 10px;
     }
 
     .fa-moon {
-        font-size: 20px; /* Decrease toggle icon size */
+        font-size: 20px; /* Adjust dark mode toggle icon size for smaller screens */
     }
 }
