@@ -2,11 +2,19 @@ document.addEventListener('DOMContentLoaded', () => {
     // Dark Mode
     const darkModeToggle = document.getElementById('darkModeToggle');
     const body = document.body;
-
-    darkModeToggle.addEventListener('click', () => {
+    const toggleDarkMode = () => {
         body.classList.toggle('dark-mode');
-        // Save user's preference to localStorage or a cookie if needed
-    });
+        const isDarkModeEnabled = body.classList.contains('dark-mode');
+        localStorage.setItem('darkModePreference', isDarkModeEnabled);
+    };
+
+    // Check if user has a preference saved and apply it
+    const savedDarkModePreference = localStorage.getItem('darkModePreference');
+    if (savedDarkModePreference === 'true') {
+        body.classList.add('dark-mode');
+    }
+
+    darkModeToggle.addEventListener('click', toggleDarkMode);
     const videoThumbnailElem = document.getElementById('videoThumbnail');
     const htmlidkThumbnail = document.getElementById('videoThumbnail'); // Fixed variable name for consistency
     htmlidkThumbnail.style.display = 'none';
@@ -39,6 +47,7 @@ document.addEventListener('DOMContentLoaded', () => {
         try {
             loadingIndicator.style.display = 'block'; // Show loading animation
             videoInfo.style.display = 'none'; // Hide video info while loading
+            videoTitleElem.innerHTML = '';
             formatsBtnsElm.innerHTML = '';
 
             if (urlType === 'youtube') {
@@ -55,7 +64,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     qualities.forEach((format) => {
                         const formatButton = document.createElement('button');
 
-                        formatButton.textContent = `${format.quality} - video/mp4`;
+                        formatButton.innerHTML = `${format.quality} - video/mp4 <br> <span style="color: black;">${format.fileSize}</span>`;
                         formatButton.addEventListener('click', () => {
                             window.open(`/download-yt?itag=${format.itag}&ytUrl=${inputUrl}`);
                         });
@@ -64,7 +73,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
                     audio.forEach((format) => {
                         const formatButton = document.createElement('button');
-                        formatButton.textContent = `${format.bitrate}kbps - audio`;
+                        formatButton.innerHTML = `${format.bitrate}kbps - audio <br> <span style="color: black;">${format.fileSize}</span>`;
                         formatButton.addEventListener('click', () => {
                             window.open(`/download-yt?itag=${format.itag}&ytUrl=${inputUrl}`);
                         });

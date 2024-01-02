@@ -3,7 +3,7 @@ const path = require('path');
 const tiktokDl = require("@sasmeee/tkdl");
 const ytdl = require('ytdl-core');
 const fetch = require('node-fetch');
-const fs = require('fs');
+const axios = require('axios'); // Import Axios for HTTP requests
 
 const app = express();
 
@@ -35,20 +35,65 @@ app.get('/ytinfo', async (req, res) => {
                 format.hasAudio
             );
         });
-        const availableAudioFormats = audioFormats.map(format => ({
-            itag: format.itag,
-            bitrate: format.audioBitrate,
-            mimeType: format.mimeType,
-            url: format.url,
-            codecs: format.codecs
-        }));
+        
+        // Function to fetch content length of a URL
+        const getContentLength = async (url) => {
+            try {
+                const response = await axios.head(url); // Send a HEAD request to get headers
+                return response.headers['content-length']; // Extract content length
+            } catch (error) {
+                console.error('Error fetching content length:', error);
+                return null;
+            }
+        };
 
-        const availableQualities = videoFormats.map(format => ({
+        // Function to convert bytes to human-readable format
+const formatBytes = (bytes) => {
+    if (bytes === 0) {
+        return '0 Bytes';
+    }
+    const k = 1024;
+    const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
+    const i = Math.floor(Math.log(bytes) / Math.log(k));
+    return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+};
+
+// Modify the code snippet within the existing logic to use the formatBytes function
+const videoFormatsWithSizes = [];
+for (const format of videoFormats) {
+    const contentLength = await getContentLength(format.url);
+    videoFormatsWithSizes.push({
+        ...format,
+        fileSize: contentLength ? formatBytes(parseInt(contentLength)) : null // Convert bytes to human-readable format
+    });
+}
+
+const audioFormatsWithSizes = [];
+for (const format of audioFormats) {
+    const contentLength = await getContentLength(format.url);
+    audioFormatsWithSizes.push({
+        ...format,
+        fileSize: contentLength ? formatBytes(parseInt(contentLength)) : null // Convert bytes to human-readable format
+    });
+}
+
+
+        const availableQualities = videoFormatsWithSizes.map(format => ({
             itag: format.itag,
             quality: format.qualityLabel || format.quality,
             mimeType: format.mimeType,
             url: format.url,
-            codecs: format.codecs
+            codecs: format.codecs,
+            fileSize: format.fileSize // Include file size in the response
+        }));
+
+        const availableAudioFormats = audioFormatsWithSizes.map(format => ({
+            itag: format.itag,
+            bitrate: format.audioBitrate,
+            mimeType: format.mimeType,
+            url: format.url,
+            codecs: format.codecs,
+            fileSize: format.fileSize // Include file size in the response
         }));
 
         const videoBasicDetails = {
