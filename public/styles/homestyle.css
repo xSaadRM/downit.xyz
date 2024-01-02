@@ -266,7 +266,7 @@ h2#videoTitle {
         flex-direction: column; /* Stack elements vertically */
         justify-content: center;
         align-items: center;
-        min-height: 100vh; /* Use min-height to occupy full viewport height */
+        /*min-height: 100vh;*/ /* Use min-height to occupy full viewport height */
     }
 
     h1 {
