@@ -255,22 +255,56 @@ h2#videoTitle {
 .dark-mode .fa-moon {
     color: #fff; /* Icon color in dark mode */
 }
-/* Mobile styles */
-@media screen and (max-width: 767px) {
-    .container {
-        max-width: 90%;
-        padding: 10px;
-        margin-bottom: 0; /* Remove margin bottom */
-    }
 
-    .container > * {
-        margin-bottom: 10px; /* Adjust margin for immediate children of container */
-    }
-
-    /* Add this rule to remove margin/padding from body and HTML */
+/* Media query for mobile devices */
+@media only screen and (max-width: 768px) {
     body, html {
         margin: 0;
         padding: 0;
-        overflow-x: hidden; /* Prevent horizontal scrolling on smaller screens */
+        width: 100%; /* Adjust width to fit the viewport */
+        overflow-x: hidden; /* Hide horizontal overflow */
     }
+
+    .container {
+        width: 100%; /* Make the container full-width */
+        padding: 10px; /* Adjust container padding for smaller screens */
+        box-sizing: border-box; /* Include padding in the width calculation */
+    }
+
+    h1 {
+        margin-bottom: 20px; /* Decreased margin for smaller screens */
+    }
+
+    input#urlInput,
+    button {
+        width: calc(100% - 24px); /* Make input and button full-width with space for padding */
+        margin-bottom: 10px; /* Add space between input and button */
+    }
+
+    .thumbnail-container {
+        flex-direction: column; /* Stack thumbnail above content on smaller screens */
+        margin-bottom: 20px; /* Adjust margin for smaller screens */
+    }
+
+    #videoThumbnail {
+        max-width: 100%; /* Make the thumbnail responsive to the container */
+        margin-right: 0; /* Remove right margin on smaller screens */
+        margin-bottom: 15px; /* Adjust margin for smaller screens */
+    }
+
+    .infoButtons {
+        flex-direction: row; /* Align buttons horizontally on smaller screens */
+        justify-content: center; /* Center align buttons on smaller screens */
+        margin-bottom: 20px; /* Adjust margin for smaller screens */
+    }
+
+    .infoButtons button {
+        margin-right: 10px; /* Adjust margin between buttons for smaller screens */
+    }
+
+    .modal-content {
+        width: 90%; /* Adjust modal content width for smaller screens */
+    }
+
+    /* Adjust any other styles as needed for mobile devices */
 }
