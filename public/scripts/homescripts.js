@@ -13,8 +13,11 @@ document.addEventListener('DOMContentLoaded', () => {
     if (savedDarkModePreference === 'true') {
         body.classList.add('dark-mode');
     }
-
+    
     darkModeToggle.addEventListener('click', toggleDarkMode);
+    const modal = document.getElementById('myModal');
+    const closeBtn = document.querySelector('.close');
+    //youtube elements
     const videoThumbnailElem = document.getElementById('videoThumbnail');
     const form = document.querySelector('form');
     const videoInfo = document.getElementById('videoInfo');
@@ -22,16 +25,19 @@ document.addEventListener('DOMContentLoaded', () => {
     const authorElem = document.getElementById('vidAuthor');
     const loadingIndicator = document.getElementById('loadingIndicator');
     const formatsBtnsElm = document.getElementById('formatsBtns');
-    const modal = document.getElementById('myModal');
-    const closeBtn = document.querySelector('.close');
+    //tiktok elements
+    const tikVideoThumbnailElem = document.getElementById('tikVideoThumbnail');
+    const tikVideoInfo = document.getElementById('tikInfo');
+    const tikAuthorElem = document.getElementById('tikVidAuthor');
+    const tikFormatsBtnsElm = document.getElementById('tikFormatsBtns');
 
     form.addEventListener('submit', async (event) => {
         event.preventDefault();
         const inputUrl = document.getElementById('urlInput').value;
-
         // Regular expressions to match YouTube and TikTok URLs
         const youtubeRegex = /^(https?:\/\/)?(www\.)?(youtube\.com|youtu\.?be)\/.*/i;
         const tiktokRegex = /^(https?:\/\/)?(www\.|vm\.)?tiktok\.com\/.*/i;
+
         let urlType = '';
         if (youtubeRegex.test(inputUrl)) {
             urlType = 'youtube';
@@ -47,6 +53,10 @@ document.addEventListener('DOMContentLoaded', () => {
             videoInfo.style.display = 'none'; // Hide video info while loading
             videoTitleElem.innerHTML = '';
             formatsBtnsElm.innerHTML = '';
+            authorElem.innerHTML = '';
+            tikVideoInfo.style.display = 'none'; // Hide video info while loading
+            tikFormatsBtnsElm.innerHTML = '';
+            tikAuthorElem.innerHTML = '';
 
             if (urlType === 'youtube') {
                 const response = await fetch(`/ytinfo?ytUrl=${inputUrl}`);
@@ -88,9 +98,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 const { title, thumbnail, sd, hd, audio, author } = data;
         
                 videoTitleElem.textContent = title;
-                videoThumbnailElem.src = thumbnail;
-                videoThumbnailElem.style.display = 'block'; // Show video thumbnail
-                videoInfo.style.display = 'block';
+                tikVideoThumbnailElem.src = thumbnail;
+                tikVideoThumbnailElem.style.display = 'block';
+                tikVideoInfo.style.display = 'block';
         
                 if (sd) {
                     const formatButtonSD = document.createElement('button');
@@ -98,7 +108,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     formatButtonSD.addEventListener('click', () => {
                         window.open(sd);
                     });
-                    formatsBtnsElm.appendChild(formatButtonSD);
+                    tikFormatsBtnsElm.appendChild(formatButtonSD);
                 }
         
                 if (hd) {
@@ -107,7 +117,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     formatButtonHD.addEventListener('click', () => {
                         window.open(hd);
                     });
-                    formatsBtnsElm.appendChild(formatButtonHD);
+                    tikFormatsBtnsElm.appendChild(formatButtonHD);
                 }
         
                 if (audio) {
@@ -117,13 +127,13 @@ document.addEventListener('DOMContentLoaded', () => {
                         window.open(audio);
                         console.log('Audio link: ', audio)
                     });
-                    formatsBtnsElm.appendChild(formatButtonAudio);
+                    tikFormatsBtnsElm.appendChild(formatButtonAudio);
                 }
         
                 // Display author information if available
                 if (author) {
-                    authorElem.textContent = `Author: ${author}`;
-                    videoInfo.appendChild(authorElem);
+                    tikAuthorElem.textContent = `Author: ${author}`;
+                    tikVideoInfo.appendChild(authorElem);
                 }
             }
         }

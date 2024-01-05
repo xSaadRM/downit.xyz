@@ -1,5 +1,5 @@
 const tiktokDl = require("@sasmeee/tkdl");
-const url = "https://www.tiktok.com/@tiktok/video/7315241757845982510";
+const url = "https://vm.tiktok.com/ZM6ANPDDA/";
 
 async function fetchData() {
   try {

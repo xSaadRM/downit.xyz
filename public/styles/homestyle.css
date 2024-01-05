@@ -77,6 +77,14 @@ h2#videoTitle {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
     margin-right: 20px;
 }
+#tikVideoThumbnail {
+    display: none;
+    max-width: 100px;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    margin-right: 20px;
+}
 
 .infoButtons {
     display: inline;
@@ -101,6 +109,32 @@ h2#videoTitle {
 }
 
 .infoButtons button:hover {
+    background-color: #2980b9;
+}
+
+.tikInfoButtons {
+    display: inline;
+    flex-direction: column;
+    align-items: center;
+}
+
+.tikInfoButtons button {
+    padding: 10px 15px;
+    margin-right: 10px; /* Add margin between buttons */
+    font-size: 14px;
+    border: 1px solid #3498db;
+    border-radius: 5px;
+    background-color: #3498db;
+    color: #fff;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.tikInfoButtons button:last-child {
+    margin-right: 0; /* Remove margin for the last button */
+}
+
+.tikInfoButtons button:hover {
     background-color: #2980b9;
 }
 
