@@ -135,7 +135,9 @@ app.get('/download-yt', async (req, res) => {
 
         const videoTitle = userVideoInfo.videoDetails.title;
         if (uvideoFormat.hasVideo) {
-            var outputFileName = `${videoTitle}.${uvideoFormat.container}`;
+            const sanitizedTitle = videoTitle.replace(/[^a-zA-Z0-9]/g, '_'); // Replace non-alphanumeric characters with underscores
+            var outputFileName = `${sanitizedTitle}.${uvideoFormat.container}`;
+
         } else outputFileName = `${videoTitle}.mp3`;
         res.setHeader('Content-Disposition', `attachment; filename="${outputFileName}"`);
         res.setHeader('Content-Type', `${uvideoFormat.mimeType}`);
