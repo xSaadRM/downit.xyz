@@ -281,6 +281,14 @@ h2#videoTitle {
         margin-bottom: 10px; /* Add space between input and button */
     }
 
+    h2#videoTitle {
+        font-size: 110%; /* Adjust the font size as needed for mobile */
+        margin-bottom: 20px; /* Optional: adjust margin for the title */
+        white-space: nowrap; /* Prevent text wrapping */
+        overflow: hidden; /* Hide overflowing text */
+        text-overflow: ellipsis; /* Show an ellipsis (...) for overflow */
+    }
+
     .thumbnail-container {
         flex-direction: column; /* Stack thumbnail above content on smaller screens */
         margin-bottom: 20px; /* Adjust margin for smaller screens */
