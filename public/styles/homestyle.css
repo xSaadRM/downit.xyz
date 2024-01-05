@@ -290,7 +290,15 @@ h2#videoTitle {
 .dark-mode .fa-moon {
     color: #fff; /* Icon color in dark mode */
 }
-
+.dark-mode .menu-toggle i {
+    color: #b9b7b7;
+}
+.dark-mode .left-menu {
+    background-color: #131212;
+}
+.dark-mode .left-menu a {
+    color: #b9b7b7;
+}
 /* Style for the menu toggle button/icon */
 .menu-toggle {
     display: block;
