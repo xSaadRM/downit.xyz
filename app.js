@@ -20,6 +20,7 @@ app.get('/ytinfo', async (req, res) => {
         let ytInfo = await ytdl.getInfo(ytUrl);
         const videoThumbnail = ytInfo.videoDetails.thumbnails[2].url;
         const videoTitle = ytInfo.videoDetails.title;
+        const videoAuthor = ytInfo.videoDetails.author;
 
         const videoFormats = ytInfo.formats.filter(format => {
             return (
@@ -100,7 +101,8 @@ for (const format of audioFormats) {
             title: videoTitle,
             thumbnail: videoThumbnail,
             qualities: availableQualities,
-            audio: availableAudioFormats 
+            audio: availableAudioFormats,
+            author: videoAuthor 
         };
 
         console.log('Video Info:', videoBasicDetails);

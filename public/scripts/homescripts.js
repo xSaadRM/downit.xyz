@@ -21,6 +21,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const form = document.querySelector('form');
     const videoInfo = document.getElementById('videoInfo');
     const videoTitleElem = document.getElementById('videoTitle');
+    const authorElem = document.getElementById('vidAuthor');
     const loadingIndicator = document.getElementById('loadingIndicator');
     const formatsBtnsElm = document.getElementById('formatsBtns');
     const modal = document.getElementById('myModal');
@@ -55,7 +56,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const data = await response.json();
 
                 if (data.videoDetails) {
-                    const { title, thumbnail, qualities, audio } = data.videoDetails;
+                    const { title, thumbnail, qualities, audio, author } = data.videoDetails;
                     videoTitleElem.textContent = title;
                     videoThumbnailElem.src = thumbnail;
                     videoThumbnailElem.style.display = 'block'; // Show video thumbnail
@@ -79,6 +80,8 @@ document.addEventListener('DOMContentLoaded', () => {
                         });
                         formatsBtnsElm.appendChild(formatButton); // Append the button to the container
                     });
+                    authorElem.textContent = `Author: ${author.user}`
+                    videoInfo.appendChild(authorElem);
                 }
             } else if (urlType === 'tiktok') {
             const response = await fetch(`/tikinfo?tikUrl=${inputUrl}`);
@@ -94,7 +97,7 @@ document.addEventListener('DOMContentLoaded', () => {
         
                 if (sd) {
                     const formatButtonSD = document.createElement('button');
-                    formatButtonSD.textContent = `Download SD <br> Without-Watermark <br> mp4/Video`;
+                    formatButtonSD.innerHTML = `Download SD <br> Without-Watermark <br> mp4/Video`;
                     formatButtonSD.addEventListener('click', () => {
                         window.open(sd);
                     });
@@ -103,7 +106,7 @@ document.addEventListener('DOMContentLoaded', () => {
         
                 if (hd) {
                     const formatButtonHD = document.createElement('button');
-                    formatButtonHD.textContent = `Download HD <br> Without-Watermark <br> mp4/Video`;
+                    formatButtonHD.innerHTML = `Download HD <br> Without-Watermark <br> mp4/Video`;
                     formatButtonHD.addEventListener('click', () => {
                         window.open(hd);
                     });
@@ -112,7 +115,7 @@ document.addEventListener('DOMContentLoaded', () => {
         
                 if (audio) {
                     const formatButtonAudio = document.createElement('button');
-                    formatButtonAudio.textContent = `Download Audio <br>mp3`;
+                    formatButtonAudio.innerHTML = `Download Audio <br>mp3`;
                     formatButtonAudio.addEventListener('click', () => {
                         window.open(audio);
                         console.log('Audio link: ', audio)
@@ -122,7 +125,6 @@ document.addEventListener('DOMContentLoaded', () => {
         
                 // Display author information if available
                 if (author) {
-                    const authorElem = document.createElement('p');
                     authorElem.textContent = `Author: ${author}`;
                     videoInfo.appendChild(authorElem);
                 }
