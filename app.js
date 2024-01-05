@@ -133,11 +133,9 @@ app.get('/download-yt', async (req, res) => {
             return res.status(404).send('Video format not found.');
         }
 
-        const videoTitle = userVideoInfo.videoDetails.title;
+        const videoTitle = encodeURIComponent(userVideoInfo.videoDetails.title);
         if (uvideoFormat.hasVideo) {
-            const sanitizedTitle = videoTitle.replace(/[^a-zA-Z0-9]/g, '_'); // Replace non-alphanumeric characters with underscores
-            var outputFileName = `${sanitizedTitle}.${uvideoFormat.container}`;
-
+            var outputFileName = `${videoTitle}.${uvideoFormat.container}`;
         } else outputFileName = `${videoTitle}.mp3`;
         res.setHeader('Content-Disposition', `attachment; filename="${outputFileName}"`);
         res.setHeader('Content-Type', `${uvideoFormat.mimeType}`);
