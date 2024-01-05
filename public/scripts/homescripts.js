@@ -31,8 +31,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Regular expressions to match YouTube and TikTok URLs
         const youtubeRegex = /^(https?:\/\/)?(www\.)?(youtube\.com|youtu\.?be)\/.*/i;
-        const tiktokRegex = /^(https?:\/\/)?(www\.|vm.)?tiktok\.com\/.*/i;
-
+        const tiktokRegex = /^(https?:\/\/)?(www\.|vm\.)?tiktok\.com\/.*/i;
         let urlType = '';
         if (youtubeRegex.test(inputUrl)) {
             urlType = 'youtube';
