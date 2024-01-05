@@ -70,6 +70,7 @@ h2#videoTitle {
 }
 
 #videoThumbnail {
+    display: none;
     max-width: 200px;
     height: auto;
     border-radius: 8px;

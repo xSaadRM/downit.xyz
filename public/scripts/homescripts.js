@@ -16,8 +16,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     darkModeToggle.addEventListener('click', toggleDarkMode);
     const videoThumbnailElem = document.getElementById('videoThumbnail');
-    const htmlidkThumbnail = document.getElementById('videoThumbnail'); // Fixed variable name for consistency
-    htmlidkThumbnail.style.display = 'none';
     const form = document.querySelector('form');
     const videoInfo = document.getElementById('videoInfo');
     const videoTitleElem = document.getElementById('videoTitle');
