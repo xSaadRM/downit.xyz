@@ -40,8 +40,8 @@
 }
 
 .content-shifted {
-    transition: transform 0.5s ease;
-    transform: translateX(0);
+    transition: margin-left 0.3s ease;
+    margin-top: 0;
 }
 
 /* Adjustments for larger screens */
@@ -62,13 +62,14 @@
     }
 
     .top-menu ul.active {
+        margin-top: 0;
         display: flex;
         flex-direction: column;
         align-items: flex-start;
     }
 
     .content-shifted {
-        transform: translateY(40%);
+        margin-top: 120px; /* Adjust the value based on the menu width */
     }
 }
 
