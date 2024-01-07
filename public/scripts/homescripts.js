@@ -44,12 +44,15 @@ document.addEventListener('DOMContentLoaded', () => {
         // Regular expressions to match YouTube and TikTok URLs
         const youtubeRegex = /^(https?:\/\/)?(www\.)?(youtube\.com|youtu\.?be)\/.*/i;
         const tiktokRegex = /^(https?:\/\/)?(www\.|vm\.)?tiktok\.com\/.*/i;
+        const facebookRegex = /^(https?:\/\/)?(m\.)?(www\.)?facebook\.com\/.*/i;
 
         let urlType = '';
         if (youtubeRegex.test(inputUrl)) {
             urlType = 'youtube';
         } else if (tiktokRegex.test(inputUrl)) {
             urlType = 'tiktok';
+        } else if (facebookRegex.test(inputUrl)) {
+            urlType = 'facebook';
         } else {
             modal.style.display = 'block';
             return;
@@ -143,7 +146,32 @@ document.addEventListener('DOMContentLoaded', () => {
                     tikVideoInfo.appendChild(authorElem);
                 }
             }
-        }
+        } else if (urlType === 'facebook') {
+            const response = await fetch(`http://127.0.0.1:5000/dl?Url=${inputUrl}`);
+            const data = await response.json();
+            if (data) {
+                const { title, thumbnail, resolutions } = data;
+                videoTitleElem.textContent = title;
+                tikVideoThumbnailElem.src = thumbnail;
+                tikVideoThumbnailElem.style.display = 'block'; // Show video thumbnail
+                tikVideoInfo.style.display = 'block';
+
+                resolutions.forEach(resolution => {
+                    // Extract width from resolution using string manipulation
+                    const width = resolution.split('x')[0]; // Extracting the width before 'x'
+                
+                    const formatButton = document.createElement('button');
+                
+                    formatButton.innerHTML = `${width}p - video/mp4 <br> <span style="color: black;">File Size</span>`;
+                    formatButton.addEventListener('click', () => {
+                        window.open(`/download-fb?Url=${inputUrl}`);
+                    });
+                    tikFormatsBtnsElm.appendChild(formatButton); // Append the button to the container
+                });
+                
+            }
+          }
+          
         
         
         } catch (error) {
