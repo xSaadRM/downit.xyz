@@ -5,8 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta charset="UTF-8">
     <link rel="stylesheet" href="./styles/homestyle.css">
+    <link rel="stylesheet" href="./styles/styles.css">
+    <link rel="stylesheet" href="./styles/header.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <link rel="stylesheet" href="./styles/topmenu.css">
 </head>
 <body>
     <div class="area">
@@ -23,17 +24,100 @@
             <li></li>
         </ul>
     </div>
-    <div class="top-menu">
-        <div class="menu-toggle">
-            <i class="fas fa-bars"></i>
+    <header class="header">
+        <div class="header-wrapper">
+          <a class="header-left" href="/home/">
+            <img src="./imgs/download-from-the-cloud.gif" alt="logo" class="logo">
+          </a>
+          <h3 class="xsitename">XMutiny Downloader</h3>
+
+      
+          <div class="nav">
+            <ul class="header-right">
+              <li id="list" data-cur="false">
+                <a href="javascript:;" data-handle="openBox">Online Tools</a>
+                <div class="content">
+                  <div class="cell">
+                    <div class="listing">
+                      <a class="li arr" href="/video-downloader/" data-cur="false">Video Downloader</a>
+                      <a class="li arr" href="/audio-downloader/" data-cur="false">Audio Downloader</a>
+                      <a class="arr" href="/youtube-to-gif-converter/" data-cur="false">YouTube to GIF</a>
+                      <a class="arr" href="/youtube-to-mp4-trim/" data-cur="false">YouTube Video Trimmer</a>
+                    </div>
+                    <div class="side-box">
+                      <ul>
+                        <li>
+                          <a href="/mp4-downloader/">MP4 Downloader</a>
+                        </li>
+                        <li>
+                          <a href="/url-to-mp4/">URL to MP4</a>
+                        </li>
+                        <li>
+                          <a href="/link-to-video/">Link to Video</a>
+                        </li>
+                      </ul>
+                    </div>
+                    <div class="side-box">
+                      <ul>
+                        <li>
+                          <a href="/url-to-mp3/">URL to MP3</a>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+      
+              </li>
+              <li id="list" data-cur="false">
+                <a href="javascript:;" data-handle="openBox">YouTube Video Converter</a>
+                <div class="content">
+                  <div class="cell">
+                    <div class="listing">
+                      <a class="arr" href="/youtube-to-webm-converter/" data-cur="false">YouTube to WebM</a>
+                      <a class="arr" href="/youtube-to-mov-converter/" data-cur="false">YouTube to MOV</a>
+                      <a class="arr" href="/youtube-to-avi-converter/" data-cur="false">YouTube to AVI</a>
+                      <a class="arr" href="/youtube-to-wmv-converter/" data-cur="false">YouTube to WMV</a>
+                      <a class="arr" href="/youtube-to-flv-converter/" data-cur="false">YouTube to FLV</a>
+                      <a class="arr" href="/youtube-to-mkv-converter/" data-cur="false">YouTube to MKV</a>
+                      <a class="arr" href="/youtube-to-mpeg-converter/" data-cur="false">YouTube to MPEG</a>
+                      <a class="arr" href="/youtube-to-3gp-converter/" data-cur="false">YouTube to 3GP</a>
+                      <a class="arr" href="/youtube-to-mp4/" data-cur="false">YouTube to MP4</a>
+                    </div>
+                  </div>
+                </div>
+              </li>
+              <li id="list" data-cur="false">
+                <a href="javascript:;" data-handle="openBox">YouTube Audio Converter</a>
+                <div class="content">
+                  <div class="cell">
+                    <div class="listing">
+                      <a class="arr" href="/youtube-to-wav-converter/" data-cur="false">YouTube to WAV</a>
+                      <a class="arr" href="/youtube-to-m4a-converter/" data-cur="false">YouTube to M4A</a>
+                      <a class="arr" href="/youtube-to-aac-converter/" data-cur="false">YouTube to AAC</a>
+                      <a class="arr" href="/youtube-to-flac-converter/" data-cur="false">YouTube to FLAC</a>
+                      <a class="arr" href="/youtube-to-ogg-converter/" data-cur="false">YouTube to OGG</a>
+                      <a class="arr" href="/youtube-to-m4r-converter/" data-cur="false">YouTube to M4R</a>
+                      <a class="arr" href="/youtube-to-mp3/" data-cur="false">YouTube to MP3</a>
+                      <a class="arr" href="/youtube-to-wma/" data-cur="false">YouTube to WMA</a>
+                    </div>
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </div>
+          <button class="mobile-menu-btn g-hide-text" data-handle="btnMenu"></button>
         </div>
-        <ul>
-            <li><a href="#">Home</a></li>
-            <li><a href="#">About</a></li>
-            <li><a href="#">Services</a></li>
-            <!-- Add more menu items as needed -->
-        </ul>
-    </div>
+      </header>
+      <div class="supported-platforms">
+        <h3>Supported Platforms</h3>
+        <div class="platform">
+            <img src="./imgs/tiktok.gif" alt="TikTok" class="tiktok-logo">
+            <h5 class="tiktok-logo-text">TikTok</h5>
+        </div>
+        <div class="platform">
+            <img src="./imgs/youtube.gif" alt="YouTube" class="youtube-logo">
+        </div>
+    </div>    
     <div class="container">
         <h1>Download YouTube/TikTok/Facebook Videos</h1>
         <form>
@@ -56,6 +140,17 @@
             </div>
             <p id="tikVidAuthor" class="hidden"></p>
         </div>
+        <div class="menu-toggle">
+            <i class="fas fa-bars"></i>
+        </div>
+        <div class="left-menu">
+            <ul>
+                <li><a href="#">Home</a></li>
+                <li><a href="#">About</a></li>
+                <li><a href="#">Services</a></li>
+                <!-- Add more menu items as needed -->
+            </ul>
+        </div>
         <div id="loadingIndicator" class="loading"></div>
         <div id="myModal" class="modal">
             <div class="modal-content">
@@ -68,7 +163,6 @@
             <i class="fas fa-moon" id="darkModeToggle"></i>
         </div>
     </div>
-    <script src="./scripts/topmenu.js"></script>
     <script src="./scripts/homescripts.js"></script>
 </body>
 </html>

@@ -1,0 +1,34 @@
+
+.logo {
+    position: relative; /* or absolute, fixed depending on your layout needs */
+    top: -10px; /* Adjust this value to move the image vertically */
+    left: -60px; /* Adjust this value to move the image horizontally */
+}
+.xsitename {
+    position: relative; /* or absolute, fixed depending on your layout needs */
+    left: -150px; /* Adjust this value to move the image horizontally */
+}
+.supported-platforms {
+    text-align: center;
+}
+
+.supported-platforms h3 {
+    margin-bottom: 10px;
+}
+
+.platform {
+    display: inline-block;
+    vertical-align: top; /* Align elements at the top */
+    margin-right: 20px; /* Add some spacing between logos */
+}
+
+.platform img {
+    width: auto;
+    height: 60px;
+}
+
+.platform h5 {
+    margin: 0;
+    position: relative;
+    top: -10px;
+}
