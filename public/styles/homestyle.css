@@ -353,6 +353,7 @@ h2#videoTitle {
 /* Show the menu when toggled */
 .history-menu.active {
     left: 0;
+    overflow-y: auto; /* Enable vertical scrolling */
 }
 
 /*BG*/

@@ -36,3 +36,10 @@
         left: 0;
     }
 }
+
+.history-menu ul li img {
+    width: 180px; /* Adjust the width of the thumbnails */
+    height: auto; /* Maintain aspect ratio */
+    margin-right: 10px; /* Add spacing between thumbnails and titles */
+    padding: 10px;
+}
