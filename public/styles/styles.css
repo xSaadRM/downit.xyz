@@ -5,8 +5,7 @@
     left: -60px; /* Adjust this value to move the image horizontally */
 }
 .xsitename {
-    position: relative; /* or absolute, fixed depending on your layout needs */
-    left: -150px; /* Adjust this value to move the image horizontally */
+    display: none;
 }
 .supported-platforms {
     text-align: center;
@@ -31,4 +30,9 @@
     margin: 0;
     position: relative;
     top: -10px;
+}
+@media screen and (max-width: 768px) {
+    .xsitename {
+        left: 0;
+    }
 }

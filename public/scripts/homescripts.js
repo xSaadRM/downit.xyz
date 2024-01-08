@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
     //menu toggle
     const menuToggle = document.querySelector('.menu-toggle');
-    const leftMenu = document.querySelector('.left-menu');
+    const leftMenu = document.querySelector('.history-menu');
 
     menuToggle.addEventListener('click', () => {
         leftMenu.classList.toggle('active');

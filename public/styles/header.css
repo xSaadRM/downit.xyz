@@ -240,8 +240,8 @@
 
     .header .logo {
         left: 0;
-        top: 24px;
-        width: 128px;
+        top: 0;
+        width: auto;
         height: 28px
     }
 

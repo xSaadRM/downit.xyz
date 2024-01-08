@@ -49,9 +49,15 @@ button {
     border-radius: 5px;
     margin-bottom: 15px; /* Increased margin */
     transition: all 0.3s ease;
+}
+#urlInput {
     background-color: #f9f9f9; /* Lighter input/button background */
     color: #333; /* Dark text color */
 }
+#downloadBtn {
+    background-color: rgb(255, 0, 0);
+    color: #000;
+} 
 
 #urlInput:focus,
 button:hover {
@@ -273,14 +279,6 @@ h2#videoTitle {
     background-color: #636060;
 }
 
-/* CSS for dark mode toggle icon */
-.dark-mode-toggle-container {
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    z-index: 999;
-}
-
 .fa-moon {
     font-size: 24px;
     color: #000; /* Icon color in light mode */
@@ -293,21 +291,13 @@ h2#videoTitle {
 .dark-mode .menu-toggle i {
     color: #b9b7b7;
 }
-.dark-mode .left-menu {
+.dark-mode .history-menu {
     background-color: #131212;
 }
-.dark-mode .left-menu a {
+.dark-mode .history-menu a {
     color: #b9b7b7;
 }
-/* Style for the menu toggle button/icon */
-.menu-toggle {
-    display: block;
-    position: fixed;
-    top: 20px;
-    left: 20px;
-    z-index: 9999;
-    cursor: pointer;
-}
+
 
 /* Styles for the menu icon (using Font Awesome) */
 .menu-toggle i {
@@ -316,7 +306,7 @@ h2#videoTitle {
 }
 
 /* Styles for the left-side menu */
-.left-menu {
+.history-menu {
     position: fixed;
     top: 0;
     left: 0;
@@ -327,17 +317,17 @@ h2#videoTitle {
     box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1); /* Optional: Add shadow for a better look */
 }
 
-.left-menu ul {
+.history-menu ul {
     list-style: none;
     padding: 0;
     margin-top: 50px;
 }
 
-.left-menu li {
+.history-menu li {
     margin-bottom: 10px; /* Adjust space between menu items */
 }
 
-.left-menu a {
+.history-menu a {
     text-decoration: none;
     color: #050505; /* Adjust link color */
     display: block;
@@ -345,11 +335,11 @@ h2#videoTitle {
     transition: background-color 0.3s ease;
 }
 
-.left-menu a:hover {
+.history-menu a:hover {
     background-color: #ddd; /* Change background color on hover */
     background-color: #3498db;
 }
-.left-menu {
+.history-menu {
     position: fixed;
     top: 0;
     left: -200px; /* Hide the menu off-screen initially */
@@ -361,70 +351,11 @@ h2#videoTitle {
 }
 
 /* Show the menu when toggled */
-.left-menu.active {
+.history-menu.active {
     left: 0;
 }
-/* Media query for mobile devices */
-@media only screen and (max-width: 768px) {
-    body, html {
-        margin: 0;
-        padding: 0;
-        width: 100%; /* Adjust width to fit the viewport */
-        overflow-x: hidden; /* Hide horizontal overflow */
-    }
-    .container {
-        width: 100%; /* Make the container full-width */
-        padding: 10px; /* Adjust container padding for smaller screens */
-        box-sizing: border-box; /* Include padding in the width calculation */
-    }
 
-    h1 {
-        margin-bottom: 20px; /* Decreased margin for smaller screens */
-    }
-
-    input#urlInput,
-    button {
-        width: calc(100% - 24px); /* Make input and button full-width with space for padding */
-        margin-bottom: 10px; /* Add space between input and button */
-    }
-
-    h2#videoTitle {
-        font-size: 110%; /* Adjust the font size as needed for mobile */
-        margin-bottom: 20px; /* Optional: adjust margin for the title */
-        white-space: nowrap; /* Prevent text wrapping */
-        overflow: hidden; /* Hide overflowing text */
-        text-overflow: ellipsis; /* Show an ellipsis (...) for overflow */
-    }
-
-    .thumbnail-container {
-        flex-direction: column; /* Stack thumbnail above content on smaller screens */
-        margin-bottom: 20px; /* Adjust margin for smaller screens */
-    }
-
-    #videoThumbnail {
-        max-width: 100%; /* Make the thumbnail responsive to the container */
-        margin-right: 0; /* Remove right margin on smaller screens */
-        margin-bottom: 15px; /* Adjust margin for smaller screens */
-    }
-
-    .infoButtons {
-        flex-direction: row; /* Align buttons horizontally on smaller screens */
-        justify-content: center; /* Center align buttons on smaller screens */
-        margin-bottom: 20px; /* Adjust margin for smaller screens */
-    }
-
-    .infoButtons button {
-        margin-right: 10px; /* Adjust margin between buttons for smaller screens */
-    }
-
-    .modal-content {
-        width: 90%; /* Adjust modal content width for smaller screens */
-    }
-
-    /* Adjust any other styles as needed for mobile devices */
-}
-
-/* Paste this CSS code in your existing stylesheet or create a new one */
+/*BG*/
 .area {
     background: #4e54c8;
     background: -webkit-linear-gradient(to left, #8f94fb, #4e54c8);

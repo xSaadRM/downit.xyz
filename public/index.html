@@ -30,8 +30,12 @@
             <img src="./imgs/download-from-the-cloud.gif" alt="logo" class="logo">
           </a>
           <h3 class="xsitename">XMutiny Downloader</h3>
-
-      
+          <div class="menu-toggle">
+            <i class="fas fa-clock"></i>
+        </div>
+        <div class="dark-mode-toggle-container">
+            <i class="fas fa-moon" id="darkModeToggle"></i>
+        </div>
           <div class="nav">
             <ul class="header-right">
               <li id="list" data-cur="false">
@@ -143,10 +147,7 @@
             </div>
             <p id="tikVidAuthor" class="hidden"></p>
         </div>
-        <div class="menu-toggle">
-            <i class="fas fa-bars"></i>
-        </div>
-        <div class="left-menu">
+        <div class="history-menu">
             <ul>
                 <li><a href="#">Home</a></li>
                 <li><a href="#">About</a></li>
@@ -161,9 +162,6 @@
                 <p><strong>Invalid URL!</strong></p>
                 <p>Provide a YouTube or TikTok URL.</p>
             </div>
-        </div>
-        <div class="dark-mode-toggle-container">
-            <i class="fas fa-moon" id="darkModeToggle"></i>
         </div>
     </div>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
