@@ -6,26 +6,11 @@
     <meta charset="UTF-8">
     <link rel="stylesheet" href="./styles/homestyle.css">
     <link rel="stylesheet" href="./styles/resview.css">
-    <link rel="stylesheet" href="./styles/bg.css">
     <link rel="stylesheet" href="./styles/styles.css">
     <link rel="stylesheet" href="./styles/header.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 </head>
 <body>
-    <div class="area">
-        <ul class="circles">
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-        </ul>
-    </div>
     <header class="header">
         <div class="header-wrapper">
           <a class="header-left" href="/home/">
@@ -121,7 +106,7 @@
             <h5 class="tiktok-logo-text">TikTok</h5>
         </div>
         <div class="platform">
-            <img src="./imgs/youtube.gif" alt="YouTube" class="youtube-logo">
+            <img src="./imgs/youtube.png" alt="YouTube" class="youtube-logo">
         </div>
         <div class="platform">
             <img src="./imgs/facebook.gif" alt="Facebook" class="facebook-logo">
@@ -138,14 +123,16 @@
         <div id="videoInfo" class="hidden">
             <div class="thumbnail-container">
                 <img src="" id="videoThumbnail" alt="Video Thumbnail">
-                <div id="formatsBtns" class="infoButtons"></div>
+                <div class="infoButtonsContainer">
+                    <div id="formatsBtns" class="infoButtons"></div>
+                </div>
                 <p id="vidAuthor" class="hidden"></p>
             </div>
         </div>
         <div id="tikInfo" class="hidden">
             <div class="thumbnail-container">
                 <img src="" id="tikVideoThumbnail" alt="Video Thumbnail">
-                <div id="tikFormatsBtns" class="infoButtons"></div>
+                <div id="tikFormatsBtns" class="tikInfoButtons"></div>
             </div>
             <p id="tikVidAuthor" class="hidden"></p>
         </div>

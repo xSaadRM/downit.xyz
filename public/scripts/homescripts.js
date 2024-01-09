@@ -155,7 +155,7 @@ window.addEventListener("scroll", () => {
 
           if (sd) {
             const formatButtonSD = document.createElement("button");
-            formatButtonSD.innerHTML = `Download SD <br> Without-Watermark <br> mp4/Video`;
+            formatButtonSD.innerHTML = `Download SD <br> MP4`;
             formatButtonSD.addEventListener("click", () => {
               window.open(sd);
             });
@@ -164,7 +164,8 @@ window.addEventListener("scroll", () => {
 
           if (hd) {
             const formatButtonHD = document.createElement("button");
-            formatButtonHD.innerHTML = `Download HD <br> Without-Watermark <br> mp4/Video`;
+            formatButtonHD.innerHTML = `Download HD <br> MP4
+            `;
             formatButtonHD.addEventListener("click", () => {
               window.open(hd);
             });
@@ -173,7 +174,7 @@ window.addEventListener("scroll", () => {
 
           if (audio) {
             const formatButtonAudio = document.createElement("button");
-            formatButtonAudio.innerHTML = `Download Audio <br>mp3`;
+            formatButtonAudio.innerHTML = `Download MP3 <br> Audio`;
             formatButtonAudio.addEventListener("click", () => {
               window.open(audio);
               console.log("Audio link: ", audio);

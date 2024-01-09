@@ -43,3 +43,17 @@
     margin-right: 10px; /* Add spacing between thumbnails and titles */
     padding: 10px;
 }
+
+.dark-mode .header, .dark-mode .header .nav, .dark-mode .header .nav>ul #list .content {
+    background-color: black;
+}
+.dark-mode .header .nav>ul #list>a {
+    color: white;
+}
+.dark-mode .header .nav a {
+    color: red;
+}
+.dark-mode .header .nav>ul #list>a:after{
+    border-right: 1.5px solid #fff7f7;
+    border-top: 1.5px solid #ffffff;
+}

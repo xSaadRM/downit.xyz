@@ -29,12 +29,6 @@
         overflow: hidden; /* Hide overflowing text */
         text-overflow: ellipsis; /* Show an ellipsis (...) for overflow */
     }
-
-    .thumbnail-container {
-        flex-direction: column; /* Stack thumbnail above content on smaller screens */
-        margin-bottom: 20px; /* Adjust margin for smaller screens */
-    }
-
     #videoThumbnail {
         max-width: 100%; /* Make the thumbnail responsive to the container */
         margin-right: 0; /* Remove right margin on smaller screens */
@@ -48,12 +42,21 @@
     }
 
     .infoButtons button {
-        margin-right: 10px; /* Adjust margin between buttons for smaller screens */
+        margin-left: 10px; 
     }
 
     .modal-content {
         width: 90%; /* Adjust modal content width for smaller screens */
     }
-
-    /* Adjust any other styles as needed for mobile devices */
+    #tikVideoThumbnail {
+        max-width: 100px;
+    }
+    .thumbnail-container {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    .tikInfoButtons {
+        display: flex;
+        flex-direction: column;
+    }
 }
