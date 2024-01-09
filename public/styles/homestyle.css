@@ -244,6 +244,12 @@ h2#videoTitle {
     margin-right: 20px;
 }
 
+
+.fa-moon {
+    font-size: 24px;
+    color: #000; /* Icon color in light mode */
+    cursor: pointer;
+}
 /* Dark mode styles */
 .dark-mode {
     background-color: #333; /* Change to your preferred dark mode background color */
@@ -281,12 +287,6 @@ h2#videoTitle {
 }
 .dark-mode .modal-content {
     background-color: #636060;
-}
-
-.fa-moon {
-    font-size: 24px;
-    color: #000; /* Icon color in light mode */
-    cursor: pointer;
 }
 
 .dark-mode .fa-moon {
