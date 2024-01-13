@@ -306,7 +306,8 @@ h2#videoTitle {
 /* Styles for the menu icon (using Font Awesome) */
 .menu-toggle i {
     font-size: 24px;
-    color: #000; /* Change icon color as needed */
+    color: #000;
+    margin-right: 10px;
 }
 
 /* Styles for the left-side menu */
