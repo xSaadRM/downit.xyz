@@ -189,29 +189,46 @@ window.addEventListener("scroll", () => {
           }
         }
       } else if (urlType === "facebook") {
-        const response = await fetch(
-          `http://127.0.0.1:5000/dl?Url=${inputUrl}`
-        );
-        const data = await response.json();
-        if (data) {
-          const { title, thumbnail, resolutions } = data;
-          videoTitleElem.textContent = title;
-          tikVideoThumbnailElem.src = thumbnail;
-          tikVideoThumbnailElem.style.display = "block"; // Show video thumbnail
-          tikVideoInfo.style.display = "block";
-
-          resolutions.forEach((resolution) => {
-            // Extract width from resolution using string manipulation
-            const width = resolution.split("x")[0]; // Extracting the width before 'x'
-
-            const formatButton = document.createElement("button");
-
-            formatButton.innerHTML = `${width}p - video/mp4 <br> <span style="color: black;">File Size</span>`;
-            formatButton.addEventListener("click", () => {
-              window.open(`/download-fb?Url=${inputUrl}`);
-            });
-            tikFormatsBtnsElm.appendChild(formatButton); // Append the button to the container
+        try {
+          const response = await fetch('http://127.0.0.1:5000/dl', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              Url: inputUrl,
+              // Include other data if needed in the request body
+            }),
           });
+      
+          if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+          }
+      
+          const data = await response.json();
+      
+          if (data) {
+            const { title, thumbnail, formats } = data;
+            videoTitleElem.textContent = title;
+            tikVideoThumbnailElem.src = thumbnail;
+            tikVideoThumbnailElem.style.display = "block";
+            tikVideoInfo.style.display = "block";
+      
+            formats.forEach((format) => {
+              const { ext, filesize, resolution, url } = format;      
+              const formatButton = document.createElement("button");
+              formatButton.innerHTML = `${resolution} - ${ext} <br> <span style="color: black;">${filesize}</span>`;
+              formatButton.addEventListener("click", () => {
+                window.open(url);
+              });
+              tikFormatsBtnsElm.appendChild(formatButton);
+            });
+          } else {
+            throw new Error('No data received from the server');
+          }
+        } catch (error) {
+          console.error('Error during fetch:', error.message);
+          // Handle the error appropriately (e.g., display an error message to the user)
         }
       }
     } catch (error) {
