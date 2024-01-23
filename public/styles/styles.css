@@ -9,18 +9,19 @@
 }
 .supported-platforms {
     text-align: center;
-}
-
-.supported-platforms h3 {
-    margin-bottom: 10px;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: center;
 }
 
 .platform {
     display: inline-block;
     vertical-align: top; /* Align elements at the top */
-    margin-right: 20px; /* Add some spacing between logos */
 }
-
+.platform h6 {
+    margin-bottom: 10px;
+}
 .platform img {
     width: auto;
     height: 60px;
@@ -31,11 +32,7 @@
     position: relative;
     top: -10px;
 }
-@media screen and (max-width: 768px) {
-    .xsitename {
-        left: 0;
-    }
-}
+
 
 .history-menu ul li img {
     width: 180px; /* Adjust the width of the thumbnails */
@@ -56,4 +53,21 @@
 .dark-mode .header .nav>ul #list>a:after{
     border-right: 1.5px solid #fff7f7;
     border-top: 1.5px solid #ffffff;
+}
+
+.menu-toggle {
+    cursor: pointer;
+}
+
+.dark-mode-toggle-container {
+    display: flex;
+    justify-content: end;
+    width: 167px;
+}
+
+.ics-ptfrms {
+    display: flex;
+}
+.sect-hist {
+    margin-left: 10px;
 }

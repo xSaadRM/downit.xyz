@@ -1,30 +1,4 @@
 document.addEventListener("DOMContentLoaded", () => {
-  //menu toggle
-  const menuToggle = document.querySelector(".menu-toggle");
-  const leftMenu = document.querySelector(".history-menu");
-  const closeMenu = () => {
-    leftMenu.classList.remove("active");
-  };
-  const handleClickOutsideMenu = (event) => {
-    if (
-      !leftMenu.contains(event.target) &&
-      !menuToggle.contains(event.target)
-    ) {
-      closeMenu();
-    }
-  };
-
-  menuToggle.addEventListener("click", () => {
-    leftMenu.classList.toggle("active");
-    renderVideoHistory();
-  });
-  document.addEventListener("click", handleClickOutsideMenu);
-  // Event listener for the scroll event on the window
-window.addEventListener("scroll", () => {
-    if (leftMenu.classList.contains("active")) {
-      closeMenu(); // Close the menu if it is active when the user scrolls
-    }
-  });
   // Dark Mode
   const darkModeToggle = document.getElementById("darkModeToggle");
   const body = document.body;
@@ -41,6 +15,39 @@ window.addEventListener("scroll", () => {
   }
 
   darkModeToggle.addEventListener("click", toggleDarkMode);
+  //NAv bar
+  function toggleNav() {
+    var nav = document.getElementById('navbar');
+    nav.classList.toggle('nav-active');
+  }
+  //menu toggle
+  const menuToggle = document.querySelector(".menu-toggle");
+  const leftMenu = document.querySelector(".history-menu");
+  const closeMenu = () => {
+    leftMenu.classList.remove("active");
+  };
+  const handleClickOutsideMenu = (event) => {
+    if (
+      !leftMenu.contains(event.target) &&
+      !menuToggle.contains(event.target) &&
+      !darkModeToggle.contains(event.target)
+    ) {
+      closeMenu();
+    }
+  };
+
+  menuToggle.addEventListener("click", () => {
+    leftMenu.classList.toggle("active");
+    renderVideoHistory();
+  });
+  document.addEventListener("click", handleClickOutsideMenu);
+  // Event listener for the scroll event on the window
+window.addEventListener("scroll", () => {
+    if (leftMenu.classList.contains("active")) {
+      closeMenu(); // Close the menu if it is active when the user scrolls
+    }
+  });
+  
   const modal = document.getElementById("myModal");
   const closeBtn = document.querySelector(".close");
   //youtube elements

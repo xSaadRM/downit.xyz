@@ -1,87 +1,110 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <title>Online Video Downloader</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta charset="UTF-8">
-    <link rel="stylesheet" href="./styles/homestyle.css">
-    <link rel="stylesheet" href="./styles/resview.css">
-    <link rel="stylesheet" href="./styles/styles.css">
-    <link rel="stylesheet" href="./styles/header.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <title>Online Video Downloader</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8" />
+  <link rel="stylesheet" href="./styles/homestyle.css" />
+  <link rel="stylesheet" href="./styles/resview.css" />
+  <link rel="stylesheet" href="./styles/styles.css" />
+  <link rel="stylesheet" href="./styles/header.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
+
 <body>
-  <header class="header">
-    <div class="header-wrapper">
-      <a class="header-left" href="/home/">
-        <img src="./imgs/sitelogo.gif" alt="logo" class="logo">
-      </a>
-      <h3 class="xsitename">XMutiny Downloader</h3>
-      <div class="menu-toggle">
-        <i class="fas fa-clock"></i>
+  <header>
+    <div class="head-container">
+      <h1>Downit.xyz</h1>
     </div>
-    <div class="dark-mode-toggle-container">
+    <nav id="navbar">
+      <a href="#">Home</a>
+      <a href="#">About</a>
+      <a href="#">Services</a>
+      <a href="#">Contact</a>
+    </nav>
+    <div class="tgls">
+      <div class="dark-mode-toggle-container">
         <i class="fas fa-moon" id="darkModeToggle"></i>
+      </div>
     </div>
-    </div>
+    <button class="toggle-btn" onclick="toggleNav()">Toggle Navbar</button>
   </header>
-      <div class="supported-platforms">
-        <h3>Supported Platforms</h3>
-        <div class="platform">
-            <img src="./imgs/tiktok.gif" alt="TikTok" class="tiktok-logo">
-            <h5 class="tiktok-logo-text">TikTok</h5>
-        </div>
-        <div class="platform">
-            <img src="./imgs/youtube.png" alt="YouTube" class="youtube-logo">
-        </div>
-        <div class="platform">
-            <img src="./imgs/facebook.gif" alt="Facebook" class="facebook-logo">
-        </div>
-    </div>    
-    <div class="container">
-        <h1>Simple, Fast and Useful</h1>
-        <form>
-            <label for="urlInput">Enter a Video Link</label>
-            <input type="text" id="urlInput" name="ytUrl">
-            <button type="submit" id="downloadBtn">Download</button>
-        </form>
-        <h2 id="videoTitle"></h2>
-        <div id="videoInfo" class="hidden">
-            <div class="thumbnail-container">
-                <img src="" id="videoThumbnail" alt="Video Thumbnail">
-                <div class="infoButtonsContainer">
-                    <div id="formatsBtns" class="infoButtons"></div>
-                </div>
-                <p id="vidAuthor" class="hidden"></p>
-            </div>
-        </div>
-        <div id="tikInfo" class="hidden">
-            <div class="thumbnail-container">
-                <img src="" id="tikVideoThumbnail" alt="Video Thumbnail">
-                <div id="tikFormatsBtns" class="tikInfoButtons"></div>
-            </div>
-            <p id="tikVidAuthor" class="hidden"></p>
-        </div>
-        <div class="history-menu">
-            <ul>
-                <li><a href="#"></a></li>
-                <li><a href="#"></a></li>
-                <li><a href="#"></a></li>
-                <!-- Add more menu items as needed -->
-            </ul>
-        </div>
-        <div id="loadingIndicator" class="loading"></div>
-        <div id="myModal" class="modal">
-            <div class="modal-content">
-                <span class="close">&times;</span>
-                <p><strong>Invalid URL!</strong></p>
-                <p>Provide a YouTube or TikTok URL.</p>
-            </div>
-        </div>
+  <section class="sect1">
+    <div class="sect-hist">
+    <div class="menu-toggle">
+      <i class="fas fa-clock"></i>
+      <p>History</p>
     </div>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="./scripts/homescripts.js"></script>
-    <script src="./scripts/header.js"></script>
-    <script src="./scripts/script.js"></script>
+  </div>
+  <div class="supported-platforms">
+    <h3>Supported Platforms</h3>
+    <div class="ics-ptfrms">
+    <div class="platform">
+      <img src="./imgs/tiktok.gif" alt="TikTok" class="tiktok-logo" />
+      <h6 class="tiktok-logo-text">TikTok</h6>
+    </div>
+    <div class="platform">
+      <img src="./imgs/youtube.png" alt="YouTube" class="youtube-logo" />
+      <h6 class="youtube-logo-text">YouTube</h6>
+    </div>
+    <div class="platform">
+      <img src="./imgs/facebook.gif" alt="Facebook" class="facebook-logo" />
+      <h6 class="facebook-logo-text">Facebook</h6>
+    </div>
+  </div>
+  </div>
+</section>
+  <div class="container">
+    <h1>Simple, Fast and Useful</h1>
+    <form>
+      <label for="urlInput">Enter a Video Link</label>
+      <input type="text" id="urlInput" name="ytUrl" />
+      <button type="submit" id="downloadBtn">Download</button>
+    </form>
+    <h2 id="videoTitle"></h2>
+    <div id="videoInfo" class="hidden">
+      <div class="thumbnail-container">
+        <img src="" id="videoThumbnail" alt="Video Thumbnail" />
+        <div class="infoButtonsContainer">
+          <div id="formatsBtns" class="infoButtons"></div>
+        </div>
+        <p id="vidAuthor" class="hidden"></p>
+      </div>
+    </div>
+    <div id="tikInfo" class="hidden">
+      <div class="thumbnail-container">
+        <img src="" id="tikVideoThumbnail" alt="Video Thumbnail" />
+        <div id="tikFormatsBtns" class="tikInfoButtons"></div>
+      </div>
+      <p id="tikVidAuthor" class="hidden"></p>
+    </div>
+    <div class="history-menu">
+      <ul>
+        <li><a href="#"></a></li>
+        <li><a href="#"></a></li>
+        <li><a href="#"></a></li>
+        <!-- Add more menu items as needed -->
+      </ul>
+    </div>
+    <div id="loadingIndicator" class="loading"></div>
+    <div id="myModal" class="modal">
+      <div class="modal-content">
+        <span class="close">&times;</span>
+        <p><strong>Invalid URL!</strong></p>
+        <p>Provide a YouTube or TikTok URL.</p>
+      </div>
+    </div>
+  </div>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="./scripts/homescripts.js"></script>
+  <script src="./scripts/script.js"></script>
+  <script>
+    function toggleNav() {
+      var nav = document.getElementById('navbar');
+      nav.classList.toggle('nav-active');
+    }
+  </script>
 </body>
+
 </html>

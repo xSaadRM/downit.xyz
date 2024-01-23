@@ -320,6 +320,7 @@ h2#videoTitle {
     background-color: #b9b7b7; /* Adjust the background color as needed */
     padding-top: 20px; /* Adjust top padding as needed */
     box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1); /* Optional: Add shadow for a better look */
+    z-index: 0; /* Set z-index to a negative value to make it appear behind other elements */
 }
 
 .history-menu ul {
