@@ -56,18 +56,24 @@
 }
 
 .menu-toggle {
+    display: inline-flex;
+    flex-direction: row;
+    align-items: center;
     cursor: pointer;
-}
-
-.dark-mode-toggle-container {
-    display: flex;
-    justify-content: end;
-    width: 167px;
+    width: 18px;
+    margin-left: 10px;
 }
 
 .ics-ptfrms {
     display: flex;
 }
 .sect-hist {
+    display: flex;
     margin-left: 10px;
 }
+.dark-mode-toggle-container {
+    margin-right: 10px;
+}
+.history-menu h4{
+    margin-left: 5px;
+  }

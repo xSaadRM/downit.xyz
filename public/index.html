@@ -24,6 +24,10 @@
       <a href="#">Contact</a>
     </nav>
     <div class="tgls">
+      <div class="menu-toggle">
+        <i class="fas fa-clock"></i>
+        <p>History</p>
+      </div>
       <div class="dark-mode-toggle-container">
         <i class="fas fa-moon" id="darkModeToggle"></i>
       </div>
@@ -31,11 +35,17 @@
     <button class="toggle-btn" onclick="toggleNav()">Toggle Navbar</button>
   </header>
   <section class="sect1">
+
     <div class="sect-hist">
-    <div class="menu-toggle">
-      <i class="fas fa-clock"></i>
-      <p>History</p>
-    </div>
+      <div class="history-menu">
+        <h4>Your last 10 downloads</h4>
+        <ul>
+          <li><a href="#"></a></li>
+          <li><a href="#"></a></li>
+          <li><a href="#"></a></li>
+          <!-- Add more menu items as needed -->
+        </ul>
+      </div>
   </div>
   <div class="supported-platforms">
     <h3>Supported Platforms</h3>
@@ -78,14 +88,6 @@
         <div id="tikFormatsBtns" class="tikInfoButtons"></div>
       </div>
       <p id="tikVidAuthor" class="hidden"></p>
-    </div>
-    <div class="history-menu">
-      <ul>
-        <li><a href="#"></a></li>
-        <li><a href="#"></a></li>
-        <li><a href="#"></a></li>
-        <!-- Add more menu items as needed -->
-      </ul>
     </div>
     <div id="loadingIndicator" class="loading"></div>
     <div id="myModal" class="modal">
