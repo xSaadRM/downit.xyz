@@ -18,6 +18,12 @@ header {
   align-items: center;
   margin: 10px 10px;
 }
+.head-container h1 {
+  color: black;
+}
+.dark-mode .head-container h1 {
+  color: white;
+}
 .toggle-btn {
   display: none;
 }
@@ -39,13 +45,6 @@ nav a {
   /* color: #cab1b1; */
   color: blueviolet;
   margin: 0 10px;
-}
-
-.toggle-btn {
-  background-color: #333;
-  color: white;
-  border: none;
-  cursor: pointer;
 }
 
 .tgls {

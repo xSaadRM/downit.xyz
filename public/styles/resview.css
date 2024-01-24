@@ -1,6 +1,15 @@
 /* Media query for mobile devices */
 
 @media only screen and (max-width: 768px) {
+    .toggle-btn {
+        display: flex;
+        color: white;
+        border: none;
+        cursor: pointer;
+    }
+     #navbar {
+        display: none;
+    }
     body, html {
         margin: 0;
         padding: 0;
@@ -13,7 +22,7 @@
         box-sizing: border-box; /* Include padding in the width calculation */
     }
 
-    h1 {
+    h3 {
         margin-bottom: 20px; /* Decreased margin for smaller screens */
     }
 
@@ -59,5 +68,10 @@
     .tikInfoButtons {
         display: flex;
         flex-direction: column;
+    }
+    .history-menu.active {
+        left: 0;
+        overflow-y: auto; /* Enable vertical scrolling */
+        width: 210px;
     }
 }

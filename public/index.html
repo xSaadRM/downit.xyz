@@ -6,9 +6,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta charset="UTF-8" />
   <link rel="stylesheet" href="./styles/homestyle.css" />
-  <link rel="stylesheet" href="./styles/resview.css" />
   <link rel="stylesheet" href="./styles/styles.css" />
   <link rel="stylesheet" href="./styles/header.css" />
+  <link rel="stylesheet" href="./styles/resview.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 
@@ -32,7 +32,9 @@
         <i class="fas fa-moon" id="darkModeToggle"></i>
       </div>
     </div>
-    <button class="toggle-btn" onclick="toggleNav()">Toggle Navbar</button>
+    <div class="toggle-btn">
+      <i class="fa fa-bar"></i>
+    </div>
   </header>
   <section class="sect1">
 
@@ -66,10 +68,10 @@
   </div>
 </section>
   <div class="container">
-    <h1>Simple, Fast and Useful</h1>
+    <h3>Simple, Fast and Useful</h3>
     <form>
       <label for="urlInput">Enter a Video Link</label>
-      <input type="text" id="urlInput" name="ytUrl" />
+      <input type="text" id="urlInput" name="ytUrl" placeholder="Paste a video URL here" />
       <button type="submit" id="downloadBtn">Download</button>
     </form>
     <h2 id="videoTitle"></h2>

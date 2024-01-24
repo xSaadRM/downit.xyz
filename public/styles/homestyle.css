@@ -17,13 +17,11 @@ body {
     border-radius: 8px;
     box-shadow: 0 0 25px rgba(0, 0, 0, 0.301);
 }
-
-h1 {
+h3 {
     text-align: center;
     margin-bottom: 10px; /* Increased margin */
     color: #000000; 
 }
-
 form {
     text-align: center;
     margin-bottom: 20px;
@@ -255,7 +253,7 @@ h2#videoTitle {
     background-color: #333; /* Change to your preferred dark mode background color */
     color: #fff; /* Change text color in dark mode if needed */
 }
-.dark-mode h1 {
+.dark-mode h3 {
     color: #ccc;
 }
 .dark-mode #downloadBtn {
@@ -360,4 +358,5 @@ h2#videoTitle {
 .history-menu.active {
     left: 0;
     overflow-y: auto; /* Enable vertical scrolling */
+    width: 220px;
 }
