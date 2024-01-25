@@ -222,11 +222,12 @@ window.addEventListener("scroll", () => {
             tikVideoInfo.style.display = "block";
       
             formats.forEach((format) => {
-              const { ext, filesize, resolution, url } = format;      
+              const { ext, filesize, resolution, url } = format;
+              const displayResolution = resolution.dimensions || resolution.format_id;
               const formatButton = document.createElement("button");
-              formatButton.innerHTML = `${resolution} - ${ext} <br> <span style="color: black;">${filesize}</span>`;
+              formatButton.innerHTML = `${displayResolution} - ${ext} <br> <span style="color: black;">${filesize}</span>`;
               formatButton.addEventListener("click", () => {
-                window.open(url);
+                window.open(`${url}&dl=1`);
               });
               tikFormatsBtnsElm.appendChild(formatButton);
             });
