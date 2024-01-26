@@ -12,6 +12,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const savedDarkModePreference = localStorage.getItem("darkModePreference");
   if (savedDarkModePreference === "true") {
     body.classList.add("dark-mode");
+    darkModeToggle.checked = true;
   }
 
   darkModeToggle.addEventListener("click", toggleDarkMode);
