@@ -111,7 +111,7 @@
     background-color: #7bb9f5;
     transition: 0.4s;
     border-radius: 20px;
-    box-shadow: 0 0 0.25em rgba(67, 71, 85, 0.27), 0.2px 0.2em 24px 0 rgba(1, 29, 77, 0.15);
+    box-shadow: 2px 7px 0.25em rgba(67, 71, 85, 0.27), 1px 1em 24px 0 rgb(1 29 77 / 62%);
   }
   .switch .slider:before {
     position: absolute;
@@ -128,4 +128,7 @@
   }
   .head-container a{
     text-decoration: none;
+  }
+  .dark-mode .switch .slider{
+    box-shadow: 0 0 0.25em rgb(255 255 255), 0.2px 0.2em 24px 0 rgb(255 255 255);
   }
