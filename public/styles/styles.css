@@ -56,12 +56,11 @@
 }
 
 .menu-toggle {
-    display: inline-flex;
-    flex-direction: row;
+    margin: 10px;
+    display: flex;
+    flex-direction: column;
     align-items: center;
     cursor: pointer;
-    width: 18px;
-    margin-left: 10px;
 }
 
 .ics-ptfrms {
@@ -72,8 +71,7 @@
     margin-left: 10px;
 }
 .dark-mode-toggle-container {
-    margin-right: 20px;
-    margin-top: 10px;
+    margin: 13px;
 }
 .history-menu h4{
     margin-left: 5px;
@@ -127,4 +125,7 @@
     border-radius: 50%;
     text-align: center;
     line-height: 16px;
+  }
+  .head-container a{
+    text-decoration: none;
   }

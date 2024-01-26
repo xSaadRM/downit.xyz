@@ -6,11 +6,12 @@ header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #8a7e78;
+  /* background-color: #8a7e78; */
+  background-color: #69bcff;
   color: white;
 }
 .dark-mode header {
-  background-color: #333;
+  background-color: #373f5f;
 }
 .head-container {
   display: flex;
@@ -19,7 +20,7 @@ header {
   margin: 10px 10px;
 }
 .head-container h1 {
-  color: black;
+  color: white;
 }
 .dark-mode .head-container h1 {
   color: white;
@@ -48,9 +49,7 @@ nav a {
 }
 
 .tgls {
-  display: inline-flex;
-
-}
-.menu-toggle {
-  margin-right: 120px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 }

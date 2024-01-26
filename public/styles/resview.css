@@ -47,13 +47,13 @@
     .infoButtons {
         flex-direction: row; /* Align buttons horizontally on smaller screens */
         justify-content: center; /* Center align buttons on smaller screens */
-        margin-bottom: 20px; /* Adjust margin for smaller screens */
     }
 
     .infoButtons button {
-        margin-left: 10px; 
+        margin-left: 10px;
+        width: 40%;
+        margin-bottom: 10px;
     }
-
     .modal-content {
         width: 90%; /* Adjust modal content width for smaller screens */
     }
