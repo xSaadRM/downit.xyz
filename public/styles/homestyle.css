@@ -6,7 +6,7 @@
 
 body {
     font-family: Arial, sans-serif;
-    background: #00c785;
+    background: #e0d5c6;
 }
 
 .container {
@@ -210,10 +210,6 @@ h2#videoTitle {
     cursor: pointer;
 }
 
-#videoInfo {
-    display: none;
-}
-
 #videoInfo.show {
     animation: fadeIn 1s ease forwards;
 }
@@ -230,7 +226,7 @@ h2#videoTitle {
 }
 
 #videoInfo {
-    display: flex;
+    display: none;
     align-items: center;
 }
 

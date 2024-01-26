@@ -106,7 +106,7 @@ window.addEventListener("scroll", () => {
           videoTitleElem.textContent = title;
           videoThumbnailElem.src = thumbnail;
           videoThumbnailElem.style.display = "block"; // Show video thumbnail
-          videoInfo.style.display = "block";
+          videoInfo.style.display = "flex";
 
           qualities.forEach((format) => {
             const formatButton = document.createElement("button");

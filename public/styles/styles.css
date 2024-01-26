@@ -8,10 +8,10 @@
     display: none;
 }
 .supported-platforms {
+    margin-top: 10px;
     text-align: center;
     display: flex;
     flex-direction: column;
-    flex-wrap: nowrap;
     align-items: center;
 }
 
