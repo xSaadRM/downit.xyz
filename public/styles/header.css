@@ -49,6 +49,8 @@ nav a {
 }
 
 .tgls {
+  gap: 20px;
+  margin: 10px;
   display: flex;
   flex-direction: row;
   align-items: center;
