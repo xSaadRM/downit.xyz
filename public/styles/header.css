@@ -2,7 +2,7 @@ body {
   font-family: Arial, sans-serif;
 }
 
-header {
+.header-container {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -10,19 +10,19 @@ header {
   background-color: #69bcff;
   color: white;
 }
-.dark-mode header {
+.dark-mode .header-container {
   background-color: #373f5f;
 }
-.head-container {
+.logo {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin: 10px 10px;
 }
-.head-container h1 {
+.logo h1 {
   color: white;
 }
-.dark-mode .head-container h1 {
+.dark-mode .logo h1 {
   color: white;
 }
 .toggle-btn {

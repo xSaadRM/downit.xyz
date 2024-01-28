@@ -1,4 +1,10 @@
 document.addEventListener("DOMContentLoaded", () => {
+    //NavBar
+    const mobileNavBar = document.getElementById("mobile-navbar");
+    const bartgl = document.getElementById("barToggle");
+    bartgl.addEventListener("click", () => {
+      mobileNavBar.classList.toggle("active");
+    });
   // Dark Mode
   const darkModeToggle = document.getElementById("darkModeToggle");
   const body = document.body;
@@ -16,11 +22,6 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   darkModeToggle.addEventListener("click", toggleDarkMode);
-  //NAv bar
-  function toggleNav() {
-    var nav = document.getElementById('navbar');
-    nav.classList.toggle('nav-active');
-  }
   //menu toggle
   const menuToggle = document.querySelector(".menu-toggle");
   const leftMenu = document.querySelector(".history-menu");

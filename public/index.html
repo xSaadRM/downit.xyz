@@ -14,32 +14,42 @@
 
 <body>
   <header>
-    <div class="head-container">
-      <a href="/">
-        <h1>Downit.xyz</h1>
-      </a>
+    <div class="header-container">
+      <div class="logo">
+        <a href="/">
+          <h1>Downit.xyz</h1>
+        </a>
+        </div>
+      <nav id="navbar" class="navbar">
+        <a href="#">Home</a>
+        <a href="#">About</a>
+        <a href="#">Services</a>
+        <a href="#">Contact</a>
+      </nav>
+      <div class="tgls">
+        <div class="dark-mode-toggle-container">
+          <label class="switch">
+            <input type="checkbox" id="darkModeToggle">
+            <span class="slider round"></span>
+          </label>
+          <!-- <i class="fas fa-moon" id="darkModeToggle"></i> -->
+        </div>
+        <div class="menu-toggle">
+          <i class="fas fa-clock"></i>
+          <p>History</p>
+        </div>
+        <div class="toggle-btn" id="barToggle">
+          <i class="fa fa-bars"></i>
+        </div>
       </div>
-    <nav id="navbar">
-      <a href="#">Home</a>
-      <a href="#">About</a>
-      <a href="#">Services</a>
-      <a href="#">Contact</a>
-    </nav>
-    <div class="tgls">
-      <div class="dark-mode-toggle-container">
-        <label class="switch">
-          <input type="checkbox" id="darkModeToggle">
-          <span class="slider round"></span>
-        </label>
-        <!-- <i class="fas fa-moon" id="darkModeToggle"></i> -->
-      </div>
-      <div class="menu-toggle">
-        <i class="fas fa-clock"></i>
-        <p>History</p>
-      </div>
-      <div class="toggle-btn">
-        <i class="fa fa-bars"></i>
-      </div>
+    </div>
+    <div id="mobile-navbar" class="navbar mobile-navbar">
+      <nav>
+        <a href="#">Home</a>
+        <a href="#">About</a>
+        <a href="#">Services</a>
+        <a href="#">Contact</a>
+      </nav>
     </div>
   </header>
   <section class="sect1">
@@ -109,12 +119,6 @@
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="./scripts/homescripts.js"></script>
   <script src="./scripts/script.js"></script>
-  <script>
-    function toggleNav() {
-      var nav = document.getElementById('navbar');
-      nav.classList.toggle('nav-active');
-    }
-  </script>
 </body>
 
 </html>

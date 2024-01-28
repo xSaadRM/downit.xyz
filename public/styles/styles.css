@@ -1,12 +1,5 @@
 
-.logo {
-    position: relative; /* or absolute, fixed depending on your layout needs */
-    top: -10px; /* Adjust this value to move the image vertically */
-    left: -60px; /* Adjust this value to move the image horizontally */
-}
-.xsitename {
-    display: none;
-}
+
 .supported-platforms {
     margin-top: 10px;
     text-align: center;
@@ -39,20 +32,6 @@
     height: auto; /* Maintain aspect ratio */
     margin-right: 10px; /* Add spacing between thumbnails and titles */
     padding: 10px;
-}
-
-.dark-mode .header, .dark-mode .header .nav, .dark-mode .header .nav>ul #list .content {
-    background-color: black;
-}
-.dark-mode .header .nav>ul #list>a {
-    color: white;
-}
-.dark-mode .header .nav a {
-    color: red;
-}
-.dark-mode .header .nav>ul #list>a:after{
-    border-right: 1.5px solid #fff7f7;
-    border-top: 1.5px solid #ffffff;
 }
 
 .menu-toggle {
@@ -125,9 +104,17 @@
     text-align: center;
     line-height: 16px;
   }
-  .head-container a{
+  .logo a{
     text-decoration: none;
   }
   .dark-mode .switch .slider{
     box-shadow: 0 0 0.25em rgb(255 255 255), 0.2px 0.2em 24px 0 rgb(255 255 255);
+  }
+  .mobile-navbar.active{
+    display: flex;
+    position: absolute;
+    right: 2rem;
+    top: 60px;
+    width: 300px;
+    background-color: rgba(255, 255, 255, 0.411);
   }
