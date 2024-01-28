@@ -9,6 +9,9 @@ body {
   /* background-color: #8a7e78; */
   background-color: #69bcff;
   color: white;
+  /* border-width: 2px;
+  border-style: none none solid none;
+  border-color: white; */
 }
 .dark-mode .header-container {
   background-color: #373f5f;

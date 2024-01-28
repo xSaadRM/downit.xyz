@@ -1,7 +1,14 @@
 /* Media query for mobile devices */
 @media only screen and (min-width: 768px) {
-    .mobile-navbar {
+    .mobile-navbar,
+    .mobile-navbar.active {
         display: none;
+    }
+}
+@media only screen and (width: 768px) {
+    .mobile-navbar,
+    .mobile-navbar.active {
+        display: flex;
     }
 }
 @media only screen and (max-width: 768px) {

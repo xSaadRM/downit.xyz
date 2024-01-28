@@ -39,6 +39,7 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   menuToggle.addEventListener("click", () => {
+    mobileNavBar.classList.remove("active");
     leftMenu.classList.toggle("active");
     renderVideoHistory();
   });
