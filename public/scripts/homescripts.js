@@ -5,6 +5,40 @@ document.addEventListener("DOMContentLoaded", () => {
     bartgl.addEventListener("click", () => {
       mobileNavBar.classList.toggle("active");
     });
+    // Toast
+    toastTxt1 = document.getElementById('toast-txt1');
+    toastTxt2 = document.getElementById('toast-txt2');
+    toast = document.querySelector(".toast");
+    (closeIcon = document.querySelector(".close")),
+    (progress = document.querySelector(".progress"));
+    overlay = document.querySelector(".overlay");
+let toastTimer1, toastTimer2;
+const openToast = () => {
+  overlay.style.display = "block";
+  toast.classList.add("active");
+  progress.classList.add("active");
+
+  toastTimer1 = setTimeout(() => {
+    toast.classList.remove("active");
+    overlay.style.display = "none";
+  }, 5000); //1s = 1000 milliseconds
+
+  toastTimer2 = setTimeout(() => {
+    progress.classList.remove("active");
+  }, 5300);
+};
+closeIcon.addEventListener("click", () => {
+  toast.classList.remove("active");
+
+  setTimeout(() => {
+    progress.classList.remove("active");
+    overlay.style.display = "none";
+  }, 300);
+
+  clearTimeout(toastTimer1);
+  clearTimeout(toastTimer2);
+});
+
   // Dark Mode
   const darkModeToggle = document.getElementById("darkModeToggle");
   const body = document.body;
@@ -71,8 +105,7 @@ window.addEventListener("scroll", () => {
     event.preventDefault();
     const inputUrl = document.getElementById("urlInput").value;
     // Regular expressions to match YouTube and TikTok URLs
-    const youtubeRegex =
-      /^(https?:\/\/)?(www\.)?(youtube\.com|youtu\.?be)\/.*/i;
+    const youtubeRegex = /^(https?:\/\/)?(www\.)?(youtube\.com|youtu\.?be)\/.*/i;
     const tiktokRegex = /^(https?:\/\/)?(www\.|vm\.)?tiktok\.com\/.*/i;
     const facebookRegex = /^(https?:\/\/)?(m\.)?(www\.)?facebook\.com\/.*/i;
 
@@ -84,7 +117,9 @@ window.addEventListener("scroll", () => {
     } else if (facebookRegex.test(inputUrl)) {
       urlType = "facebook";
     } else {
-      modal.style.display = "block";
+      toastTxt1.innerHTML = "Invalid Link";
+      toastTxt2.innerHTML = "Please enter a supported link.";
+      openToast();
       return;
     }
 
@@ -100,6 +135,15 @@ window.addEventListener("scroll", () => {
 
       if (urlType === "youtube") {
         const response = await fetch(`/ytinfo?ytUrl=${inputUrl}`);
+        if (!response.ok) {
+          const responseData = await response.text();
+      if (responseData.includes("Video unavailable")) {
+        // Handle the case where the video is unavailable
+        console.error("YouTube video is unavailable");
+        throw new Error("YouTube video is unavailable");
+      } else throw new Error(`Failed to fetch YouTube video info. Status: ${response.status}`);
+      }
+      
         const data = await response.json();
 
         if (data.videoDetails) {
@@ -239,12 +283,16 @@ window.addEventListener("scroll", () => {
           }
         } catch (error) {
           console.error('Error during fetch:', error.message);
-          // Handle the error appropriately (e.g., display an error message to the user)
+          // display an error message to the user
+          alert('An error occurred while fetching Facebook video info. Please try again later.');
         }
       }
     } catch (error) {
       console.error("Error:", error);
-      // Handle error display if needed
+      // Display an error message to the user
+      toastTxt1.innerHTML = "ERROR";
+      toastTxt2.innerHTML = `${error}`;
+      openToast();
     } finally {
       loadingIndicator.style.display = "none"; // Hide loading animation
     }

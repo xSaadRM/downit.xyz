@@ -3,16 +3,34 @@ const path = require('path');
 const tiktokDl = require("@sasmeee/tkdl");
 const ytdl = require('ytdl-core');
 const axios = require('axios');
+const winston = require('winston');
 
 const app = express();
 
 app.use(express.static(path.join(__dirname, 'public')));
 
+// Configure the logger
+const logger = winston.createLogger({
+    level: 'info',
+    format: winston.format.simple(),
+    transports: [
+        new winston.transports.Console(),
+        new winston.transports.File({ filename: 'error.log', level: 'error' }),
+    ],
+});
+
+// Centralized error handling middleware
+app.use((err, req, res, next) => {
+    console.error('Unhandled Error:', err);
+    logger.error('Unhandled Error:', err);
+    res.status(500).json({ error: 'Internal Server Error' });
+});
+
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
-app.get('/ytinfo', async (req, res) => {
+app.get('/ytinfo', async (req, res, next) => {
     try {
         const ytUrl = req.query.ytUrl;
         let ytInfo = await ytdl.getInfo(ytUrl);
@@ -106,12 +124,15 @@ for (const format of audioFormats) {
         console.log('Video Info:', videoBasicDetails);
         res.send({ videoDetails: videoBasicDetails });
     } catch (error) {
-        console.error('Error:', error);
-        res.status(500).json({ error: 'Error fetching video info' });
+        console.error('Error fetching YouTube video info:', error);
+        logger.error('Error fetching YouTube video info:', error);
+        res.status(500).json({ error: 'Error fetching YouTube video info' });
+        // You can also pass the error to the next middleware for centralized handling
+        next(error);
     }
 });
 
-app.get('/download-yt', async (req, res) => {
+app.get('/download-yt', async (req, res, next) => {
     try {
         const userItag = req.query.itag;
         const userYtUrl = req.query.ytUrl;
@@ -140,12 +161,15 @@ app.get('/download-yt', async (req, res) => {
 
         ytdl(userYtUrl, userOptions).pipe(res);
     } catch (error) {
-        console.error('Error:', error);
-        res.status(500).send('Internal Server Error');
+        console.error('Error downloading YouTube video:', error);
+        logger.error('Error downloading YouTube video:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+        // You can also pass the error to the next middleware for centralized handling
+        next(error);
     }
 });
 
-app.get('/tikinfo', async (req, res) => {
+app.get('/tikinfo', async (req, res, next) => {
     try {
       const tikUrl = req.query.tikUrl;
   
@@ -174,9 +198,11 @@ app.get('/tikinfo', async (req, res) => {
       }
       
     } catch (error) {
-      console.error("Error occurred:", error);
-      res.status(500).json({ error: 'An error occurred while fetching TikTok data.' });
-      // Handle errors here
+        console.error('Error fetching TikTok data:', error);
+        logger.error('Error fetching TikTok data:', error);
+        res.status(500).json({ error: 'An error occurred while fetching TikTok data.' });
+        // You can also pass the error to the next middleware for centralized handling
+        next(error);
     }
   });
 
