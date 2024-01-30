@@ -140,7 +140,6 @@ window.addEventListener("scroll", () => {
           const responseData = await response.text();
       if (responseData.includes("Video unavailable")) {
         // Handle the case where the video is unavailable
-        console.error("YouTube video is unavailable");
         throw new Error("YouTube video is unavailable");
       } else throw new Error(`Failed to fetch YouTube video info. Status: ${response.status}`);
       }
