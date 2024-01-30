@@ -296,7 +296,9 @@ window.addEventListener("scroll", () => {
       openToast();
     } finally {
       loadingIndicator.style.display = "none"; // Hide loading animation
-      overlay.style.display = "none";
+      if (toast.classList.contains("active")) {
+        overlay.style.display = "block";
+      } else overlay.style.display = "none";
     }
   });
 
