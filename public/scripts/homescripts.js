@@ -124,6 +124,7 @@ window.addEventListener("scroll", () => {
     }
 
     try {
+      overlay.style.display = "block";
       loadingIndicator.style.display = "block"; // Show loading animation
       videoInfo.style.display = "none"; // Hide video info while loading
       videoTitleElem.innerHTML = "";
@@ -295,6 +296,7 @@ window.addEventListener("scroll", () => {
       openToast();
     } finally {
       loadingIndicator.style.display = "none"; // Hide loading animation
+      overlay.style.display = "none";
     }
   });
 
