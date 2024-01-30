@@ -200,7 +200,7 @@ app.get('/tikinfo', async (req, res, next) => {
     } catch (error) {
         console.error('Error fetching TikTok data:', error);
         logger.error('Error fetching TikTok data:', error);
-        res.status(500).json({ error: 'An error occurred while fetching TikTok data.' });
+        res.status(500).json({ error: 'Video unavailable' });
         // You can also pass the error to the next middleware for centralized handling
         next(error);
     }

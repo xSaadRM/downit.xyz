@@ -197,6 +197,13 @@ window.addEventListener("scroll", () => {
         }
       } else if (urlType === "tiktok") {
         const response = await fetch(`/tikinfo?tikUrl=${inputUrl}`);
+        if (!response.ok) {
+          const responseData = await response.text();
+          if (responseData.includes("Video unavailable")) {
+        // Handle the case where the video is unavailable
+        throw new Error(`TikTok video is unavailable`);
+      } else throw new Error(`Failed to fetch ${urlType} video info. Status: ${response.status}`);
+      }
         const data = await response.json();
 
         if (data.title) {
@@ -284,7 +291,7 @@ window.addEventListener("scroll", () => {
         } catch (error) {
           console.error('Error during fetch:', error.message);
           // display an error message to the user
-          alert('An error occurred while fetching Facebook video info. Please try again later.');
+          throw new Error("Can't connect to Facebook server. Please try again later.");
         }
       }
     } catch (error) {
