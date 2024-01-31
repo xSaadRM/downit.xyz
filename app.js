@@ -2,8 +2,10 @@ const express = require('express');
 const path = require('path');
 const tiktokDl = require("@sasmeee/tkdl");
 const ytdl = require('ytdl-core');
+const getFBInfo = require("@xaviabot/fb-downloader");
 const axios = require('axios');
 const winston = require('winston');
+const { error } = require('console');
 
 const app = express();
 
@@ -205,6 +207,17 @@ app.get('/tikinfo', async (req, res, next) => {
         next(error);
     }
   });
+
+app.get('/fb', async (req, res, next) => {
+    try {
+        const userFBUrl = req.query.Url;
+        const result = await getFBInfo(userFBUrl);
+        console.log("Result:", result);
+        res.json(result);
+    } catch (error) {
+
+    }
+})
 
 const PORT = process.env.PORT || 80; 
 app.listen(PORT, () => {
