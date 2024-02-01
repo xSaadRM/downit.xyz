@@ -1,3 +1,7 @@
+User-agent: Googlebot
+Disallow: /nogooglebot/
+
 User-agent: *
-Disallow:
-Sitemap: https://dl.rmaida.cf/sitemap.xml
+Allow: /
+
+Sitemap: https://www.example.com/sitemap.xml
