@@ -134,7 +134,7 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     } catch (error) {
       console.error("Error:", error);
-      toastTxt1.innerHTML = "ERROR";
+      toastTxt1.innerHTML = urlType;
       toastTxt2.innerHTML = `${error.message || error}`;
       openToast();
     } finally {
