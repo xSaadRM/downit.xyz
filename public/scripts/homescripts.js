@@ -244,11 +244,11 @@ document.addEventListener("DOMContentLoaded", () => {
         handleThumbnailAspectRatio(data.thumbnail);
 
         if (sd) {
-          createDownloadButton("Download SD", sd);
+          createDownloadButton("Download SD", `${sd}&dl=1`);
         }
 
         if (hd) {
-          createDownloadButton("Download HD", hd);
+          createDownloadButton("Download HD", `${hd}&dl=1`);
         }
 
         if (audio) {
