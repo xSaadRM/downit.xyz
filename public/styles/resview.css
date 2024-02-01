@@ -51,9 +51,7 @@
         text-overflow: ellipsis; /* Show an ellipsis (...) for overflow */
     }
     #videoThumbnail {
-        max-width: 100%; /* Make the thumbnail responsive to the container */
-        margin-right: 0; /* Remove right margin on smaller screens */
-        margin-bottom: 15px; /* Adjust margin for smaller screens */
+        margin-bottom: 15px;
     }
 
     .infoButtons {
@@ -69,17 +67,12 @@
     .modal-content {
         width: 90%; /* Adjust modal content width for smaller screens */
     }
-    #tikVideoThumbnail {
-        max-width: 100px;
-    }
+
     .thumbnail-container {
         flex-wrap: wrap;
         justify-content: center;
     }
-    .tikInfoButtons {
-        display: flex;
-        flex-direction: column;
-    }
+
     .history-menu.active {
         left: 0;
         overflow-y: auto; /* Enable vertical scrolling */

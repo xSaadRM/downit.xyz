@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <title>Online Video Downloader</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -13,7 +12,6 @@
   <link rel="stylesheet" href=" https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&amp;display=swap">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
-
 <body>
   <header>
     <div class="header-container">
@@ -34,7 +32,6 @@
             <input type="checkbox" id="darkModeToggle">
             <span class="slider round"></span>
           </label>
-          <!-- <i class="fas fa-moon" id="darkModeToggle"></i> -->
         </div>
         <div class="menu-toggle">
           <i class="fas fa-clock"></i>
@@ -75,10 +72,6 @@
       <div class="history-menu">
         <h4>Your last 10 downloads</h4>
         <ul>
-          <li><a href="#"></a></li>
-          <li><a href="#"></a></li>
-          <li><a href="#"></a></li>
-          <!-- Add more menu items as needed -->
         </ul>
       </div>
   </div>
@@ -117,25 +110,9 @@
         <p id="vidAuthor" class="hidden"></p>
       </div>
     </div>
-    <div id="tikInfo" class="hidden">
-      <div class="thumbnail-container">
-        <img src="" id="tikVideoThumbnail" alt="Video Thumbnail" />
-        <div id="tikFormatsBtns" class="tikInfoButtons"></div>
-      </div>
-      <p id="tikVidAuthor" class="hidden"></p>
-    </div>
     <div id="loadingIndicator" class="loading"></div>
-    <div id="myModal" class="modal">
-      <div class="modal-content">
-        <span class="close">&times;</span>
-        <p><strong>Invalid URL!</strong></p>
-        <p>Provide a YouTube or TikTok URL.</p>
-      </div>
-    </div>
   </div>
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="./scripts/homescripts.js"></script>
   <script src="./scripts/script.js"></script>
 </body>
-
 </html>
