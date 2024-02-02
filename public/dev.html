@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="title" content="Rmaida Downloader">
+<meta name="description" content="Download YouTube, Instagram, Facebook, TikTok Videos free without watermark.Online Video downloader 1080p, 720p, 480p.">
+<meta name="keywords" content="youtube video downloaer, ytmp4, yt2mp4, facebook video downloader,fbmp4,instagram video downloader,insta,tiktok video downloaer,download,video downloader,free">
+<meta name="robots" content="index, follow">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="language" content="English">
+<meta name="author" content="xSaadRM">
+
+  <title>Online Video Downloader</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8" />
+  <link rel="stylesheet" href="./styles/dev.css" />
+  <link rel="stylesheet" href="./styles/styles.css" />
+  <link rel="stylesheet" href="./styles/header.css" />
+  <link rel="stylesheet" href="./styles/resview.css" />
+  <link rel="stylesheet" href="./styles/miscs.css" />
+  <link rel="stylesheet" href=" https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&amp;display=swap">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+  <header>
+    <div class="header-container">
+      <div class="logo">
+        <a href="/">
+          <h1>Downit.xyz</h1>
+        </a>
+        </div>
+      <nav id="navbar" class="navbar">
+        <a href="#">Home</a>
+        <a href="#">About</a>
+        <a href="#">Services</a>
+        <a href="#">Contact</a>
+      </nav>
+      <div class="tgls">
+        <div class="dark-mode-toggle-container">
+          <label class="switch">
+            <input type="checkbox" id="darkModeToggle">
+            <span class="slider round"></span>
+          </label>
+        </div>
+        <div class="menu-toggle">
+          <i class="fas fa-clock"></i>
+          <p>History</p>
+        </div>
+        <div class="toggle-btn" id="barToggle">
+          <i class="fa fa-bars"></i>
+        </div>
+      </div>
+    </div>
+    <div class="mobile-navbar-container">
+      <nav id="mobile-navbar" class="navbar mobile-navbar">
+        <a href="#">Home</a>
+        <a href="#">About</a>
+        <a href="#">Services</a>
+        <a href="#">Contact</a>
+      </nav>
+    </div>
+  </header>
+  <div class="overlay" style="display: none;"></div>
+  <div class="toast">
+  
+    <div class="toast-content">
+      <i class="fas fa-regular fa-xmark xmark"></i>
+      <div class="message">
+        <span id="toast-txt1" class="text text-1">Invalid Link</span>
+        <span id="toast-txt2" class="text text-2">Please enter a supported link.</span>
+      </div>
+    </div>
+    <i class="fa-solid fa-xmark close"></i>
+  
+   
+    <div class="progress"></div>
+  </div>  
+  <section class="sect1">
+
+    <div class="sect-hist">
+      <div class="history-menu">
+        <h4>Your last 10 downloads</h4>
+        <ul>
+        </ul>
+      </div>
+  </div>
+  <div class="supported-platforms">
+    <h3>Supported Platforms</h3>
+    <div class="ics-ptfrms">
+    <div class="platform">
+      <img src="./imgs/tiktok.png" alt="TikTok" class="tiktok-logo">
+      <h6 class="tiktok-logo-text">TikTok</h6>
+    </div>
+    <div class="platform">
+      <img src="./imgs/youtube.png" alt="YouTube" class="youtube-logo">
+      <h6 class="youtube-logo-text">YouTube</h6>
+    </div>
+    <div class="platform">
+      <img src="./imgs/facebook.png" alt="Facebook" class="facebook-logo">
+      <h6 class="facebook-logo-text">Facebook</h6>
+    </div>
+  </div>
+  </div>
+</section>
+  <div class="container">
+    <h3>Simple, Fast and Useful</h3>
+    <form>
+      <label for="urlInput">Enter a Video Link</label>
+      <input type="text" id="urlInput" name="ytUrl" placeholder="Paste a video URL here">
+      <button type="submit" id="downloadBtn">Download</button>
+    </form>
+    <h2 id="videoTitle">علاش ختاريت نقرى فشينوا🇨🇳📚؟</h2>
+    <div id="videoInfo" class="hidden" style="display: flex;">
+      <div class="thumbnail-container isVideo">
+        <img src="https://i.ytimg.com/vi/gKnwQDeT59A/hqdefault.jpg?sqp=-oaymwEcCPYBEIoBSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&amp;rs=AOn4CLDSmvIgxHt02Qcpgf4g6Tei7dLbGQ" id="videoThumbnail" alt="Video Thumbnail" style="display: flex;">
+        <div class="infoButtonsContainer">
+          <div id="formatsBtns" class="infoButtons"><button>360p - video/mp4 <br> <span style="color: black;">35.99 MB</span></button><button>720p - video/mp4 <br> <span style="color: black;">58.85 MB</span></button><button>160 - audio <br> <span style="color: black;">6.91 MB</span></button><button>128 - audio <br> <span style="color: black;">6.9 MB</span></button><button>64 - audio <br> <span style="color: black;">3.45 MB</span></button><button>48 - audio <br> <span style="color: black;">2.61 MB</span></button></div>
+        </div>
+        
+      </div>
+    <p id="vidAuthor" class="hidden">Author: @bilalsaidi61</p></div>
+    <div id="loadingIndicator" class="loading" style="display: none;"></div>
+  </div>
+  <script src="./scripts/homescripts.js"></script>
+  <script src="./scripts/script.js"></script>
+<script>(function(){var js = "window['__CF$cv$params']={r:'84f2e88abe7c998d',t:'MTcwNjg4MTg4MC45ODQwMDA='};_cpo=document.createElement('script');_cpo.nonce='',_cpo.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js',document.getElementsByTagName('head')[0].appendChild(_cpo);";var _0xh = document.createElement('iframe');_0xh.height = 1;_0xh.width = 1;_0xh.style.position = 'absolute';_0xh.style.top = 0;_0xh.style.left = 0;_0xh.style.border = 'none';_0xh.style.visibility = 'hidden';document.body.appendChild(_0xh);function handler() {var _0xi = _0xh.contentDocument || _0xh.contentWindow.document;if (_0xi) {var _0xj = _0xi.createElement('script');_0xj.innerHTML = js;_0xi.getElementsByTagName('head')[0].appendChild(_0xj);}}if (document.readyState !== 'loading') {handler();} else if (window.addEventListener) {document.addEventListener('DOMContentLoaded', handler);} else {var prev = document.onreadystatechange || function () {};document.onreadystatechange = function (e) {prev(e);if (document.readyState !== 'loading') {document.onreadystatechange = prev;handler();}};}})();</script><iframe height="1" width="1" style="position: absolute; top: 0px; left: 0px; border: none; visibility: hidden;"></iframe>
+</body>
+</html>
