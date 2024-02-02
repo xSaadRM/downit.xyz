@@ -224,7 +224,6 @@ h2#videoTitle {
 .dark-mode .infoButtons button {
     padding: 10px 15px;
     margin-right: 10px; /* Add margin between buttons */
-    font-size: 14px;
     border: 1px solid #3498db;
     border-radius: 5px;
     background-color: #3498db;

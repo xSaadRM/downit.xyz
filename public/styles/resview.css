@@ -8,11 +8,21 @@
 @media only screen and (max-width: 530px) {
     .infoButtons button {
         width: 40%;
+        font-size: small;
+    }
+}
+@media only screen and (max-width: 645px) {
+    .thumbnail-container.isTikTokOrReelOrShort #videoThumbnail {
+        width: 150px;
+    }
+    .thumbnail-container.isTikTokOrReelOrShort .infoButtons {
+        margin-left: 0px;
+        width: 200px;
     }
 }
 @media only screen and (max-width: 380px) {
-    .infoButtons button {
-        width: 60%;
+    .thumbnail-container.isTikTokOrReelOrShort #videoThumbnail {
+        width: 100px;
     }
 }
 @media only screen and (width: 768px) {
