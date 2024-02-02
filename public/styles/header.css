@@ -6,15 +6,12 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  /* background-color: #8a7e78; */
   background-color: #69bcff;
   color: white;
-  /* border-width: 2px;
-  border-style: none none solid none;
-  border-color: white; */
+
 }
 .dark-mode .header-container {
-  background: linear-gradient(to right, #1f234e, #4d1b7b);
+  background: linear-gradient(to right, #363b74, #4d1b7b);
 }
 .logo {
   display: flex;
