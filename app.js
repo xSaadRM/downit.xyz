@@ -32,9 +32,13 @@ app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
+const pathToSitemap = path.join(__dirname, 'sitemap.xml');
+
 app.get('/sitemap.xml', (req, res) => {
   res.header('Content-Type', 'application/xml');
+  res.sendFile(pathToSitemap);
 });
+
 app.get('/ytinfo', async (req, res, next) => {
     try {
         const ytUrl = req.query.ytUrl;
