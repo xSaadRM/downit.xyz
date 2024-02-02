@@ -9,6 +9,10 @@ document.addEventListener("DOMContentLoaded", () => {
   const progress = document.querySelector(".progress");
   const overlay = document.querySelector(".overlay");
   let toastTimer1, toastTimer2;
+  //NavBar
+  bartgl.addEventListener("click", () => {
+    mobileNavBar.classList.toggle("active");
+      });
 
   const openToast = () => {
     overlay.style.display = "block";
