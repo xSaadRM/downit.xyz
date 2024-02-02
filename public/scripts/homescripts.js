@@ -1,5 +1,4 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const container = document.querySelector(".container");
   const mobileNavBar = document.getElementById("mobile-navbar");
   const bartgl = document.getElementById("barToggle");
   const toastTxt1 = document.getElementById('toast-txt1');
@@ -88,7 +87,7 @@ document.addEventListener("DOMContentLoaded", () => {
       closeMenu();
     }
   });
-
+  const thumbnailContainer = document.querySelector(".thumbnail-container")
   const videoThumbnailElem = document.getElementById("videoThumbnail");
   const form = document.querySelector("form");
   const videoInfo = document.getElementById("videoInfo");
@@ -168,8 +167,9 @@ document.addEventListener("DOMContentLoaded", () => {
       const { title, thumbnail, qualities, audio, author } = data.videoDetails;
       videoTitleElem.textContent = title;
       videoThumbnailElem.src = thumbnail;
-      videoThumbnailElem.style.display = "block";
+      videoThumbnailElem.style.display = "flex";
       videoInfo.style.display = "flex";
+      handleThumbnailAspectRatio(data.videoDetails.thumbnail);
 
       createFormatButtons(qualities, "video/mp4");
       createFormatButtons(audio, "audio");
@@ -200,13 +200,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const data = await response.json();
 
-    if (data.title) {
+    if (data) {
       const { title, thumbnail, sd, hd, audio, author } = data;
-
       videoTitleElem.textContent = title;
       videoThumbnailElem.src = thumbnail;
-      videoThumbnailElem.style.display = "block";
-      videoInfo.style.display = "block";
+      videoThumbnailElem.style.display = "flex";
+      videoInfo.style.display = "flex";
+      handleThumbnailAspectRatio(data.thumbnail);
 
       if (sd) {
         createDownloadButton("Download SD", sd);
@@ -236,11 +236,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
       const data = await response.json();
       if (data) {
-        const { title, thumbnail, formats, sd, hd, audio, author } = data;
+        const { title, thumbnail, sd, hd, audio, author } = data;
         videoTitleElem.textContent = title;
         videoThumbnailElem.src = thumbnail;
-        videoThumbnailElem.style.display = "block";
-        videoInfo.style.display = "block";
+        videoThumbnailElem.style.display = "flex";
+        videoInfo.style.display = "flex";
+        handleThumbnailAspectRatio(data.thumbnail);
 
         if (sd) {
           createDownloadButton("Download SD", sd);
@@ -301,5 +302,11 @@ document.addEventListener("DOMContentLoaded", () => {
     const maxHistoryItems = 10;
     videoHistory = videoHistory.slice(0, maxHistoryItems);
     localStorage.setItem("videoHistory", JSON.stringify(videoHistory));
+  }
+  function handleThumbnailAspectRatio(thumbnail) {
+    const aspectRatio = thumbnail.height / thumbnail.width;
+    if (aspectRatio === 16 / 9) {
+      thumbnailContainer.classList.add("is9:16");
+    } else thumbnailContainer.classList.add("isNot9:16");
   }
 });
