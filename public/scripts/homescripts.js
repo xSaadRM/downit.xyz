@@ -279,7 +279,7 @@ document.addEventListener("DOMContentLoaded", () => {
   function createFormatButtons(formats, type) {
     formats.forEach((format) => {
       const formatButton = document.createElement("button");
-      formatButton.innerHTML = `${format.quality || format.bitrate} - ${type} <br> <span style="color: black;">${format.fileSize}</span>`;
+      formatButton.innerHTML = `${format.quality || format.bitrate} - ${type} <br> <span>${format.fileSize}</span>`;
       formatButton.addEventListener("click", () => {
         window.open(`/download?itag=${format.itag || format.id}&url=${inputUrl}`);
       });
