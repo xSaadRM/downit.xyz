@@ -14,7 +14,7 @@ body {
   border-color: white; */
 }
 .dark-mode .header-container {
-  background-color: #373f5f;
+  background: linear-gradient(to right, #1f234e, #4d1b7b);
 }
 .logo {
   display: flex;
