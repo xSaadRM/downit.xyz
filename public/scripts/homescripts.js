@@ -303,10 +303,27 @@ document.addEventListener("DOMContentLoaded", () => {
     videoHistory = videoHistory.slice(0, maxHistoryItems);
     localStorage.setItem("videoHistory", JSON.stringify(videoHistory));
   }
-  function handleThumbnailAspectRatio(thumbnail) {
-    const aspectRatio = thumbnail.height / thumbnail.width;
-    if (aspectRatio === 16 / 9) {
-      thumbnailContainer.classList.add("is9:16");
-    } else thumbnailContainer.classList.add("isNot9:16");
-  }
+  async function handleThumbnailAspectRatio(thumbnailUrl) {
+    // Create a new Image element
+    const thumbnailImage = new Image();
+  
+    // Set the source URL of the image
+    thumbnailImage.src = thumbnailUrl;
+  
+    // Wait for the image to load
+    await new Promise((resolve) => {
+      thumbnailImage.onload = resolve;
+    });
+  
+    // Check the aspect ratio after the image has loaded
+    const aspectRatio = thumbnailImage.width / thumbnailImage.height;
+  
+    console.log("Aspect Ratio:", aspectRatio);
+  
+    if (aspectRatio > 1.5) {
+      thumbnailContainer.classList.add("isVideo");
+    } else {
+      thumbnailContainer.classList.add("isTikTokOrReelOrShort");
+    }
+  }  
 });
