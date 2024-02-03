@@ -51,10 +51,7 @@ nav {
 }
 
 nav a {
-  border: 1px solid white;
-  border-radius: 8px;
-  background-color: #eb1818fd;
-  box-shadow: 3px 7px 1em 1px rgb(0 0 0);
+  border-bottom: 1px solid white;
   text-decoration: none;
   color: rgb(255, 255, 255);
   margin: 0 10px;
@@ -67,9 +64,8 @@ nav a {
   font-family: 'Black Ops One', system-ui;
 }
 .dark-mode nav a{
-  background-color: #86a2c7b2;
-  color: #000000;
-  box-shadow: 3px 3px 1rem 0px rgb(255 255 255);
+  background-color: rgba(0, 0, 0, 0);
+  color: #187fd3;
 }
 .mobile-navbar.active {
   display: flex;
