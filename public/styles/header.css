@@ -11,7 +11,7 @@ body {
 
 }
 .dark-mode .header-container {
-  background: linear-gradient(to top, #363b74, #311050);
+  background: #363b74;
 }
 .logo {
   display: flex;
@@ -63,10 +63,7 @@ nav a {
   justify-content: end;
   font-family: 'Black Ops One', system-ui;
 }
-.dark-mode nav a{
-  background-color: rgba(0, 0, 0, 0);
-  color: #187fd3;
-}
+
 .mobile-navbar.active {
   display: flex;
   flex-direction: column;
