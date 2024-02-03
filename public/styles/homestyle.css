@@ -213,7 +213,7 @@ h2#videoTitle {
 }
 /* Dark mode styles */
 .dark-mode {
-    background: linear-gradient(to top, #333, #093637);
+    background-color: #353741;
     color: #fff; /* Change text color in dark mode if needed */
 }
 .dark-mode h3 {
