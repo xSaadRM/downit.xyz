@@ -61,8 +61,10 @@ button {
     box-shadow: 0 5px 15px 5px rgba(34, 125, 199, 0.548);
     border-radius: 12px;
     font-weight: 600;
-} 
-
+}
+.fa-cloud-arrow-down {
+    margin-right: 5px;
+}
 #urlInput:focus,
 button:hover {
     transform: scale(1.05);
