@@ -1,6 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
   const mobileNavBar = document.getElementById("mobile-navbar");
   const bartgl = document.getElementById("barToggle");
+  const navBarCloser = document.getElementById("navBarCloser");
   const toastTxt1 = document.getElementById('toast-txt1');
   const toastTxt2 = document.getElementById('toast-txt2');
   const toast = document.querySelector(".toast");
@@ -11,7 +12,12 @@ document.addEventListener("DOMContentLoaded", () => {
   //NavBar
   bartgl.addEventListener("click", () => {
     mobileNavBar.classList.toggle("active");
+    navBarCloser.classList.remove("hide");
       });
+  navBarCloser.addEventListener("click", () => {
+  mobileNavBar.classList.remove("active");
+  navBarCloser.classList.add("hide");
+  });
 
   const openToast = () => {
     overlay.style.display = "block";
