@@ -239,11 +239,11 @@ document.addEventListener("DOMContentLoaded", () => {
       if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
-
+encodeURIComponent
       const data = await response.json();
       if (data) {
         const { title, thumbnail, sd, hd, audio, author } = data;
-        videoTitleElem.textContent = encodeURIComponent(title);
+        videoTitleElem.textContent = title;
         videoThumbnailElem.src = thumbnail;
         videoThumbnailElem.style.display = "flex";
         videoInfo.style.display = "flex";
