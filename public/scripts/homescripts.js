@@ -239,7 +239,7 @@ document.addEventListener("DOMContentLoaded", () => {
       if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
-encodeURIComponent
+
       const data = await response.json();
       if (data) {
         const { title, thumbnail, sd, hd, audio, author } = data;
