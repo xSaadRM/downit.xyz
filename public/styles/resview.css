@@ -21,6 +21,30 @@
     }
 }
 @media only screen and (max-width: 380px) {
+    .tgls {
+        gap: 10px;
+        margin: 5px;
+    }
+    .toggle-btn i {
+        font-size: 25px;
+    }
+    .menu-toggle i {
+        font-size: 20px;
+    }
+    .menu-toggle p {
+        font-size: 11px;
+    }
+    .switch {
+        width: 2.5rem;
+        height: 1.2rem;
+    }
+    .switch .slider:before {
+        height: 12px;
+        width: 12px;    
+    }
+    .dark-mode-toggle-container label {
+        margin-bottom: 0;
+    }
     .thumbnail-container.isTikTokOrReelOrShort #videoThumbnail {
         width: 100px;
     }
