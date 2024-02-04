@@ -24,6 +24,15 @@
     .thumbnail-container.isTikTokOrReelOrShort #videoThumbnail {
         width: 100px;
     }
+    .thumbnail-container.isTikTokOrReelOrShort .infoButtons button {
+        margin-left: 0;
+    }
+    .thumbnail-container.isTikTokOrReelOrShort .infoButtonsContainer {
+        margin-left: 0;
+    }
+    .thumbnail-container.isVideo .infoButtons button {
+        width: 100%;
+    }
 }
 @media only screen and (width: 768px) {
     .mobile-navbar,

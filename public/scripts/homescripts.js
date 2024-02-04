@@ -327,8 +327,10 @@ document.addEventListener("DOMContentLoaded", () => {
     console.log("Aspect Ratio:", aspectRatio);
   
     if (aspectRatio > 1.5) {
+      thumbnailContainer.classList.remove("isTikTokOrReelOrShort");
       thumbnailContainer.classList.add("isVideo");
     } else {
+      thumbnailContainer.classList.remove("isVideo");
       thumbnailContainer.classList.add("isTikTokOrReelOrShort");
     }
   }  

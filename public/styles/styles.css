@@ -111,6 +111,9 @@
     width: 100%;
     margin-left: 30%;
   }
+  .thumbnail-container.isTikTokOrReelOrShort {
+    align-items: flex-start;
+  }
   .dark-mode .infoButtons button span {
     color: #c79dd7;
   }

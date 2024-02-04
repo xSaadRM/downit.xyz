@@ -115,7 +115,7 @@ for (const format of audioFormats) {
 
         const availableAudioFormats = audioFormatsWithSizes.map(format => ({
             itag: format.itag,
-            bitrate: format.audioBitrate,
+            bitrate: `${format.audioBitrate} kbps`,
             mimeType: format.mimeType,
             url: format.url,
             codecs: format.codecs,
