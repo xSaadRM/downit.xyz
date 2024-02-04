@@ -1,0 +1,94 @@
+body {
+  font-family: Arial, sans-serif;
+}
+
+.header-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: linear-gradient(to top, #69bcff, #0086ad);
+  color: white;
+
+}
+.dark-mode .header-container {
+  background: #363b74;
+}
+.logo {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 10px 10px;
+}
+.logo h1 {
+  color: white;
+}
+.dark-mode .logo h1 {
+  color: white;
+}
+.toggle-btn {
+  display: none;
+}
+
+.menu-toggle p {
+  color: black;
+}
+
+.dark-mode .menu-toggle p {
+  color: white;
+}
+
+.tgls {
+  gap: 20px;
+  margin: 10px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+nav {
+  text-align: center;
+  font-family: 'Black Ops One', system-ui;
+}
+
+nav a {
+  border-bottom: 1px solid white;
+  text-decoration: none;
+  color: rgb(255, 255, 255);
+  margin: 0 10px;
+  padding: 5px 10px;
+  width: 60%;
+}
+.mobile-navbar-container {
+  display: flex;
+  justify-content: end;
+  font-family: 'Black Ops One', system-ui;
+}
+
+.mobile-navbar.active {
+  top: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: fixed;
+  background: rgba(6, 0, 19, 0.363);
+  padding: 10px;
+  height: 100%;
+  z-index: 0;
+  width: 30%;
+  gap: 15px;
+  backdrop-filter: blur(1.5px);
+}
+.mobile-navbar.active a:first-child {
+  margin-top: 20%;
+}
+.closeNav {
+  font-size: 1.3rem;
+  position: fixed;
+  top: 10px;
+  right: 28%;
+  z-index: 1;
+  color: red;
+}
+.closeNav.hide {
+  display: none;
+}

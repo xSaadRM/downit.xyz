@@ -1,96 +1,233 @@
 const express = require('express');
-const ytdl = require('ytdl-core');
-const app = express();
 const path = require('path');
+const tiktokDl = require("@sasmeee/tkdl");
+const ytdl = require('ytdl-core');
+const getFBInfo = require("@xaviabot/fb-downloader");
+const axios = require('axios');
+const winston = require('winston');
+const { error } = require('console');
 
-// Serve static files
-app.use('/styles', express.static(path.join(__dirname, 'public/styles'), {
-  setHeaders: (res, filePath) => {
-    if (path.extname(filePath) === '.css') {
-      res.setHeader('Content-Type', 'text/css');
-    }
-  }
-}));
+const app = express();
 
-app.use('/scripts', express.static(path.join(__dirname, 'public/scripts'), {
-  setHeaders: (res, filePath) => {
-    if (path.extname(filePath) === '.js') {
-      res.setHeader('Content-Type', 'text/javascript');
-    }
-  }
-}));
+app.use(express.static(path.join(__dirname, 'public')));
 
-// Middleware to parse JSON data
-app.use(express.json());
-
-// Serve index.html on the root URL
-app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, '/public/index.html'));
+// Configure the logger
+const logger = winston.createLogger({
+    level: 'info',
+    format: winston.format.simple(),
+    transports: [
+        new winston.transports.Console(),
+        new winston.transports.File({ filename: 'error.log', level: 'error' }),
+    ],
 });
 
-// Endpoint to get video information including available formats
-app.post('/getVideoInfo', async (req, res) => {
-    const { videoUrl } = req.body;
-  
+// Centralized error handling middleware
+app.use((err, req, res, next) => {
+    console.error('Unhandled Error:', err);
+    logger.error('Unhandled Error:', err);
+    res.status(500).json({ error: 'Internal Server Error' });
+});
+
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
+
+const pathToSitemap = path.join(__dirname, 'sitemap.xml');
+
+app.get('/sitemap.xml', (req, res) => {
+  res.header('Content-Type', 'application/xml');
+  res.sendFile(pathToSitemap);
+});
+
+app.get('/ytinfo', async (req, res, next) => {
     try {
-      const info = await ytdl.getInfo(videoUrl);
-      const videoId = ytdl.getURLVideoID(videoUrl);
-      console.log("THE VID ID: ", videoId)
-      // Extract video details
-      const title = info.videoDetails.title;
-      const author = info.videoDetails.author.name;
-      const description = info.videoDetails.description;
-      const thumbnailURL = info.videoDetails.thumbnails[0].url;
+        const ytUrl = req.query.ytUrl;
+        let ytInfo = await ytdl.getInfo(ytUrl);
+        const videoThumbnail = ytInfo.videoDetails.thumbnails[2].url;
+        const videoTitle = ytInfo.videoDetails.title;
+        const videoAuthor = ytInfo.videoDetails.author;
+
+        const videoFormats = ytInfo.formats.filter(format => {
+            return (
+                format.hasVideo &&
+                format.hasAudio &&
+                format.container === 'mp4'
+            );
+        });
+
+        const audioFormats = ytInfo.formats.filter(format => {
+            return (
+                !format.hasVideo &&
+                format.hasAudio
+            );
+        });
+        
+        // Function to fetch content length of a URL
+        const getContentLength = async (url) => {
+            try {
+                const response = await axios.head(url); // Send a HEAD request to get headers
+                return response.headers['content-length']; // Extract content length
+            } catch (error) {
+                console.error('Error fetching content length:', error);
+                return null;
+            }
+        };
+
+        // Function to convert bytes to human-readable format
+const formatBytes = (bytes) => {
+    if (bytes === 0) {
+        return '0 Bytes';
+    }
+    const k = 1024;
+    const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
+    const i = Math.floor(Math.log(bytes) / Math.log(k));
+    return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+};
+
+// Modify the code snippet within the existing logic to use the formatBytes function
+const videoFormatsWithSizes = [];
+for (const format of videoFormats) {
+    const contentLength = await getContentLength(format.url);
+    videoFormatsWithSizes.push({
+        ...format,
+        fileSize: contentLength ? formatBytes(parseInt(contentLength)) : null // Convert bytes to human-readable format
+    });
+}
+
+const audioFormatsWithSizes = [];
+for (const format of audioFormats) {
+    const contentLength = await getContentLength(format.url);
+    audioFormatsWithSizes.push({
+        ...format,
+        fileSize: contentLength ? formatBytes(parseInt(contentLength)) : null // Convert bytes to human-readable format
+    });
+}
+
+
+        const availableQualities = videoFormatsWithSizes.map(format => ({
+            itag: format.itag,
+            quality: format.qualityLabel || format.quality,
+            mimeType: format.mimeType,
+            url: format.url,
+            codecs: format.codecs,
+            fileSize: format.fileSize // Include file size in the response
+        }));
+
+        const availableAudioFormats = audioFormatsWithSizes.map(format => ({
+            itag: format.itag,
+            bitrate: `${format.audioBitrate} kbps`,
+            mimeType: format.mimeType,
+            url: format.url,
+            codecs: format.codecs,
+            fileSize: format.fileSize // Include file size in the response
+        }));
+
+        const videoBasicDetails = {
+            title: videoTitle,
+            thumbnail: videoThumbnail,
+            qualities: availableQualities,
+            audio: availableAudioFormats,
+            author: videoAuthor 
+        };
+
+        console.log('Video Info:', videoBasicDetails);
+        res.send({ videoDetails: videoBasicDetails });
+    } catch (error) {
+        console.error('Error fetching YouTube video info:', error);
+        logger.error('Error fetching YouTube video info:', error);
+        res.status(500).json({ error: 'Error fetching YouTube video info' });
+        // You can also pass the error to the next middleware for centralized handling
+        next(error);
+    }
+});
+
+app.get('/download-yt', async (req, res, next) => {
+    try {
+        const userItag = req.query.itag;
+        const userYtUrl = req.query.ytUrl;
+
+        if (!userItag || !userYtUrl) {
+            return res.status(400).send('Please provide both itag and ytUrl parameters.');
+        }
+
+        const userOptions = {
+            quality: userItag,
+        };
+
+        const userVideoInfo = await ytdl.getInfo(userYtUrl);
+        const uvideoFormat = ytdl.chooseFormat(userVideoInfo.formats, userOptions);
+
+        if (!uvideoFormat) {
+            return res.status(404).send('Video format not found.');
+        }
+
+        const videoTitle = encodeURIComponent(userVideoInfo.videoDetails.title);
+        if (uvideoFormat.hasVideo) {
+            var outputFileName = `${videoTitle}.${uvideoFormat.container}`;
+        } else outputFileName = `${videoTitle}.mp3`;
+        res.setHeader('Content-Disposition', `attachment; filename="${outputFileName}"`);
+        res.setHeader('Content-Type', `${uvideoFormat.mimeType}`);
+
+        ytdl(userYtUrl, userOptions).pipe(res);
+    } catch (error) {
+        console.error('Error downloading YouTube video:', error);
+        logger.error('Error downloading YouTube video:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+        // You can also pass the error to the next middleware for centralized handling
+        next(error);
+    }
+});
+
+app.get('/tikinfo', async (req, res, next) => {
+    try {
+      const tikUrl = req.query.tikUrl;
   
-      // Extract available formats
-      const availableFormats = info.formats.map((format, index) => ({
-        formatId: format.itag,
-        resolution: format.qualityLabel || 'Unknown',
-        videoCodec: format.hasVideo ? format.codecs : 'None',
-        audioCodec: format.hasAudio ? format.audioCodecs : 'None',
-        bitrate: format.bitrate
-      }));
+      if (!tikUrl) {
+        return res.status(400).json({ error: 'Missing TikTok URL' });
+      }
   
-      // Send video details and available formats as JSON response
-      res.json({
-        title,
-        videoId,
-        author,
-        description,
-        thumbnailURL,
-        videoUrl,
-        availableFormats
-      });
-    } catch (err) {
-      console.error('Error fetching video info:', err);
-      res.status(500).json({ error: 'Error fetching video info' });
+      const dataList = await tiktokDl(tikUrl);
+  
+      if (Array.isArray(dataList) && dataList.length > 0) {
+        const firstItem = dataList[0];
+  
+        const info = {
+          title: firstItem.title || "Title not found in the fetched data.",
+          thumbnail: firstItem.thumbnail || "Thumbnail not found in the fetched data.",
+          sd: firstItem.sd || "SD link not found in the fetched data.",
+          hd: firstItem.hd || "HD link not found in the fetched data.",
+          audio: firstItem.audio || "Audio link not found in the fetched data.",
+          author: firstItem.author || "Author not found in the fetched data."
+        };
+  
+        res.json(info);
+  
+      } else {
+        res.status(404).json({ error: 'Empty or invalid data received.' });
+      }
+      
+    } catch (error) {
+        console.error('Error fetching TikTok data:', error);
+        logger.error('Error fetching TikTok data:', error);
+        res.status(500).json({ error: 'Video unavailable' });
+        // You can also pass the error to the next middleware for centralized handling
+        next(error);
     }
   });
 
-// Endpoint to download the video based on the format ID
-app.get('/download/:videoId/:formatId', async (req, res) => {
-    const { videoId, formatId } = req.params;
-  
+app.get('/fb', async (req, res, next) => {
     try {
-      const videoInfo = await ytdl.getInfo(`https://www.youtube.com/watch?v=${videoId}`);
-      const format = videoInfo.formats.find(format => format.itag === parseInt(formatId));
-  
-      if (format) {
-        const filename = `${videoInfo.videoDetails.title.replace(/[^\w\s]/gi, '')}.${format.container}`;
-        res.header('Content-Disposition', `attachment; filename="${filename}"`);
-        
-        // Using ytdl.downloadFromInfo to download the video
-        const options = { format: format };
-        ytdl.downloadFromInfo(videoInfo, options).pipe(res);
-      } else {
-        res.status(404).send('Format not found');
-      }
+        const userFBUrl = req.query.Url;
+        const result = await getFBInfo(userFBUrl);
+        console.log("Result:", result);
+        res.json(result);
     } catch (error) {
-      res.status(500).send('Error downloading the video');
+
     }
+})
+
+const PORT = process.env.PORT || 80; 
+app.listen(PORT, () => {
+    console.log(`Server listening on port ${PORT}`);
 });
 
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-  console.log(`Server is running on http://localhost:${PORT}`);
-});

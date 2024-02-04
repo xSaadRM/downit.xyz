@@ -1,0 +1,127 @@
+/* Media query for mobile devices */
+@media only screen and (min-width: 768px) {
+    .mobile-navbar,
+    .mobile-navbar.active {
+        display: none;
+    }
+}
+@media only screen and (max-width: 530px) {
+    .infoButtons button {
+        width: 40%;
+        font-size: small;
+    }
+}
+@media only screen and (max-width: 645px) {
+    .thumbnail-container.isTikTokOrReelOrShort #videoThumbnail {
+        width: 150px;
+    }
+    .thumbnail-container.isTikTokOrReelOrShort .infoButtons {
+        margin-left: 0px;
+        width: 200px;
+    }
+}
+@media only screen and (max-width: 380px) {
+    .thumbnail-container.isTikTokOrReelOrShort #videoThumbnail {
+        width: 100px;
+    }
+    .thumbnail-container.isTikTokOrReelOrShort .infoButtons button {
+        margin-left: 0;
+    }
+    .thumbnail-container.isTikTokOrReelOrShort .infoButtonsContainer {
+        margin-left: 0;
+    }
+    .thumbnail-container.isVideo .infoButtons button {
+        width: 100%;
+    }
+}
+@media only screen and (width: 768px) {
+    .mobile-navbar,
+    .mobile-navbar.active {
+        display: flex;
+    }
+}
+@media only screen and (max-width: 768px) {
+    .toggle-btn {
+        font-size: xx-large;
+        display: flex;
+        color: white;
+        border: none;
+        cursor: pointer;
+    }
+     .navbar {
+        display: none;
+    }
+    body, html {
+        margin: 0;
+        padding: 0;
+        width: 100%; /* Adjust width to fit the viewport */
+        overflow-x: hidden; /* Hide horizontal overflow */
+    }
+    .container {
+        width: 100%; /* Make the container full-width */
+        padding: 10px; /* Adjust container padding for smaller screens */
+        box-sizing: border-box; /* Include padding in the width calculation */
+    }
+
+    input#urlInput {
+            width: 50%;
+    }
+    
+    input#urlInput,
+    button {
+        margin-bottom: 0px;
+    }
+
+    h2#videoTitle {
+        font-size: 110%; /* Adjust the font size as needed for mobile */
+        margin-bottom: 20px; /* Optional: adjust margin for the title */
+        white-space: nowrap; /* Prevent text wrapping */
+        overflow: hidden; /* Hide overflowing text */
+        text-overflow: ellipsis; /* Show an ellipsis (...) for overflow */
+    }
+    #videoThumbnail {
+        margin-bottom: 15px;
+        margin-right: 0px;
+    }
+
+    .infoButtons {
+        flex-direction: row; /* Align buttons horizontally on smaller screens */
+        justify-content: center; /* Center align buttons on smaller screens */
+    }
+
+    .infoButtons button {
+        margin-left: 10px;
+        margin-bottom: 10px;
+    }
+    .modal-content {
+        width: 90%; /* Adjust modal content width for smaller screens */
+    }
+
+    .thumbnail-container {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .history-menu.active {
+        left: 0;
+        overflow-y: auto; /* Enable vertical scrolling */
+        width: 210px;
+    }
+    .supported-platforms{
+        flex-direction: row;
+        justify-content: space-around;
+    }
+    .platform{
+        margin-left: 10px;
+    }
+    .platform img{
+        width: 40px;
+        height: auto;
+    }
+    .supported-platforms h3{
+        font-size: medium;
+    }
+    .logo h1 {
+        font-size: larger;
+    }
+}
