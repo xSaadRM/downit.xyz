@@ -243,7 +243,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const data = await response.json();
       if (data) {
         const { title, thumbnail, sd, hd, audio, author } = data;
-        videoTitleElem.textContent = title;
+        videoTitleElem.textContent = encodeURIComponent(title);
         videoThumbnailElem.src = thumbnail;
         videoThumbnailElem.style.display = "flex";
         videoInfo.style.display = "flex";
