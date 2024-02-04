@@ -135,7 +135,7 @@ for (const format of audioFormats) {
     } catch (error) {
         console.error('Error fetching YouTube video info:', error);
         logger.error('Error fetching YouTube video info:', error);
-        res.status(500).json({ error: 'Error fetching YouTube video info' });
+        res.status(500).json({ error: `${error}` });
         // You can also pass the error to the next middleware for centralized handling
         next(error);
     }
