@@ -297,7 +297,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const formatButton = document.createElement("button");
     formatButton.innerHTML = `${label} <br> MP4`;
     formatButton.addEventListener("click", () => {
-      window.open(url);
+      window.open( url, "_blank" );
     });
     formatsBtnsElm.appendChild(formatButton);
   }
