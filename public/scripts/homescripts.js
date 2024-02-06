@@ -295,9 +295,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function createDownloadButton(label, url) {
     const formatButton = document.createElement("button");
-    formatButton.innerHTML = `${label} <br> MP4`;
+    formatButton.innerHTML = `${label}`;
     formatButton.addEventListener("click", () => {
-      window.open( url, "_blank" );
+      window.open( `/tik-download/${url}`, "_blank" );
     });
     formatsBtnsElm.appendChild(formatButton);
   }
