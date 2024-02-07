@@ -5,7 +5,8 @@ const getFBInfo = require("@xaviabot/fb-downloader");
 const axios = require("axios");
 const winston = require("winston");
 const fs = require("fs");
-const { v4: uuidv4 } = require("uuid"); // Import the uuid library
+const { v4: uuidv4 } = require("uuid");
+const { title } = require("process");
 
 const app = express();
 
@@ -220,48 +221,47 @@ app.get("/tikinfo", async (req, res, next) => {
       ) {
         // Filtering and accessing links array based on format (ft)
         const mp4Links = data.links.filter((link) => link.ft === "1");
-
-        mp4Links.forEach(link => {
-          console.log(link);
-        });
-        const mp3Link = data.links.find((link) => link.ft === "3"); // Use find instead of filter for a single element
-        console.log(mp3Link.a);
-        const uniqueId = uuidv4();
-        if (mp3Link.a) {
-          const mp3FilePath = `tiktok/vids/${uniqueId}.mp3`;
-
-          const mp3Response = await fetch(mp3Link.a);
-          if (mp3Response.ok) {
-            const mp3Buffer = await mp3Response.arrayBuffer();
-            const mp3Array = new Uint8Array(mp3Buffer);
-
-            fs.writeFile(mp3FilePath, mp3Array, (writeErr) => {
-              if (writeErr) {
-                console.error("Error writing mp3 file:", writeErr);
-              } else {
-                console.log(`MP3 file saved to ${mp3FilePath}`);
-              }
-            });
+        let tiktok1080p;
+        let tiktok720p;
+        if (mp4Links.length > 0) {
+          tiktok1080p = mp4Links[0];
+          if (mp4Links.length > 1) {
+            tiktok720p = mp4Links[1];
           } else {
-            console.error(
-              `HTTP error downloading MP3 file! Status: ${mp3Response.status}`
-            );
+            res.json({ error: "Only one MP4 Link Found" });
           }
+        } else {
+          res.json({ error: "No MP4 Links Found" });
         }
-
+        const mp3Link = data.links.find((link) => link.ft === "3"); // Use find instead of filter for a single element
+        const uservidID = uuidv4();
+        const uservidIDjsonPath = `vids/ids/${uservidID}.json`;
         const info = {
-          id: data.vid,
+          vidID: data.vid,
           title: data.desc || "Title not found in the fetched data.",
           thumbnail: data.cover || "Thumbnail not found in the fetched data.",
-          sd: "soon" || "SD link not found in the fetched data.",
-          hd: "soon" || "HD link not found in the fetched data.",
-          audio: `${uniqueId}.mp3` || "Audio link not found in the fetched data.",
+          sd: tiktok720p
+            ? `${uservidID}?&f=720p`
+            : "SD link not found in the fetched data.",
+          hd: tiktok1080p
+            ? `${uservidID}?&f=1080p`
+            : "HD link not found in the fetched data.",
+          audio: mp3Link
+            ? `${uservidID}?&f=audio`
+            : "Audio link not found in the fetched data.",
           author: data.author || "Author not found in the fetched data.",
           authorName:
             data.author_name || "Author Name not found in the fetched data.",
         };
         res.json(info);
-        // Writing the response data to a JSON file
+        info.sd = tiktok720p.a;
+        info.hd = tiktok1080p.a;
+        info.audio = mp3Link.a;
+        fs.writeFileSync(uservidIDjsonPath, JSON.stringify(info, null, 2));
+
+        /* DEUGGIN ONLY !!! 
+
+        Writing the response data to a JSON file*/
         const jsonFileName = "tikinfo_response.json";
         fs.writeFile(
           jsonFileName,
@@ -288,34 +288,60 @@ app.get("/tikinfo", async (req, res, next) => {
     next(error);
   }
 });
-app.use(express.static('tiktok/vids'));
 
-app.get('/tik-download/:fileid', (req, res) => {
-  const fileID = req.params.fileid;
-  const filePath = path.join(__dirname, 'tiktok/vids', fileID);
-
-  // Check if the file exists
-  if (fs.existsSync(filePath)) {
-    // Send the file to the user for download
-    res.download(filePath, (err) => {
-      if (err) {
-        console.error('Error sending file:', err);
-      } else {
-        // File sent successfully, now delete the file
-        fs.unlink(filePath, (unlinkErr) => {
-          if (unlinkErr) {
-            console.error('Error deleting file:', unlinkErr);
-          } else {
-            console.log(`File deleted: ${fileID}`);
-          }
-        });
-      }
+app.get("/vdl/:ressourceID", async (req, res, next) => {
+  try {
+    ressourceID = req.params.ressourceID;
+    requestedFormat = req.query.f;
+    const ressourceIDjsonPath = path.join(__dirname, `vids/ids/${ressourceID}.json`);
+    const data = fs.readFileSync(ressourceIDjsonPath, "utf8");
+    const info = JSON.parse(data);
+    let tikUrl;
+    if (requestedFormat === "720p") {
+      tikUrl = info.sd;
+    } else if (requestedFormat === "1080p") {
+      tikUrl = info.hd;
+    } else if (requestedFormat === "audio") {
+      tikUrl = info.audio;
+    } else {
+      res.status(400).json({ error: "Invalid format" });
+      return;
+    }
+    const response = await axios.get(tikUrl, { responseType: "stream" });
+    if (response.status === 404) {
+      console.error("TikTok video not found:", tikUrl);
+      throw new Error("TikTok video not found");
+    }
+    let fileType;
+    if (requestedFormat == "720p" || "1080p") {
+      fileType = "mp4";
+      res.setHeader("Content-Type", "video/mp4");
+    } else if (requestedFormat == "audio") {
+      fileType = "mp3";
+      res.setHeader("Content-Type", "audio/mp3");
+    }
+    const tikFileName = `Downit.xyz - ${requestedFormat} - ${encodeURIComponent(info.title)}.${fileType}`
+    res.setHeader("Content-Disposition", `attachment; filename=${tikFileName}`);
+    res.status(200);
+    // Pipe the TikTok video response to the Express response
+    response.data.pipe(res);
+    // Optionally, you can handle errors if the download fails
+    response.data.on("error", (err) => {
+      console.error("Error downloading TikTok video:", err.message);
+      res.status(500).json({ error: "Error downloading TikTok video" });
     });
-  } else {
-    // File not found
-    res.status(404).send('File not found');
+    // Optionally, you can handle the end of the stream
+    response.data.on("end", () => {
+      console.log("TikTok video download completed");
+    });
+  } catch (error) {
+    console.error("Error downloading TikTok video:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+    // You can also pass the error to the next middleware for centralized handling
+    next(error);
   }
 });
+
 app.get("/fb", async (req, res, next) => {
   try {
     const userFBUrl = req.query.Url;

@@ -2,8 +2,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const mobileNavBar = document.getElementById("mobile-navbar");
   const bartgl = document.getElementById("barToggle");
   const navBarCloser = document.getElementById("navBarCloser");
-  const toastTxt1 = document.getElementById('toast-txt1');
-  const toastTxt2 = document.getElementById('toast-txt2');
+  const toastTxt1 = document.getElementById("toast-txt1");
+  const toastTxt2 = document.getElementById("toast-txt2");
   const toast = document.querySelector(".toast");
   const closeIcon = document.querySelector(".close");
   const progress = document.querySelector(".progress");
@@ -13,10 +13,10 @@ document.addEventListener("DOMContentLoaded", () => {
   bartgl.addEventListener("click", () => {
     mobileNavBar.classList.toggle("active");
     navBarCloser.classList.remove("hide");
-      });
+  });
   navBarCloser.addEventListener("click", () => {
-  mobileNavBar.classList.remove("active");
-  navBarCloser.classList.add("hide");
+    mobileNavBar.classList.remove("active");
+    navBarCloser.classList.add("hide");
   });
 
   const openToast = () => {
@@ -93,7 +93,7 @@ document.addEventListener("DOMContentLoaded", () => {
       closeMenu();
     }
   });
-  const thumbnailContainer = document.querySelector(".thumbnail-container")
+  const thumbnailContainer = document.querySelector(".thumbnail-container");
   const videoThumbnailElem = document.getElementById("videoThumbnail");
   const form = document.querySelector("form");
   const videoInfo = document.getElementById("videoInfo");
@@ -108,7 +108,8 @@ document.addEventListener("DOMContentLoaded", () => {
     event.preventDefault();
     const inputUrl = document.getElementById("urlInput").value;
 
-    const youtubeRegex = /^(https?:\/\/)?(www\.)?(youtube\.com|youtu\.?be)\/.*/i;
+    const youtubeRegex =
+      /^(https?:\/\/)?(www\.)?(youtube\.com|youtu\.?be)\/.*/i;
     const tiktokRegex = /^(https?:\/\/)?(www\.|vm\.)?tiktok\.com\/.*/i;
     const facebookRegex = /^(https?:\/\/)?(m\.)?(www\.)?facebook\.com\/.*/i;
 
@@ -163,7 +164,9 @@ document.addEventListener("DOMContentLoaded", () => {
       if (responseData.includes("Video unavailable")) {
         throw new Error("YouTube video is unavailable");
       } else {
-        throw new Error(`Failed to fetch YouTube video info. Status: ${response.status}`);
+        throw new Error(
+          `Failed to fetch YouTube video info. Status: ${response.status}`
+        );
       }
     }
 
@@ -179,7 +182,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       createFormatButtons(qualities, "video/mp4", inputUrl);
       createFormatButtons(audio, "audio", inputUrl);
-      
+
       authorElem.textContent = `Author: ${author.user}`;
       videoInfo.appendChild(authorElem);
 
@@ -200,7 +203,9 @@ document.addEventListener("DOMContentLoaded", () => {
       if (responseData.includes("Video unavailable")) {
         throw new Error(`TikTok video is unavailable`);
       } else {
-        throw new Error(`Failed to fetch TikTok video info. Status: ${response.status}`);
+        throw new Error(
+          `Failed to fetch TikTok video info. Status: ${response.status}`
+        );
       }
     }
 
@@ -215,15 +220,15 @@ document.addEventListener("DOMContentLoaded", () => {
       handleThumbnailAspectRatio(data.thumbnail);
 
       if (sd) {
-        createDownloadButton("Download SD", sd);
+        createDownloadButton("Download SD<br>720p", sd, "mp4", "720p");
       }
 
       if (hd) {
-        createDownloadButton("Download HD", hd);
+        createDownloadButton("Download HD<br>1080p", hd, "mp4", "1080p");
       }
 
       if (audio) {
-        createDownloadButton("Download MP3", audio);
+        createDownloadButton("Download MP3<br>audio", audio, "mp3", "audio");
       }
 
       if (author) {
@@ -250,15 +255,15 @@ document.addEventListener("DOMContentLoaded", () => {
         handleThumbnailAspectRatio(data.thumbnail);
 
         if (sd) {
-          createDownloadButton("Download SD", `${sd}&dl=1`);
+          createDownloadButton("Download SD", `${sd}&dl=1`, "mp4", "sd");
         }
 
         if (hd) {
-          createDownloadButton("Download HD", `${hd}&dl=1`);
+          createDownloadButton("Download HD", `${hd}&dl=1`, "mp4", "hd");
         }
 
         if (audio) {
-          createDownloadButton("Download MP3", audio);
+          createDownloadButton("Download MP3", audio, "mp3", "audio");
         }
 
         if (author) {
@@ -274,18 +279,22 @@ document.addEventListener("DOMContentLoaded", () => {
 
         updateVideoHistory(videoDetails);
       } else {
-        throw new Error('No data received from the server');
+        throw new Error("No data received from the server");
       }
     } catch (error) {
-      console.error('Error during fetch:', error.message);
-      throw new Error("Can't connect to Facebook server. Please try again later.");
+      console.error("Error during fetch:", error.message);
+      throw new Error(
+        "Can't connect to Facebook server. Please try again later."
+      );
     }
   }
 
   function createFormatButtons(formats, type, inputUrl) {
     formats.forEach((format) => {
       const formatButton = document.createElement("button");
-      formatButton.innerHTML = `${format.quality || format.bitrate} - ${type} <br> <span>${format.fileSize}</span>`;
+      formatButton.innerHTML = `${
+        format.quality || format.bitrate
+      } - ${type} <br> <span>${format.fileSize}</span>`;
       formatButton.addEventListener("click", () => {
         window.open(`/download-yt?itag=${format.itag || format.id}&ytUrl=${inputUrl}`);
       });
@@ -297,7 +306,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const formatButton = document.createElement("button");
     formatButton.innerHTML = `${label}`;
     formatButton.addEventListener("click", () => {
-      window.open( `/tik-download/${url}`, "_blank" );
+      window.open(`/vdl/${url}`)
     });
     formatsBtnsElm.appendChild(formatButton);
   }
@@ -312,20 +321,20 @@ document.addEventListener("DOMContentLoaded", () => {
   async function handleThumbnailAspectRatio(thumbnailUrl) {
     // Create a new Image element
     const thumbnailImage = new Image();
-  
+
     // Set the source URL of the image
     thumbnailImage.src = thumbnailUrl;
-  
+
     // Wait for the image to load
     await new Promise((resolve) => {
       thumbnailImage.onload = resolve;
     });
-  
+
     // Check the aspect ratio after the image has loaded
     const aspectRatio = thumbnailImage.width / thumbnailImage.height;
-  
+
     console.log("Aspect Ratio:", aspectRatio);
-  
+
     if (aspectRatio > 1.5) {
       thumbnailContainer.classList.remove("isTikTokOrReelOrShort");
       thumbnailContainer.classList.add("isVideo");
@@ -333,5 +342,5 @@ document.addEventListener("DOMContentLoaded", () => {
       thumbnailContainer.classList.remove("isVideo");
       thumbnailContainer.classList.add("isTikTokOrReelOrShort");
     }
-  }  
+  }
 });
