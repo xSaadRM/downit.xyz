@@ -12,6 +12,10 @@ const app = express();
 
 app.use(express.static(path.join(__dirname, "public")));
 
+// app.use((req, res, next) => {
+//   res.status(404).sendFile(__dirname + '/public/404.html');
+// });
+
 // Configure the logger
 const logger = winston.createLogger({
   level: "info",
@@ -349,6 +353,10 @@ app.get("/fb", async (req, res, next) => {
     console.log("Result:", result);
     res.json(result);
   } catch (error) {}
+});
+
+app.use((req, res, next) => {
+  res.status(404).sendFile(__dirname + '/public/404.html');
 });
 
 const PORT = process.env.PORT || 80;
