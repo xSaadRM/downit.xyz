@@ -6,23 +6,22 @@ const axios = require("axios");
 const winston = require("winston");
 const fs = require("fs");
 const { v4: uuidv4 } = require("uuid");
-const { title } = require("process");
+const { format } = require('date-fns');
+
 
 const app = express();
 
 app.use(express.static(path.join(__dirname, "public")));
 
-// app.use((req, res, next) => {
-//   res.status(404).sendFile(__dirname + '/public/404.html');
-// });
-
 // Configure the logger
+const logFilePath = path.join(__dirname, `logs/error_${format(new Date(), 'yyyy-MM-dd')}.log`);
+
 const logger = winston.createLogger({
   level: "info",
   format: winston.format.simple(),
   transports: [
     new winston.transports.Console(),
-    new winston.transports.File({ filename: "error.log", level: "error" }),
+    new winston.transports.File({ filename: logFilePath, level: "error" }),
   ],
 });
 
@@ -239,7 +238,7 @@ app.get("/tikinfo", async (req, res, next) => {
         }
         const mp3Link = data.links.find((link) => link.ft === "3"); // Use find instead of filter for a single element
         const uservidID = uuidv4();
-        const uservidIDjsonPath = `vids/ids/${uservidID}.json`;
+        const uservidIDjsonPath = `users/VidIDs/${uservidID}.json`;
         const info = {
           vidID: data.vid,
           title: data.desc || "Title not found in the fetched data.",
@@ -266,7 +265,7 @@ app.get("/tikinfo", async (req, res, next) => {
         /* DEUGGIN ONLY !!! 
 
         Writing the response data to a JSON file*/
-        const jsonFileName = "tikinfo_response.json";
+        const jsonFileName = path.join(__dirname, '/debugging/lovetikAPI-response.js');
         fs.writeFile(
           jsonFileName,
           JSON.stringify(data, null, 2),
@@ -297,7 +296,7 @@ app.get("/vdl/:ressourceID", async (req, res, next) => {
   try {
     ressourceID = req.params.ressourceID;
     requestedFormat = req.query.f;
-    const ressourceIDjsonPath = path.join(__dirname, `vids/ids/${ressourceID}.json`);
+    const ressourceIDjsonPath = path.join(__dirname, `users/VidIDs/${ressourceID}.json`);
     const data = fs.readFileSync(ressourceIDjsonPath, "utf8");
     const info = JSON.parse(data);
     let tikUrl;
