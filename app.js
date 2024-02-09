@@ -257,8 +257,8 @@ app.get("/tikinfo", async (req, res, next) => {
           authorName: data.author_name || "Author Name not found in the fetched data.",
         };
         res.json(info);
-        info._720 = tiktok720p.a;
-        info._1080 = tiktok1080p.a;
+        info._720p = tiktok720p.a;
+        info._1080p = tiktok1080p.a;
         info.audio = mp3Link.a;
         fs.writeFileSync(uservidIDjsonPath, JSON.stringify(info, null, 2));
 
@@ -301,11 +301,11 @@ app.get("/vdl/:ressourceID", async (req, res, next) => {
     const info = JSON.parse(data);
     let tikUrl;
     if (requestedFormat === "360p") {
-      tikUrl = info._360p
+      tikUrl = info._360p;
     } else if (requestedFormat === "720p") {
-      tikUrl = info._720;
+      tikUrl = info._720p;
     } else if (requestedFormat === "1080p") {
-      tikUrl = info._1080;
+      tikUrl = info._1080p;
     } else if (requestedFormat === "audio") {
       tikUrl = info.audio;
     } else {
