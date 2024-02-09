@@ -180,8 +180,8 @@ document.addEventListener("DOMContentLoaded", () => {
       videoInfo.style.display = "flex";
       handleThumbnailAspectRatio(data.videoDetails.thumbnail);
 
-      createFormatButtons(qualities, "video/mp4", inputUrl);
-      createFormatButtons(audio, "audio", inputUrl);
+      createFormatButtons(qualities, "video/mp4", qualities.url);
+      createFormatButtons(audio, "audio", audio.url);
 
       authorElem.textContent = `Author: ${author.user}`;
       videoInfo.appendChild(authorElem);
@@ -289,14 +289,16 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  function createFormatButtons(formats, type, inputUrl) {
+  function createFormatButtons(formats, type, url) {
     formats.forEach((format) => {
       const formatButton = document.createElement("button");
       formatButton.innerHTML = `${
         format.quality || format.bitrate
       } - ${type} <br> <span>${format.fileSize}</span>`;
       formatButton.addEventListener("click", () => {
-        window.open(`/download-yt?itag=${format.itag || format.id}&ytUrl=${inputUrl}`);
+        console.log(url);
+        console.log(format.url);
+        window.open(format.url);
       });
       formatsBtnsElm.appendChild(formatButton);
     });

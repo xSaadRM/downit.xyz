@@ -99,12 +99,12 @@ app.get("/ytinfo", async (req, res, next) => {
         fileSize: contentLength ? formatBytes(parseInt(contentLength)) : null, // Convert bytes to human-readable format
       });
     }
-
+    const ytVidID = uuidv4();
     const availableQualities = videoFormatsWithSizes.map((format) => ({
       itag: format.itag,
       quality: format.qualityLabel || format.quality,
       mimeType: format.mimeType,
-      url: format.url,
+      url: `/vdl/${ytVidID}?&f=${format.qualityLabel}`,
       codecs: format.codecs,
       fileSize: format.fileSize, // Include file size in the response
     }));
@@ -113,7 +113,7 @@ app.get("/ytinfo", async (req, res, next) => {
       itag: format.itag,
       bitrate: `${format.audioBitrate} kbps`,
       mimeType: format.mimeType,
-      url: format.url,
+      url: `/vdl/${ytVidID}?&f=audio`,
       codecs: format.codecs,
       fileSize: format.fileSize, // Include file size in the response
     }));
@@ -125,9 +125,16 @@ app.get("/ytinfo", async (req, res, next) => {
       audio: availableAudioFormats,
       author: videoAuthor,
     };
-
-    console.log("Video Info:", videoBasicDetails);
     res.send({ videoDetails: videoBasicDetails });
+    const _360pArray = videoFormats.find(format => format.qualityLabel == '360p');
+    const _720pArray = videoFormats.find(format => format.qualityLabel == '720p');
+    const audioArray = audioFormats.find(format => format.audioBitrate == '160' || format.audioBitrate == '128')
+    const info = {
+      _360p: _360pArray.url,
+      _720p: _720pArray.url,
+      audio: audioArray.url
+    }
+    fs.writeFileSync(path.join(__dirname, `data/users/VidIDs/${ytVidID}.json`), JSON.stringify(info))
   } catch (error) {
     console.error("Error fetching YouTube video info:", error);
     logger.error("Error fetching YouTube video info:", error);
@@ -243,29 +250,22 @@ app.get("/tikinfo", async (req, res, next) => {
           vidID: data.vid,
           title: data.desc || "Title not found in the fetched data.",
           thumbnail: data.cover || "Thumbnail not found in the fetched data.",
-          sd: tiktok720p
-            ? `${uservidID}?&f=720p`
-            : "SD link not found in the fetched data.",
-          hd: tiktok1080p
-            ? `${uservidID}?&f=1080p`
-            : "HD link not found in the fetched data.",
-          audio: mp3Link
-            ? `${uservidID}?&f=audio`
-            : "Audio link not found in the fetched data.",
+          sd: tiktok720p ? `${uservidID}?&f=720p` : "SD link not found in the fetched data.",
+          hd: tiktok1080p ? `${uservidID}?&f=1080p` : "HD link not found in the fetched data.",
+          audio: mp3Link ? `${uservidID}?&f=audio` : "Audio link not found in the fetched data.",
           author: data.author || "Author not found in the fetched data.",
-          authorName:
-            data.author_name || "Author Name not found in the fetched data.",
+          authorName: data.author_name || "Author Name not found in the fetched data.",
         };
         res.json(info);
-        info.sd = tiktok720p.a;
-        info.hd = tiktok1080p.a;
+        info._720 = tiktok720p.a;
+        info._1080 = tiktok1080p.a;
         info.audio = mp3Link.a;
         fs.writeFileSync(uservidIDjsonPath, JSON.stringify(info, null, 2));
 
         /* DEUGGIN ONLY !!! 
 
         Writing the response data to a JSON file*/
-        const jsonFileName = path.join(__dirname, '/debugging/lovetikAPI-response.js');
+        const jsonFileName = path.join(__dirname, '/debugging/lovetikAPI-response.json');
         fs.writeFile(
           jsonFileName,
           JSON.stringify(data, null, 2),
@@ -300,10 +300,12 @@ app.get("/vdl/:ressourceID", async (req, res, next) => {
     const data = fs.readFileSync(ressourceIDjsonPath, "utf8");
     const info = JSON.parse(data);
     let tikUrl;
-    if (requestedFormat === "720p") {
-      tikUrl = info.sd;
+    if (requestedFormat === "360p") {
+      tikUrl = info._360p
+    } else if (requestedFormat === "720p") {
+      tikUrl = info._720;
     } else if (requestedFormat === "1080p") {
-      tikUrl = info.hd;
+      tikUrl = info._1080;
     } else if (requestedFormat === "audio") {
       tikUrl = info.audio;
     } else {
@@ -316,7 +318,7 @@ app.get("/vdl/:ressourceID", async (req, res, next) => {
       throw new Error("TikTok video not found");
     }
     let fileType;
-    if (requestedFormat == "720p" || "1080p") {
+    if (requestedFormat == "720p" || "1080p"|| "360p") {
       fileType = "mp4";
       res.setHeader("Content-Type", "video/mp4");
     } else if (requestedFormat == "audio") {

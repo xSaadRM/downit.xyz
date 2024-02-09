@@ -1,9 +1,4 @@
-tiktok.js
-tiktok.py
-TikTokAPI.js
-error.log
-homescripts copy.js
-tikinfo_response.json
-tiktok/
-resolution_checker.js
-vids/
+
+data/users/VidIDs/
+logs/
+debugging/
