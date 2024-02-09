@@ -238,7 +238,7 @@ app.get("/tikinfo", async (req, res, next) => {
         }
         const mp3Link = data.links.find((link) => link.ft === "3"); // Use find instead of filter for a single element
         const uservidID = uuidv4();
-        const uservidIDjsonPath = `users/VidIDs/${uservidID}.json`;
+        const uservidIDjsonPath = `data/users/VidIDs/${uservidID}.json`;
         const info = {
           vidID: data.vid,
           title: data.desc || "Title not found in the fetched data.",
