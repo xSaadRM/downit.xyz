@@ -230,7 +230,7 @@ app.get("/tikinfo", async (req, res, next) => {
             if (writeErr) {
               logger.error("Error writing to JSON file:", writeErr);
             } else {
-              logger.log(`Response data written to ${jsonFileName}`);
+              logger.info(`Response data written to ${jsonFileName}`);
             }
           }
         );
