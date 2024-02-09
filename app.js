@@ -130,6 +130,7 @@ app.get("/ytinfo", async (req, res, next) => {
     const _720pArray = videoFormats.find(format => format.qualityLabel == '720p');
     const audioArray = audioFormats.find(format => format.audioBitrate == '160' || format.audioBitrate == '128')
     const info = {
+      title: videoTitle,
       _360p: _360pArray.url,
       _720p: _720pArray.url,
       audio: audioArray.url
