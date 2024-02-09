@@ -145,48 +145,6 @@ app.get("/ytinfo", async (req, res, next) => {
   }
 });
 
-app.get("/download-yt", async (req, res, next) => {
-  try {
-    const userItag = req.query.itag;
-    const userYtUrl = req.query.ytUrl;
-
-    if (!userItag || !userYtUrl) {
-      return res
-        .status(400)
-        .send("Please provide both itag and ytUrl parameters.");
-    }
-
-    const userOptions = {
-      quality: userItag,
-    };
-
-    const userVideoInfo = await ytdl.getInfo(userYtUrl);
-    const uvideoFormat = ytdl.chooseFormat(userVideoInfo.formats, userOptions);
-
-    if (!uvideoFormat) {
-      return res.status(404).send("Video format not found.");
-    }
-
-    const videoTitle = encodeURIComponent(userVideoInfo.videoDetails.title);
-    if (uvideoFormat.hasVideo) {
-      var outputFileName = `${videoTitle}.${uvideoFormat.container}`;
-    } else outputFileName = `${videoTitle}.mp3`;
-    res.setHeader(
-      "Content-Disposition",
-      `attachment; filename="${outputFileName}"`
-    );
-    res.setHeader("Content-Type", `${uvideoFormat.mimeType}`);
-
-    ytdl(userYtUrl, userOptions).pipe(res);
-  } catch (error) {
-    console.error("Error downloading YouTube video:", error);
-    logger.error("Error downloading YouTube video:", error);
-    res.status(500).json({ error: "Internal Server Error" });
-    // You can also pass the error to the next middleware for centralized handling
-    next(error);
-  }
-});
-
 app.get("/tikinfo", async (req, res, next) => {
   try {
     const tikUrl = req.query.tikUrl;
