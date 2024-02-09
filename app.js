@@ -7,7 +7,6 @@ const fs = require("fs");
 const { v4: uuidv4 } = require("uuid");
 const { format } = require('date-fns');
 
-
 const app = express();
 
 app.use(express.static(path.join(__dirname, "public")));
@@ -17,7 +16,10 @@ const logFilePath = path.join(__dirname, `logs/error_${format(new Date(), 'yyyy-
 
 const logger = winston.createLogger({
   level: "info",
-  format: winston.format.simple(),
+  format: winston.format.combine(
+    winston.format.timestamp({ format: 'YYYY-MM-DD HH:mm:ss' }),
+    winston.format.printf(info => `${info.timestamp} => ${info.level}: ${info.message}`)
+  ),
   transports: [
     new winston.transports.Console(),
     new winston.transports.File({ filename: logFilePath, level: "error" }),
@@ -64,7 +66,7 @@ app.get("/ytinfo", async (req, res, next) => {
         const response = await axios.head(url); // Send a HEAD request to get headers
         return response.headers["content-length"]; // Extract content length
       } catch (error) {
-        console.error("Error fetching content length:", error);
+        logger.error("Error fetching content length:", error);
         return null;
       }
     };
@@ -136,11 +138,8 @@ app.get("/ytinfo", async (req, res, next) => {
     }
     fs.writeFileSync(path.join(__dirname, `data/users/VidIDs/${ytVidID}.json`), JSON.stringify(info))
   } catch (error) {
-    console.error("Error fetching YouTube video info:", error);
     logger.error("Error fetching YouTube video info:", error);
-    res.status(500).json({ error: `${error}` });
-    // You can also pass the error to the next middleware for centralized handling
-    next(error);
+    res.status(500).json("Error fetching YouTube video info");
   }
 });
 
@@ -229,24 +228,22 @@ app.get("/tikinfo", async (req, res, next) => {
           JSON.stringify(data, null, 2),
           (writeErr) => {
             if (writeErr) {
-              console.error("Error writing to JSON file:", writeErr);
+              logger.error("Error writing to JSON file:", writeErr);
             } else {
-              console.log(`Response data written to ${jsonFileName}`);
+              logger.log(`Response data written to ${jsonFileName}`);
             }
           }
         );
       } else {
-        console.error("Error: Video unavailable");
+        logger.error("TikTok: Video unavailable");
         res.status(500).json({ error: "Video unavailable" });
       }
     } catch (error) {
-      console.error("Error:", error);
+      logger.error("Error:", error);
     }
   } catch (error) {
-    console.error("Error fetching TikTok data:", error);
     logger.error("Error fetching TikTok data:", error);
-    res.status(500).json(error);
-    next(error);
+    res.status(500).json("Error fetching TikTok data");
   }
 });
 
@@ -272,7 +269,7 @@ app.get("/vdl/:ressourceID", async (req, res, next) => {
     }
     const response = await axios.get(tikUrl, { responseType: "stream" });
     if (response.status === 404) {
-      console.error("TikTok video not found:", tikUrl);
+      logger.error("TikTok video not found:", tikUrl);
       throw new Error("TikTok video not found");
     }
     let fileType;
@@ -290,18 +287,16 @@ app.get("/vdl/:ressourceID", async (req, res, next) => {
     response.data.pipe(res);
     // Optionally, you can handle errors if the download fails
     response.data.on("error", (err) => {
-      console.error("Error downloading TikTok video:", err.message);
+      logger.error("Error downloading TikTok video:", err.message);
       res.status(500).json({ error: "Error downloading TikTok video" });
     });
     // Optionally, you can handle the end of the stream
     response.data.on("end", () => {
-      console.log("TikTok video download completed");
+      logger.log("TikTok video download completed");
     });
   } catch (error) {
-    console.error("Error downloading TikTok video:", error);
+    logger.error("Error downloading TikTok video:", error);
     res.status(500).json({ error: "Internal Server Error" });
-    // You can also pass the error to the next middleware for centralized handling
-    next(error);
   }
 });
 
