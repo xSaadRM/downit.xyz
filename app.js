@@ -1,7 +1,6 @@
 const express = require("express");
 const path = require("path");
 const ytdl = require("ytdl-core");
-const getFBInfo = require("@xaviabot/fb-downloader");
 const axios = require("axios");
 const winston = require("winston");
 const fs = require("fs");
@@ -304,15 +303,6 @@ app.get("/vdl/:ressourceID", async (req, res, next) => {
     // You can also pass the error to the next middleware for centralized handling
     next(error);
   }
-});
-
-app.get("/fb", async (req, res, next) => {
-  try {
-    const userFBUrl = req.query.Url;
-    const result = await getFBInfo(userFBUrl);
-    console.log("Result:", result);
-    res.json(result);
-  } catch (error) {}
 });
 
 app.use((req, res, next) => {
