@@ -296,7 +296,7 @@ app.get("/vdl/:ressourceID", async (req, res, next) => {
   try {
     ressourceID = req.params.ressourceID;
     requestedFormat = req.query.f;
-    const ressourceIDjsonPath = path.join(__dirname, `users/VidIDs/${ressourceID}.json`);
+    const ressourceIDjsonPath = path.join(__dirname, `data/users/VidIDs/${ressourceID}.json`);
     const data = fs.readFileSync(ressourceIDjsonPath, "utf8");
     const info = JSON.parse(data);
     let tikUrl;
