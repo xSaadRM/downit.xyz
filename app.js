@@ -1,4 +1,5 @@
 const express = require("express");
+const rateLimit = require("express-rate-limit")
 const path = require("path");
 const ytdl = require("ytdl-core");
 const axios = require("axios");
@@ -11,9 +12,13 @@ const app = express();
 
 app.use(express.static(path.join(__dirname, "public")));
 
-// Configure the logger
-const logFilePath = path.join(__dirname, `logs/error_${format(new Date(), 'yyyy-MM-dd')}.log`);
+const limiter = rateLimit({
+  windowMs: 24 * 60 * 60 * 1000,
+  max: 30,
+  message: 'Too many requests, please try again later.',
+});
 
+const logFilePath = path.join(__dirname, `logs/error_${format(new Date(), 'yyyy-MM-dd')}.log`);
 const logger = winston.createLogger({
   level: "info",
   format: winston.format.combine(
