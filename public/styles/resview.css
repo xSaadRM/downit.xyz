@@ -20,6 +20,11 @@
         width: 200px;
     }
 }
+@media only screen and (max-width: 319px) {
+    .thumbnail-container.isTikTokOrReelOrShort .infoButtons button {
+        margin-left: 0;
+    }
+}
 @media only screen and (max-width: 380px) {
     .tgls {
         gap: 10px;
@@ -47,9 +52,6 @@
     }
     .thumbnail-container.isTikTokOrReelOrShort #videoThumbnail {
         width: 100px;
-    }
-    .thumbnail-container.isTikTokOrReelOrShort .infoButtons button {
-        margin-left: 0;
     }
     .thumbnail-container.isTikTokOrReelOrShort .infoButtonsContainer {
         margin-left: 0;
