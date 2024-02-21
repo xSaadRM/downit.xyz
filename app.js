@@ -297,7 +297,7 @@ app.get("/vdl/:ressourceID", async (req, res, next) => {
     });
     // Optionally, you can handle the end of the stream
     response.data.on("end", () => {
-      logger.log("TikTok video download completed");
+      logger.info("TikTok video download completed");
     });
   } catch (error) {
     logger.error("Error downloading TikTok video:", error);
