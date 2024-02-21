@@ -13,7 +13,7 @@ const app = express();
 app.use(express.static(path.join(__dirname, "public")));
 
 const limiter = rateLimit({
-  windowMs: 24 * 60 * 60 * 1000,
+  windowMs: 60 * 60 * 1000,
   max: 30,
   message: 'Too many requests, please try again later.',
 });
