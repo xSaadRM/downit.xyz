@@ -2,6 +2,7 @@ const express = require("express");
 const rateLimit = require("express-rate-limit")
 const path = require("path");
 const ytdl = require("ytdl-core");
+const { TiktokDownloader } = require("@tobyg74/tiktok-api-dl")
 const axios = require("axios");
 const winston = require("winston");
 const fs = require("fs");
@@ -17,6 +18,7 @@ const limiter = rateLimit({
   max: 30,
   message: 'Too many requests, please try again later.',
 });
+app.use('/tikinfo', limiter);
 
 const logFilePath = path.join(__dirname, `logs/error_${format(new Date(), 'yyyy-MM-dd')}.log`);
 const logger = winston.createLogger({
