@@ -235,6 +235,12 @@ document.addEventListener("DOMContentLoaded", () => {
         authorElem.textContent = `Author: ${author}`;
         videoInfo.appendChild(authorElem);
       }
+      const videoDetails = {
+        title: title,
+        url: inputUrl,
+        thumbnail: thumbnail,
+      };
+      updateVideoHistory(videoDetails);
     }
   }
 

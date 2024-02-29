@@ -183,12 +183,6 @@ app.get("/tikinfo", async (req, res, next) => {
       const data = await response.json();
       // Check if the expected properties exist before accessing them
       if (
-        data &&
-        data.vid &&
-        data.cover &&
-        data.desc &&
-        data.author &&
-        data.author_name &&
         data.links
       ) {
         // Filtering and accessing links array based on format (ft)
