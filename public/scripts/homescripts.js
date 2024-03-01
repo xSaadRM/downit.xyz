@@ -246,7 +246,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   async function handleFacebookVideo(inputUrl) {
     try {
-      const response = await fetch(`/fb?Url=${inputUrl}`);
+      const response = await fetch(`/fbinfo?fbUrl=${inputUrl}`);
       if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
@@ -261,11 +261,11 @@ document.addEventListener("DOMContentLoaded", () => {
         handleThumbnailAspectRatio(data.thumbnail);
 
         if (sd) {
-          createDownloadButton("Download SD", `${sd}&dl=1`, "mp4", "sd");
+          createDownloadButton("Download SD", sd, "mp4", "sd");
         }
 
         if (hd) {
-          createDownloadButton("Download HD", `${hd}&dl=1`, "mp4", "hd");
+          createDownloadButton("Download HD", hd, "mp4", "hd");
         }
 
         if (audio) {

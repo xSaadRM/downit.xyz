@@ -1,13 +1,14 @@
 const express = require("express");
-const rateLimit = require("express-rate-limit")
+const rateLimit = require("express-rate-limit");
 const path = require("path");
 const ytdl = require("ytdl-core");
-const { TiktokDownloader } = require("@tobyg74/tiktok-api-dl")
+const { facebook } = require("fy-downloader-new");
+// const { TiktokDownloader } = require("@tobyg74/tiktok-api-dl")
 const axios = require("axios");
 const winston = require("winston");
 const fs = require("fs");
 const { v4: uuidv4 } = require("uuid");
-const { format } = require('date-fns');
+const { format } = require("date-fns");
 
 const app = express();
 
@@ -16,16 +17,21 @@ app.use(express.static(path.join(__dirname, "public")));
 const limiter = rateLimit({
   windowMs: 60 * 60 * 1000,
   max: 30,
-  message: 'Too many requests, please try again later.',
+  message: "Too many requests, please try again later.",
 });
-app.use('/tikinfo', limiter);
+app.use("/tikinfo", limiter);
 
-const logFilePath = path.join(__dirname, `logs/error_${format(new Date(), 'yyyy-MM-dd')}.log`);
+const logFilePath = path.join(
+  __dirname,
+  `logs/error_${format(new Date(), "yyyy-MM-dd")}.log`
+);
 const logger = winston.createLogger({
   level: "info",
   format: winston.format.combine(
-    winston.format.timestamp({ format: 'YYYY-MM-DD HH:mm:ss' }),
-    winston.format.printf(info => `${info.timestamp} => ${info.level}: ${info.message}`)
+    winston.format.timestamp({ format: "YYYY-MM-DD HH:mm:ss" }),
+    winston.format.printf(
+      (info) => `${info.timestamp} => ${info.level}: ${info.message}`
+    )
   ),
   transports: [
     new winston.transports.Console(),
@@ -134,16 +140,25 @@ app.get("/ytinfo", async (req, res, next) => {
       author: videoAuthor,
     };
     res.send({ videoDetails: videoBasicDetails });
-    const _360pArray = videoFormats.find(format => format.qualityLabel == '360p');
-    const _720pArray = videoFormats.find(format => format.qualityLabel == '720p');
-    const audioArray = audioFormats.find(format => format.audioBitrate == '160' || format.audioBitrate == '128')
+    const _360pArray = videoFormats.find(
+      (format) => format.qualityLabel == "360p"
+    );
+    const _720pArray = videoFormats.find(
+      (format) => format.qualityLabel == "720p"
+    );
+    const audioArray = audioFormats.find(
+      (format) => format.audioBitrate == "160" || format.audioBitrate == "128"
+    );
     const info = {
       title: videoTitle,
       _360p: _360pArray.url,
       _720p: _720pArray.url,
-      audio: audioArray.url
-    }
-    fs.writeFileSync(path.join(__dirname, `data/users/VidIDs/${ytVidID}.json`), JSON.stringify(info))
+      audio: audioArray.url,
+    };
+    fs.writeFileSync(
+      path.join(__dirname, `data/users/VidIDs/${ytVidID}.json`),
+      JSON.stringify(info)
+    );
   } catch (error) {
     logger.error("Error fetching YouTube video info:", error);
     res.status(500).json("Error fetching YouTube video info");
@@ -184,9 +199,7 @@ app.get("/tikinfo", async (req, res, next) => {
 
       const data = await response.json();
       // Check if the expected properties exist before accessing them
-      if (
-        data.links
-      ) {
+      if (data.links) {
         // Filtering and accessing links array based on format (ft)
         const mp4Links = data.links.filter((link) => link.ft === "1");
         let tiktok1080p;
@@ -208,11 +221,18 @@ app.get("/tikinfo", async (req, res, next) => {
           vidID: data.vid,
           title: data.desc || "Title not found in the fetched data.",
           thumbnail: data.cover || "Thumbnail not found in the fetched data.",
-          sd: tiktok720p ? `${uservidID}?&f=720p` : "SD link not found in the fetched data.",
-          hd: tiktok1080p ? `${uservidID}?&f=1080p` : "HD link not found in the fetched data.",
-          audio: mp3Link ? `${uservidID}?&f=audio` : "Audio link not found in the fetched data.",
+          sd: tiktok720p
+            ? `${uservidID}?&f=720p`
+            : "SD link not found in the fetched data.",
+          hd: tiktok1080p
+            ? `${uservidID}?&f=1080p`
+            : "HD link not found in the fetched data.",
+          audio: mp3Link
+            ? `${uservidID}?&f=audio`
+            : "Audio link not found in the fetched data.",
           author: data.author || "Author not found in the fetched data.",
-          authorName: data.author_name || "Author Name not found in the fetched data.",
+          authorName:
+            data.author_name || "Author Name not found in the fetched data.",
         };
         res.json(info);
         info._720p = tiktok720p.a;
@@ -223,7 +243,10 @@ app.get("/tikinfo", async (req, res, next) => {
         /* DEUGGIN ONLY !!! 
 
         Writing the response data to a JSON file*/
-        const jsonFileName = path.join(__dirname, '/debugging/lovetikAPI-response.json');
+        const jsonFileName = path.join(
+          __dirname,
+          "/debugging/lovetikAPI-response.json"
+        );
         fs.writeFile(
           jsonFileName,
           JSON.stringify(data, null, 2),
@@ -248,11 +271,46 @@ app.get("/tikinfo", async (req, res, next) => {
   }
 });
 
+app.get("/fbinfo", async (req, res) => {
+  const fbUrl = req.query.fbUrl;
+  if (!fbUrl) {
+    res.send("No url provided");
+  }
+  try {
+    facebook(fbUrl, (err, data) => {
+      if (err != null) {
+        console.log(err);
+      } else {
+        const info = {
+          title: data.title,
+          thumbnail: data.vid.thumbnail,
+          author: data.vid.author.name,
+          _360p: data.download.mp4,
+          _720p: data.download.mp4Hd,
+          audio: data.download.mp3
+        }
+        const uservidID = uuidv4();
+        const uservidIDjsonPath = `data/users/VidIDs/${uservidID}.json`;
+        fs.writeFileSync(uservidIDjsonPath, JSON.stringify(info));
+        info.sd = `${uservidID}?&f=360p`
+        info.hd = `${uservidID}?&f=720p`
+        info.audio = `${uservidID}?&f=audio`
+        res.json(info);
+      }
+    });
+  } catch (error) {
+    console.error(error);
+  }
+});
+
 app.get("/vdl/:ressourceID", async (req, res, next) => {
   try {
     ressourceID = req.params.ressourceID;
     requestedFormat = req.query.f;
-    const ressourceIDjsonPath = path.join(__dirname, `data/users/VidIDs/${ressourceID}.json`);
+    const ressourceIDjsonPath = path.join(
+      __dirname,
+      `data/users/VidIDs/${ressourceID}.json`
+    );
     const data = fs.readFileSync(ressourceIDjsonPath, "utf8");
     const info = JSON.parse(data);
     let tikUrl;
@@ -274,14 +332,16 @@ app.get("/vdl/:ressourceID", async (req, res, next) => {
       throw new Error("TikTok video not found");
     }
     let fileType;
-    if (requestedFormat == "720p" || "1080p"|| "360p") {
+    if (requestedFormat == "720p" || "1080p" || "360p") {
       fileType = "mp4";
       res.setHeader("Content-Type", "video/mp4");
     } else if (requestedFormat == "audio") {
       fileType = "mp3";
       res.setHeader("Content-Type", "audio/mp3");
     }
-    const tikFileName = `Downit.xyz - ${requestedFormat} - ${encodeURIComponent(info.title)}.${fileType}`
+    const tikFileName = `Downit.xyz - ${requestedFormat} - ${encodeURIComponent(
+      info.title
+    )}.${fileType}`;
     res.setHeader("Content-Disposition", `attachment; filename=${tikFileName}`);
     res.status(200);
     // Pipe the TikTok video response to the Express response
@@ -302,7 +362,7 @@ app.get("/vdl/:ressourceID", async (req, res, next) => {
 });
 
 app.use((req, res, next) => {
-  res.status(404).sendFile(__dirname + '/public/404.html');
+  res.status(404).sendFile(__dirname + "/public/404.html");
 });
 
 const PORT = process.env.PORT || 80;

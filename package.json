@@ -4,18 +4,19 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "nodemon app.js",
+    "start": "node app.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "@tobyg74/tiktok-api-dl": "^1.0.14",
-    "@xaviabot/fb-downloader": "^1.0.14",
     "axios": "^1.6.5",
     "date-fns": "^3.3.1",
     "express": "^4.18.2",
     "express-rate-limit": "^7.1.5",
+    "fy-downloader-new": "^1.0.2",
     "path": "^0.12.7",
     "uuid": "^9.0.1",
     "winston": "^3.11.0",
