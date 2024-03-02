@@ -245,12 +245,17 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   async function handleFacebookVideo(inputUrl) {
-    try {
       const response = await fetch(`/fbinfo?fbUrl=${inputUrl}`);
       if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
+        const responseData = await response.text();
+        if (responseData.includes("Video unavailable")) {
+          throw new Error("YouTube video is unavailable");
+        } else {
+          throw new Error(
+            `Failed to fetch YouTube video info. Status: ${response.status}`
+          );
+        }
       }
-
       const data = await response.json();
       if (data) {
         const { title, thumbnail, sd, hd, audio, author } = data;
@@ -287,12 +292,6 @@ document.addEventListener("DOMContentLoaded", () => {
       } else {
         throw new Error("No data received from the server");
       }
-    } catch (error) {
-      console.error("Error during fetch:", error.message);
-      throw new Error(
-        "Can't connect to Facebook server. Please try again later."
-      );
-    }
   }
 
   function createFormatButtons(formats, type, url) {

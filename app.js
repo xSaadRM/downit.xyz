@@ -279,7 +279,9 @@ app.get("/fbinfo", async (req, res) => {
   try {
     facebook(fbUrl, (err, data) => {
       if (err != null) {
-        console.log(err);
+        if (err.message == 'invalid_url') {
+          res.status(500).json({ error: "Video unavailable" });
+      } else { console.log(err) }
       } else {
         const info = {
           title: data.title,
@@ -347,7 +349,7 @@ app.get("/vdl/:ressourceID", async (req, res, next) => {
 
     const contentLength = response.headers['content-length'];
     res.setHeader('Content-Length', contentLength);
-    
+
     res.status(200);
     // Pipe the TikTok video response to the Express response
     response.data.pipe(res);
