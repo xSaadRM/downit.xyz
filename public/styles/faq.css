@@ -1,0 +1,74 @@
+/* faq.css */
+
+/* FAQ Section Styling */
+#faq {
+  font-family: "Arial", sans-serif;
+  box-sizing: border-box;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f8f8f8;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+#faq h3 {
+  font-size: 24px;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+#faq ol {
+  list-style-type: none;
+  padding: 0;
+}
+
+#faq li {
+  margin-bottom: 20px;
+  background-color: #fff;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease-in-out;
+}
+
+#faq li:hover {
+  transform: scale(1.02);
+}
+
+#faq h4 {
+  font-size: 18px;
+  color: #007bff;
+  background-color: #f0faff;
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+}
+
+#faq p {
+  font-size: 16px;
+  color: #555;
+  padding: 15px;
+}
+
+/* Mobile Responsiveness */
+@media only screen and (max-width: 600px) {
+  #faq h3 {
+    font-size: 20px;
+  }
+
+  #faq h4 {
+    font-size: 16px;
+  }
+
+  #faq p {
+    font-size: 14px;
+    display: none;
+    padding: 10px;
+    margin: 0;
+  }
+
+  /* Style for the "show-answer" class on smaller screens */
+  #faq p.show-answer {
+    display: block;
+  }
+}
