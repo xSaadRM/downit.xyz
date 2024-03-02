@@ -72,3 +72,30 @@
     display: block;
   }
 }
+/* Dark-Mode */
+.dark-mode #faq {
+  background-color: #1a1a1a; /* Dark background color */
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.1); /* Adjust shadow color */
+}
+
+.dark-mode #faq h3 {
+  color: #b3b3b3; /* Header text color */
+}
+
+.dark-mode #faq li {
+  background-color: #333; /* List item background color */
+  box-shadow: 0 0 5px rgba(255, 255, 255, 0.1); /* Adjust shadow color */
+}
+
+.dark-mode #faq h4 {
+  background-color: #2c2c2c; /* Subheader background color */
+  border-bottom: 1px solid #555; /* Adjust border color */
+}
+
+.dark-mode #faq p {
+  color: #999; /* Paragraph text color */
+}
+
+.dark-mode #faq p a {
+    color: #007bff;
+}
