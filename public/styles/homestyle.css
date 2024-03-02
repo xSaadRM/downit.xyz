@@ -270,54 +270,71 @@ h2#videoTitle {
 }
 
 /* Styles for the left-side menu */
+.sect-hist {
+    display: flex;
+    margin-left: 10px;
+}
+
 .history-menu {
-    position: fixed;
-    top: 0;
-    left: 0;
-    height: 100%;
-    width: 200px;
-    background-color: #b9b7b7; /* Adjust the background color as needed */
-    padding-top: 20px; /* Adjust top padding as needed */
-    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1); /* Optional: Add shadow for a better look */
-    z-index: 0; /* Set z-index to a negative value to make it appear behind other elements */
+  position: fixed;
+  top: 0;
+  left: -200px;
+  height: 100%;
+  width: 200px;
+  background-color: #f3f3f3;
+  padding-top: 20px;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+  transition: left 0.3s ease; /* Add transition for smooth animation */
+  overflow-y: auto;
+}
+
+.history-menu.active {
+  left: 0;
+  width: 220px;
 }
 
 .history-menu ul {
-    list-style: none;
-    padding: 0;
-    margin-top: 50px;
+  list-style: none;
+  padding: 0;
+  margin-top: 50px;
 }
 
 .history-menu li {
-    margin-bottom: 10px; /* Adjust space between menu items */
+  margin-bottom: 10px;
 }
 
 .history-menu a {
-    text-decoration: none;
-    color: #050505; /* Adjust link color */
-    display: block;
-    padding: 8px 16px; /* Adjust padding for menu items */
-    transition: background-color 0.3s ease;
+  text-decoration: none;
+  color: #050505;
+  display: flex;
+  align-items: center; /* Align text and image vertically */
+  padding: 8px 16px;
+  transition: background-color 0.3s ease;
 }
 
 .history-menu a:hover {
-    background-color: #ddd; /* Change background color on hover */
-    background-color: #3498db;
-}
-.history-menu {
-    position: fixed;
-    top: 0;
-    left: -200px; /* Hide the menu off-screen initially */
-    height: 100%;
-    width: 200px;
-    background-color: #f3f3f3; /* Adjust the background color as needed */
-    padding-top: 20px; /* Adjust top padding as needed */
-    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1); /* Optional: Add shadow for a better look */
+  background-color: #ddd;
+  background-color: #3498db;
 }
 
-/* Show the menu when toggled */
-.history-menu.active {
-    left: 0;
-    overflow-y: auto; /* Enable vertical scrolling */
-    width: 220px;
+
+.history-menu ul li img {
+    width: 180px; /* Adjust the width of the thumbnails */
+    height: auto; /* Maintain aspect ratio */
+    margin-right: 10px; /* Add spacing between thumbnails and titles */
+    padding: 10px;
+}
+
+.history-menu h4{
+    padding: 10px;
+  }
+
+/* Modernizing the scrollbar */
+.history-menu::-webkit-scrollbar {
+  width: 10px; /* Set the width of the scrollbar */
+}
+
+.history-menu::-webkit-scrollbar-thumb {
+  background-color: #3498db; /* Set the color of the thumb */
+  border-radius: 5px; /* Optional: Add rounded corners to the thumb */
 }

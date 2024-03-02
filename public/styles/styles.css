@@ -25,14 +25,6 @@
     top: -10px;
 }
 
-
-.history-menu ul li img {
-    width: 180px; /* Adjust the width of the thumbnails */
-    height: auto; /* Maintain aspect ratio */
-    margin-right: 10px; /* Add spacing between thumbnails and titles */
-    padding: 10px;
-}
-
 .menu-toggle {
     display: flex;
     flex-direction: column;
@@ -43,14 +35,6 @@
 .ics-ptfrms {
     display: flex;
 }
-.sect-hist {
-    display: flex;
-    margin-left: 10px;
-}
-
-.history-menu h4{
-    margin-left: 5px;
-  }
 
   /*Switcher*/
 .switch {
