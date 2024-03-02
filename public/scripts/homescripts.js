@@ -59,6 +59,10 @@ document.addEventListener("DOMContentLoaded", () => {
   if (savedDarkModePreference === "true") {
     body.classList.add("dark-mode");
     darkModeToggle.checked = true;
+  } else {
+    toastTxt1.innerHTML = "huh Light Theme?";
+    toastTxt2.innerHTML = "Please turn on dark-mode from the website for your mental health 🙏🏿";
+    openToast();
   }
 
   darkModeToggle.addEventListener("click", toggleDarkMode);
