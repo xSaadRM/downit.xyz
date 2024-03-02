@@ -1,0 +1,46 @@
+/* For WebKit browsers (e.g., Chrome, Safari) */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #555;
+}
+
+::-webkit-scrollbar-track {
+  background-color: #f0f0f0;
+}
+
+/* For Firefox */
+body {
+  scrollbar-width: thin;
+  scrollbar-color: #555 #f0f0f0;
+}
+
+/* For Internet Explorer and Microsoft Edge */
+body {
+  -ms-overflow-style: none; /* Hide scrollbar in Internet Explorer and Edge */
+  scrollbar-width: thin;
+  scrollbar-color: #555 #f0f0f0;
+}
+
+/* Show scrollbar in Microsoft Edge (Chromium-based) */
+/* Comment out this block if you want to hide the scrollbar in Edge */
+body::-webkit-scrollbar {
+  width: 8px;
+}
+
+/* Hide scrollbar track for Internet Explorer and Microsoft Edge */
+body::-webkit-scrollbar-track {
+  background-color: #f0f0f0;
+}
+
+/* Hover effect for the thumb */
+::-webkit-scrollbar-thumb:hover {
+  background-color: #333;
+}
+
+/* Optional: Smooth scrolling behavior */
+html {
+  scroll-behavior: smooth;
+}
