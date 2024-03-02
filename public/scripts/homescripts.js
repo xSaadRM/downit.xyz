@@ -56,13 +56,15 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   const savedDarkModePreference = localStorage.getItem("darkModePreference");
+  const hasVisitedBefore = localStorage.getItem("firstTimeVisit");
   if (savedDarkModePreference === "true") {
     body.classList.add("dark-mode");
     darkModeToggle.checked = true;
-  } else {
+  } else if (!hasVisitedBefore){
     toastTxt1.innerHTML = "huh Light Theme?";
     toastTxt2.innerHTML = "Please turn on dark-mode from the website for your mental health 🙏🏿";
     openToast();
+    localStorage.setItem("firstTimeVisit", false);
   }
 
   darkModeToggle.addEventListener("click", toggleDarkMode);
