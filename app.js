@@ -337,12 +337,17 @@ app.get("/vdl/:ressourceID", async (req, res, next) => {
       res.setHeader("Content-Type", "video/mp4");
     } else if (requestedFormat == "audio") {
       fileType = "mp3";
-      res.setHeader("Content-Type", "audio/mp3");
+      res.setHeader("Content-Type", "audio/mpeg");
     }
     const tikFileName = `Downit.xyz - ${requestedFormat} - ${encodeURIComponent(
       info.title
     )}.${fileType}`;
+
     res.setHeader("Content-Disposition", `attachment; filename=${tikFileName}`);
+
+    const contentLength = response.headers['content-length'];
+    res.setHeader('Content-Length', contentLength);
+    
     res.status(200);
     // Pipe the TikTok video response to the Express response
     response.data.pipe(res);
