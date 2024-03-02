@@ -328,13 +328,3 @@ h2#videoTitle {
 .history-menu h4{
     padding: 10px;
   }
-
-/* Modernizing the scrollbar */
-.history-menu::-webkit-scrollbar {
-  width: 8px; /* Set the width of the scrollbar */
-}
-
-.history-menu::-webkit-scrollbar-thumb {
-  background-color: #3498db; /* Set the color of the thumb */
-  border-radius: 5px; /* Optional: Add rounded corners to the thumb */
-}
