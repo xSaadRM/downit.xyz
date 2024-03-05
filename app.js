@@ -238,7 +238,7 @@ app.get("/tikinfo", async (req, res, next) => {
             tikAPIData?.result?.description ||
             "Title not found in the fetched data.",
           thumbnail:
-            tikAPIData?.result.cover ||
+            tikAPIData?.result?.cover ||
             "Thumbnail not found in the fetched data.",
           sd: `${uservidID}?&f=720p`,
           hd: `${uservidID}?&f=1080p`,
