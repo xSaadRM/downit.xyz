@@ -235,10 +235,8 @@ app.get("/tikinfo", async (req, res, next) => {
         const info = {
           vidID: data.vid,
           title:
-            (data && data.desc) ||
-            (tikAPIData &&
-              tikAPIData.result &&
-              tikAPIData.result.description) ||
+            data?.desc ||
+            tikAPIData?.result?.description ||
             "Title not found in the fetched data.",
           thumbnail:
             tikAPIData.result.cover ||
