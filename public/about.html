@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>About Us - VidSavy</title>
     <link rel="stylesheet" href="./styles/about.css" />
+    <link rel="stylesheet" href="./styles/header.css" />
+    <link rel="stylesheet" href="./styles/resview.css" />
+    <link rel="stylesheet" href="./styles/styles.css" />
         <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
@@ -13,9 +16,41 @@
     <!-- Include any other necessary stylesheets or resources here -->
   </head>
   <body>
-    <header>
-      <!-- Navigation or header content goes here -->
-    </header>
+  <header>
+    <div class="header-container">
+      <div class="logo">
+        <a href="/">
+          <h1>Downify.us.to</h1>
+        </a>
+      </div>
+      <nav id="navbar" class="navbar">
+        <a href="/">Home</a>
+        <a href="/about">About</a>
+        <a href="/services">Services</a>
+        <a href="/contact">Contact US</a>
+      </nav>
+      <div class="tgls">
+        <div class="dark-mode-toggle-container">
+          <label class="switch">
+            <input type="checkbox" id="darkModeToggle" />
+            <span class="slider round"></span>
+          </label>
+        </div>
+        <div class="toggle-btn" id="barToggle">
+          <i class="fa fa-bars"></i>
+        </div>
+      </div>
+    </div>
+    <div class="mobile-navbar-container">
+      <i class="fa-solid fa-circle-xmark closeNav hide" id="navBarCloser"></i>
+      <nav id="mobile-navbar" class="navbar mobile-navbar">
+        <a href="/">Home</a>
+        <a href="/about">About</a>
+        <a href="/services">Services</a>
+        <a href="/contact">Contact US</a>
+      </nav>
+    </div>
+  </header>
 
     <main class="about-container">
       <section class="about-section">
@@ -76,4 +111,5 @@
       <!-- Footer content goes here -->
     </footer>
   </body>
+  <script src="./scripts/header.js"></script>
 </html>

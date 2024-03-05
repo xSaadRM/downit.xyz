@@ -30,7 +30,6 @@ document.addEventListener("DOMContentLoaded", () => {
   
     darkModeToggle.addEventListener("click", toggleDarkMode);
   
-    const menuToggle = document.querySelector(".menu-toggle");
     const leftMenu = document.querySelector(".history-menu");
   
     const closeMenu = () => {
@@ -40,18 +39,11 @@ document.addEventListener("DOMContentLoaded", () => {
     const handleClickOutsideMenu = (event) => {
       if (
         !leftMenu.contains(event.target) &&
-        !menuToggle.contains(event.target) &&
         !darkModeToggle.contains(event.target)
       ) {
         closeMenu();
       }
     };
-  
-    menuToggle.addEventListener("click", () => {
-      mobileNavBar.classList.remove("active");
-      leftMenu.classList.toggle("active");
-      renderVideoHistory();
-    });
   
     document.addEventListener("click", handleClickOutsideMenu);
   
