@@ -255,7 +255,7 @@ app.get("/tikinfo", async (req, res, next) => {
         }
         /* DEUGGIN ONLY !!! 
 
-        Writing the response data to a JSON file*/
+        Writing the response data to a JSON file
         const jsonFileName = path.join(
           __dirname,
           "/debugging/lovetikAPI-response.json"
@@ -271,6 +271,7 @@ app.get("/tikinfo", async (req, res, next) => {
             }
           }
         );
+        */
       } else {
         logger.error("TikTok: Video unavailable");
         res.status(500).json({ error: "Video unavailable" });
