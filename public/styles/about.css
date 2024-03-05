@@ -1,0 +1,95 @@
+body {
+  font-family: "Poppins", sans-serif;
+  margin: 0;
+  padding: 0;
+  background: linear-gradient(
+    to bottom,
+    #3498db,
+    #2980b9
+  ); /* Gradient background */
+  color: #fff; /* White text for better contrast */
+}
+
+.about-container {
+  max-width: 800px;
+  margin: 40px auto;
+  padding: 20px;
+  background-color: rgba(
+    255,
+    255,
+    255,
+    0.95
+  ); /* Semi-transparent white background */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+}
+
+.about-section,
+.team-section,
+.mission-section {
+  margin-bottom: 40px;
+  background-color: #fff; /* White background for sections */
+  padding: 20px; /* Added padding for sections */
+  border-radius: 8px; /* Slight border radius for sections */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Added shadow for sections */
+}
+
+h2 {
+  color: #3498db; /* Blue heading color */
+}
+
+p {
+  color: #555;
+  line-height: 1.6;
+}
+
+.team-member {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+  padding: 15px;
+  border-radius: 8px;
+}
+
+.member-avatar img {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  margin-right: 20px;
+  object-fit: cover;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.member-details {
+  flex-grow: 1;
+}
+
+.member-name {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.member-rank {
+  background-color: #3498db;
+  color: #fff;
+  padding: 5px 10px;
+  border-radius: 6px;
+}
+h3 {
+  color: #2980b9;
+}
+.member-social-icons {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.social-icon {
+  font-size: 20px;
+}
+.wa-icon {
+  color: green;
+}
