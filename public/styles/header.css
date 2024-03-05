@@ -19,6 +19,12 @@ body {
   align-items: center;
   margin: 10px 10px;
 }
+.logo a {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+}
 .logo h1 {
   color: white;
 }

@@ -1,5 +1,5 @@
 /* Media query for mobile devices */
-@media only screen and (min-width: 768px) {
+@media only screen and (min-width: 786px) {
     .mobile-navbar,
     .mobile-navbar.active {
         display: none;
@@ -60,13 +60,13 @@
         width: 100%;
     }
 }
-@media only screen and (width: 768px) {
+@media only screen and (width: 786px) {
     .mobile-navbar,
     .mobile-navbar.active {
         display: flex;
     }
 }
-@media only screen and (max-width: 768px) {
+@media only screen and (max-width: 786px) {
     .toggle-btn {
         font-size: xx-large;
         display: flex;
