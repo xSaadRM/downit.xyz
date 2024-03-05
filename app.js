@@ -3,7 +3,7 @@ const rateLimit = require("express-rate-limit");
 const path = require("path");
 const ytdl = require("ytdl-core");
 const { facebook } = require("fy-downloader-new");
-// const { TiktokDownloader } = require("@tobyg74/tiktok-api-dl")
+const { TiktokDownloader } = require("@tobyg74/tiktok-api-dl")
 const axios = require("axios");
 const winston = require("winston");
 const fs = require("fs");
@@ -172,6 +172,9 @@ app.get("/ytinfo", async (req, res, next) => {
 app.get("/tikinfo", async (req, res, next) => {
   try {
     const tikUrl = req.query.tikUrl;
+    const tikAPIData = await TiktokDownloader(tikUrl, {
+      version: "v1",
+    });
 
     if (!tikUrl) {
       return res.status(400).json({ error: "Missing TikTok URL" });
@@ -203,47 +206,53 @@ app.get("/tikinfo", async (req, res, next) => {
 
       const data = await response.json();
       // Check if the expected properties exist before accessing them
-      if (data.links) {
+      if (data) {
         // Filtering and accessing links array based on format (ft)
-        const mp4Links = data.links.filter((link) => link.ft === "1");
+        let mp4Links;
         let tiktok1080p;
         let tiktok720p;
-        if (mp4Links.length > 0) {
-          tiktok1080p = mp4Links[0];
-          if (mp4Links.length > 1) {
-            tiktok720p = mp4Links[1];
+        let mp3Link
+        if (data.links) {
+          mp3Link = data.links.find((link) => link.ft === "3");
+          mp4Links = data.links.filter((link) => link.ft === "1");
+          if (mp4Links.length > 0) {
+            tiktok1080p = mp4Links[0];
+            if (mp4Links.length > 1) {
+              tiktok720p = mp4Links[1];
+            } else {
+              res.json({ error: "Only one MP4 Link Found" });
+            }
           } else {
-            res.json({ error: "Only one MP4 Link Found" });
+            res.json({ error: "No MP4 Links Found" });
           }
-        } else {
-          res.json({ error: "No MP4 Links Found" });
         }
-        const mp3Link = data.links.find((link) => link.ft === "3"); // Use find instead of filter for a single element
+       
         const uservidID = uuidv4();
         const uservidIDjsonPath = `data/users/VidIDs/${uservidID}.json`;
         const info = {
           vidID: data.vid,
-          title: data.desc || "Title not found in the fetched data.",
-          thumbnail: data.cover || "Thumbnail not found in the fetched data.",
-          sd: tiktok720p
-            ? `${uservidID}?&f=720p`
-            : "SD link not found in the fetched data.",
-          hd: tiktok1080p
-            ? `${uservidID}?&f=1080p`
-            : "HD link not found in the fetched data.",
-          audio: mp3Link
-            ? `${uservidID}?&f=audio`
-            : "Audio link not found in the fetched data.",
+          title:
+            data.desc ||
+            tikAPIData.result.description ||
+            "Title not found in the fetched data.",
+          thumbnail: tikAPIData.result.cover || "Thumbnail not found in the fetched data.",
+          sd: `${uservidID}?&f=720p`,
+          hd: `${uservidID}?&f=1080p`,
+          audio: `${uservidID}?&f=audio`,
           author: data.author || "Author not found in the fetched data.",
           authorName:
             data.author_name || "Author Name not found in the fetched data.",
         };
         res.json(info);
-        info._720p = tiktok720p.a;
-        info._1080p = tiktok1080p.a;
-        info.audio = mp3Link.a;
-        fs.writeFileSync(uservidIDjsonPath, JSON.stringify(info, null, 2));
-
+        info._720p = tiktok720p ? tiktok720p.a : "404";
+        info._1080p = tiktok1080p ? tiktok1080p.a : tikAPIData.result.video[0];
+        info.audio = mp3Link ? mp3Link.a : tikAPIData.result.music.playUrl;
+        try {
+          fs.writeFileSync(uservidIDjsonPath, JSON.stringify(info, null, 2));
+          logger.info("File has been written successfully.");
+        } catch (error) {
+          logger.error("Error writing the file:", error.message);
+        }
         /* DEUGGIN ONLY !!! 
 
         Writing the response data to a JSON file*/
