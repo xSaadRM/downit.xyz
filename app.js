@@ -229,17 +229,27 @@ app.get("/tikinfo", async (req, res, next) => {
        
         const uservidID = uuidv4();
         const uservidIDjsonPath = `data/users/VidIDs/${uservidID}.json`;
+        console.log("Data:", data);
+        console.log("TikAPIData Result:", tikAPIData.result);
+
         const info = {
           vidID: data.vid,
           title:
-            data.desc ||
-            tikAPIData.result.description ||
+            (data && data.desc) ||
+            (tikAPIData &&
+              tikAPIData.result &&
+              tikAPIData.result.description) ||
             "Title not found in the fetched data.",
-          thumbnail: tikAPIData.result.cover || "Thumbnail not found in the fetched data.",
+          thumbnail:
+            tikAPIData.result.cover ||
+            "Thumbnail not found in the fetched data.",
           sd: `${uservidID}?&f=720p`,
           hd: `${uservidID}?&f=1080p`,
           audio: `${uservidID}?&f=audio`,
-          author: data.author || tikAPIData.result.author.nickname ||"Author not found in the fetched data.",
+          author:
+            data.author ||
+            tikAPIData.result.author.nickname ||
+            "Author not found in the fetched data.",
           authorName:
             data.author_name || "Author Name not found in the fetched data.",
         };
