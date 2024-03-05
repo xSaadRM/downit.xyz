@@ -1,5 +1,5 @@
 const express = require("express");
-const rateLimit = require("express-rate-limit");
+// const rateLimit = require("express-rate-limit");
 const path = require("path");
 const ytdl = require("ytdl-core");
 const { facebook } = require("fy-downloader-new");
@@ -13,14 +13,14 @@ const { format } = require("date-fns");
 const app = express();
 
 app.use(express.static(path.join(__dirname, "public")));
-
+/*
 const limiter = rateLimit({
   windowMs: 60 * 60 * 1000,
   max: 30,
   message: "Too many requests, please try again later.",
 });
 app.use("/tikinfo", limiter);
-
+*/
 const logFilePath = path.join(
   __dirname,
   `logs/error_${format(new Date(), "yyyy-MM-dd")}.log`
