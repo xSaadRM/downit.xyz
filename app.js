@@ -239,7 +239,7 @@ app.get("/tikinfo", async (req, res, next) => {
           sd: `${uservidID}?&f=720p`,
           hd: `${uservidID}?&f=1080p`,
           audio: `${uservidID}?&f=audio`,
-          author: data.author || "Author not found in the fetched data.",
+          author: data.author || tikAPIData.result.author.nickname ||"Author not found in the fetched data.",
           authorName:
             data.author_name || "Author Name not found in the fetched data.",
         };
