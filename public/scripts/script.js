@@ -5,7 +5,12 @@ const renderVideoHistory = () => {
 
   // Open IndexedDB
   const request = indexedDB.open("VideoHistoryDB", 1);
-
+  request.onupgradeneeded = function (event) {
+  const db = event.target.result;
+  if (!db.objectStoreNames.contains("videoHistory")) {
+    db.createObjectStore("videoHistory", { keyPath: "url" });
+  }
+};
   request.onsuccess = function (event) {
     const db = event.target.result;
     const transaction = db.transaction(["videoHistory"], "readonly");
