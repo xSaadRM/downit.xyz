@@ -1,31 +1,3 @@
-// Function to convert image to data URL
-function getImageDataURL(url, callback) {
-  var img = new Image();
-  img.crossOrigin = 'Anonymous'; // Enable CORS for the image
-  img.onload = function() {
-    var canvas = document.createElement('canvas');
-    var ctx = canvas.getContext('2d');
-    canvas.width = img.width;
-    canvas.height = img.height;
-    ctx.drawImage(img, 0, 0);
-    var dataURL = canvas.toDataURL('image/png');
-    callback(dataURL);
-  };
-  img.src = url;
-}
-
-// Save image data URL to localStorage
-function saveImageToLocalStorage(imageURL) {
-  getImageDataURL(imageURL, function(dataURL) {
-    try {
-      localStorage.setItem('savedImage', dataURL);
-      console.log('Image saved to localStorage!');
-    } catch (e) {
-      console.log('LocalStorage is full, or the image is too large to store.');
-    }
-  });
-}
-
     // Function to render video history in the history menu
     const renderVideoHistory = () => {
         const historyMenu = document.querySelector('.history-menu ul');
