@@ -117,7 +117,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const youtubeRegex =
       /^(https?:\/\/)?(www\.)?(youtube\.com|youtu\.?be)\/.*/i;
     const tiktokRegex = /^(https?:\/\/)?(www\.|vm\.)?tiktok\.com\/.*/i;
-    const facebookRegex = /^(https?:\/\/)?(m\.)?(www\.)?facebook\.com\/.*/i;
+    const facebookRegex = /^(https?:\/\/)?(m\.)?(www\.)?facebook|fb\.com\/.*/i;
 
     let urlType = "";
     if (youtubeRegex.test(inputUrl)) {
@@ -324,13 +324,63 @@ document.addEventListener("DOMContentLoaded", () => {
     formatsBtnsElm.appendChild(formatButton);
   }
 
-  function updateVideoHistory(videoDetails) {
-    let videoHistory = JSON.parse(localStorage.getItem("videoHistory")) || [];
-    videoHistory.unshift(videoDetails);
-    const maxHistoryItems = 10;
-    videoHistory = videoHistory.slice(0, maxHistoryItems);
-    localStorage.setItem("videoHistory", JSON.stringify(videoHistory));
-  }
+// Function to convert an image to a data URL
+function convertImageToDataURL(imagePath, callback) {
+  const img = new Image();
+  img.crossOrigin = "Anonymous"; // Enable cross-origin resource sharing
+  img.onload = function () {
+    const canvas = document.createElement("canvas");
+    const ctx = canvas.getContext("2d");
+    canvas.width = img.width;
+    canvas.height = img.height;
+    ctx.drawImage(img, 0, 0, img.width, img.height);
+    const dataURL = canvas.toDataURL("image/png"); // Change to "image/jpeg" if your thumbnail is in JPEG format
+    callback(dataURL);
+  };
+  img.src = imagePath;
+}
+
+// Function to update video history in IndexedDB
+function updateVideoHistory(videoDetails) {
+  convertImageToDataURL(videoDetails.thumbnail, function (thumbnailDataURL) {
+    videoDetails.thumbnail = thumbnailDataURL;
+
+    // Open IndexedDB
+    const request = indexedDB.open("VideoHistoryDB", 1);
+
+    request.onupgradeneeded = function (event) {
+      const db = event.target.result;
+      const objectStore = db.createObjectStore("videoHistory", {
+        keyPath: "url",
+      });
+    };
+
+    request.onsuccess = function (event) {
+      const db = event.target.result;
+      const transaction = db.transaction(["videoHistory"], "readwrite");
+      const objectStore = transaction.objectStore("videoHistory");
+
+      // Add video details to the object store
+      const addRequest = objectStore.add(videoDetails);
+
+      addRequest.onsuccess = function (event) {
+        console.log("Video details added to IndexedDB");
+      };
+
+      addRequest.onerror = function (event) {
+        console.error(
+          "Error adding video details to IndexedDB",
+          event.target.error
+        );
+      };
+    };
+
+    request.onerror = function (event) {
+      console.error("Error opening IndexedDB", event.target.error);
+    };
+  });
+}
+
   async function handleThumbnailAspectRatio(thumbnailUrl) {
     // Create a new Image element
     const thumbnailImage = new Image();
