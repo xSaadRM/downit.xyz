@@ -229,6 +229,7 @@ app.get("/tikinfo", async (req, res, next) => {
           vidID: data.vid,
           title: data.desc || "Title not found in the fetched data.",
           thumbnail: data.cover || "Thumbnail not found in the fetched data.",
+          thumbnail64: await getBase64FromURL(data.cover),
           sd: tiktok720p
             ? `${uservidID}?&f=720p`
             : "SD link not found in the fetched data.",
@@ -255,6 +256,7 @@ app.get("/tikinfo", async (req, res, next) => {
         info = {
           title: tikDl.result.description || "Title not found in the fetched data.",
           thumbnail: tikDl.result.cover || "Thumbnail not found in the fetched data.",
+          thumbnail64: await getBase64FromURL(tikDl.result.cover),
           hd: tikDl.result.video
             ? `${uservidID}?&f=1080p`
             : "HD link not found in the fetched data.",
@@ -384,6 +386,17 @@ app.use((req, res, next) => {
   res.status(404).sendFile(__dirname + "/public/404.html");
 });
 
+// Add a function to convert an image URL to base64
+async function getBase64FromURL(imageURL) {
+  try {
+    const response = await axios.get(imageURL, { responseType: 'arraybuffer' });
+    const base64Data = Buffer.from(response.data, 'binary').toString('base64');
+    return `data:image/jpg;base64,${base64Data}`;
+  } catch (error) {
+    console.error('Error fetching image:', error);
+    throw error;
+  }
+}
 const PORT = process.env.PORT || 80;
 app.listen(PORT, () => {
   console.log(`Server listening on port ${PORT}`);

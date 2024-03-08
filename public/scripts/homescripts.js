@@ -219,7 +219,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const data = await response.json();
 
     if (data) {
-      const { title, thumbnail, sd, hd, audio, author } = data;
+      const { title, thumbnail, thumbnail64, sd, hd, audio, author } = data;
       videoTitleElem.textContent = title;
       videoThumbnailElem.src = thumbnail;
       videoThumbnailElem.style.display = "flex";
@@ -245,7 +245,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const videoDetails = {
         title: title,
         url: inputUrl,
-        thumbnail: thumbnail,
+        thumbnail: thumbnail64,
       };
       updateVideoHistory(videoDetails);
     }
@@ -440,7 +440,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // Function to open IndexedDB database
   async function openDB() {
     return new Promise((resolve, reject) => {
-      const openDBRequest = indexedDB.open("VideoHistoryDB", 2);
+      const openDBRequest = indexedDB.open("VideoHistoryDB_V1", 2);
 
       openDBRequest.onupgradeneeded = (event) => {
         const db = event.target.result;
