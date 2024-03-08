@@ -54,6 +54,10 @@ app.get("/about", (req, res) => {
   res.sendFile(path.join(__dirname, "public", "about.html"));
 });
 
+app.get("/contact", (req, res) => {
+  res.sendFile(path.join(__dirname, "public", "contact.html"));
+});
+
 const pathToSitemap = path.join(__dirname, "sitemap.xml");
 
 app.get("/sitemap.xml", (req, res) => {
