@@ -178,7 +178,7 @@ app.get("/tikinfo", async (req, res, next) => {
     const tikUrl = req.query.tikUrl;
     const uservidID = uuidv4();
     const uservidIDjsonPath = `data/users/VidIDs/${uservidID}.json`;
-
+    let info;
     if (!tikUrl) {
       return res.status(400).json({ error: "Missing TikTok URL" });
     }
@@ -225,7 +225,7 @@ app.get("/tikinfo", async (req, res, next) => {
           res.json({ error: "No MP4 Links Found" });
         }
         const mp3Link = data.links.find((link) => link.ft === "3"); // Use find instead of filter for a single element
-        const info = {
+        info = {
           vidID: data.vid,
           title: data.desc || "Title not found in the fetched data.",
           thumbnail: data.cover || "Thumbnail not found in the fetched data.",
@@ -252,7 +252,7 @@ app.get("/tikinfo", async (req, res, next) => {
           version: "v1",
         })
 
-        const info = {
+        info = {
           title: tikDl.result.description || "Title not found in the fetched data.",
           thumbnail: tikDl.result.cover || "Thumbnail not found in the fetched data.",
           hd: tikDl.result.video
