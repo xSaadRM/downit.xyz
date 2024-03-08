@@ -438,27 +438,27 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // Function to open IndexedDB database
-function openDB() {
-  return new Promise((resolve, reject) => {
-    const openDB = indexedDB.open("VideoHistoryDB", 2);
+  async function openDB() {
+    return new Promise((resolve, reject) => {
+      const openDBRequest = indexedDB.open("VideoHistoryDB", 2);
 
-    openDB.onupgradeneeded = (event) => {
-      const db = event.target.result;
-      const objectStore = db.createObjectStore("videoHistory", {
-        keyPath: "url",
-      });
-      objectStore.createIndex("order", "order", { unique: false });
-    };
+      openDBRequest.onupgradeneeded = (event) => {
+        const db = event.target.result;
+        const objectStore = db.createObjectStore("videoHistory", {
+          keyPath: "url",
+        });
+        objectStore.createIndex("order", "order", { unique: false });
+      };
 
-    openDB.onsuccess = (event) => {
-      resolve(event.target.result);
-    };
+      openDBRequest.onsuccess = (event) => {
+        resolve(event.target.result);
+      };
 
-    openDB.onerror = (event) => {
-      reject(event.target.error);
-    };
-  });
-}
+      openDBRequest.onerror = (event) => {
+        reject(event.target.error);
+      };
+    });
+  }
 
   async function handleThumbnailAspectRatio(thumbnailUrl) {
     // Create a new Image element
