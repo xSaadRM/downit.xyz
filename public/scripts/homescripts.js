@@ -342,45 +342,123 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // Function to update video history in IndexedDB
-  function updateVideoHistory(videoDetails) {
-    let videoHistory = JSON.parse(localStorage.getItem("videoHistory")) || [];
-    videoHistory.unshift(videoDetails);
-    const maxHistoryItems = 10;
-    videoHistory = videoHistory.slice(0, maxHistoryItems);
-    localStorage.setItem("videoHistory", JSON.stringify(videoHistory));
-  }
-  // Function to render video history in the history menu
-  const renderVideoHistory = () => {
-    const historyMenu = document.querySelector(".history-menu ul");
-    historyMenu.innerHTML = ""; // Clear previous history
+  async function updateVideoHistory(videoDetails) {
+    const db = await openDB();
+    const transaction = db.transaction("videoHistory", "readwrite");
+    const objectStore = transaction.objectStore("videoHistory");
 
-    // Retrieve video history from local storage
-    const videoHistory = JSON.parse(localStorage.getItem("videoHistory")) || [];
+    return new Promise((resolve, reject) => {
+      // Check if the video already exists in the history
+      const existingVideoRequest = objectStore.get(videoDetails.url);
 
-    // Iterate through video history and create list items with thumbnails and titles
-    videoHistory.forEach((video, index) => {
-      const listItem = document.createElement("li");
-      const anchor = document.createElement("a");
-      const thumbnailImg = document.createElement("img");
+      existingVideoRequest.onsuccess = (event) => {
+        const existingVideo = event.target.result;
 
-      // Set thumbnail source and alt text
-      thumbnailImg.src = video.thumbnail;
-      thumbnailImg.alt = "Thumbnail";
+        if (existingVideo) {
+          // Update the existing video's order
+          existingVideo.order = Date.now();
+          const updateRequest = objectStore.put(existingVideo);
 
-      // Set the anchor href to the video URL
-      anchor.href = video.url;
+          updateRequest.onsuccess = () => resolve();
+          updateRequest.onerror = () => reject(updateRequest.error);
+        } else {
+          // Add the new video to the history with the current timestamp as order
+          const maxHistoryItems = 10;
 
-      // Set the anchor text to the video title
-      anchor.textContent = video.title;
+          const countRequest = objectStore.count();
+          countRequest.onsuccess = (countEvent) => {
+            const count = countEvent.target.result;
 
-      // Append thumbnail image and anchor to list item
-      listItem.appendChild(thumbnailImg);
-      listItem.appendChild(anchor);
+            if (count >= maxHistoryItems) {
+              // Fetch all videos to find the oldest one
+              const index = objectStore.index("order");
+              const allVideosRequest = index.getAll();
 
-      // Append list item to history menu
-      historyMenu.appendChild(listItem);
+              allVideosRequest.onsuccess = (allVideosEvent) => {
+                const allVideos = allVideosEvent.target.result;
+
+                // Find the oldest video
+                const oldestVideo = allVideos.reduce((oldest, current) => {
+                  return current.order < oldest.order ? current : oldest;
+                }, allVideos[0]);
+
+                // Remove the oldest video
+                objectStore.delete(oldestVideo.url);
+              };
+            }
+
+            // Add the new video to the history
+            videoDetails.order = Date.now();
+            const addRequest = objectStore.add(videoDetails);
+
+            addRequest.onsuccess = () => resolve();
+            addRequest.onerror = () => reject(addRequest.error);
+          };
+        }
+      };
+
+      existingVideoRequest.onerror = () => reject(existingVideoRequest.error);
     });
-  };
+  }
+
+  // Function to render video history in the history menu
+  async function renderVideoHistory() {
+    const db = await openDB();
+    const historyMenu = document.querySelector(".history-menu ul");
+    historyMenu.innerHTML = "";
+
+    const objectStore = db
+      .transaction("videoHistory", "readonly")
+      .objectStore("videoHistory");
+    const index = objectStore.index("order");
+
+    index.openCursor(null, "prev").onsuccess = (event) => {
+      const cursor = event.target.result;
+
+      if (cursor) {
+        const video = cursor.value;
+
+        const listItem = document.createElement("li");
+        const anchor = document.createElement("a");
+        const thumbnailImg = document.createElement("img");
+
+        thumbnailImg.src = video.thumbnail;
+        thumbnailImg.alt = "Thumbnail";
+        anchor.href = video.url;
+        anchor.textContent = video.title;
+
+        listItem.appendChild(thumbnailImg);
+        listItem.appendChild(anchor);
+
+        historyMenu.appendChild(listItem);
+
+        cursor.continue();
+      }
+    };
+  }
+
+  // Function to open IndexedDB database
+  function openDB() {
+    return new Promise((resolve, reject) => {
+      const openDB = indexedDB.open("VideoHistoryDB", 1);
+
+      openDB.onupgradeneeded = (event) => {
+        const db = event.target.result;
+        const objectStore = db.createObjectStore("videoHistory", {
+          keyPath: "url",
+        });
+        objectStore.createIndex("order", "order", { unique: false });
+      };
+
+      openDB.onsuccess = (event) => {
+        resolve(event.target.result);
+      };
+
+      openDB.onerror = (event) => {
+        reject(event.target.error);
+      };
+    });
+  }
 
   async function handleThumbnailAspectRatio(thumbnailUrl) {
     // Create a new Image element
