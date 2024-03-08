@@ -60,9 +60,10 @@ document.addEventListener("DOMContentLoaded", () => {
   if (savedDarkModePreference === "true") {
     body.classList.add("dark-mode");
     darkModeToggle.checked = true;
-  } else if (!hasVisitedBefore){
+  } else if (!hasVisitedBefore) {
     toastTxt1.innerHTML = "huh Light Theme?";
-    toastTxt2.innerHTML = "Please turn on dark-mode from the website for your mental health 🙏🏿";
+    toastTxt2.innerHTML =
+      "Please turn on dark-mode from the website for your mental health 🙏🏿";
     openToast();
     localStorage.setItem("firstTimeVisit", false);
   }
@@ -251,53 +252,53 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   async function handleFacebookVideo(inputUrl) {
-      const response = await fetch(`/fbinfo?fbUrl=${inputUrl}`);
-      if (!response.ok) {
-        const responseData = await response.text();
-        if (responseData.includes("Video unavailable")) {
-          throw new Error("YouTube video is unavailable");
-        } else {
-          throw new Error(
-            `Failed to fetch YouTube video info. Status: ${response.status}`
-          );
-        }
-      }
-      const data = await response.json();
-      if (data) {
-        const { title, thumbnail, sd, hd, audio, author } = data;
-        videoTitleElem.textContent = title;
-        videoThumbnailElem.src = thumbnail;
-        videoThumbnailElem.style.display = "flex";
-        videoInfo.style.display = "flex";
-        handleThumbnailAspectRatio(data.thumbnail);
-
-        if (sd) {
-          createDownloadButton("Download SD", sd, "mp4", "sd");
-        }
-
-        if (hd) {
-          createDownloadButton("Download HD", hd, "mp4", "hd");
-        }
-
-        if (audio) {
-          createDownloadButton("Download MP3", audio, "mp3", "audio");
-        }
-
-        if (author) {
-          authorElem.textContent = `Author: ${author}`;
-          videoInfo.appendChild(authorElem);
-        }
-
-        const videoDetails = {
-          title: title,
-          url: inputUrl,
-          thumbnail: thumbnail,
-        };
-
-        updateVideoHistory(videoDetails);
+    const response = await fetch(`/fbinfo?fbUrl=${inputUrl}`);
+    if (!response.ok) {
+      const responseData = await response.text();
+      if (responseData.includes("Video unavailable")) {
+        throw new Error("YouTube video is unavailable");
       } else {
-        throw new Error("No data received from the server");
+        throw new Error(
+          `Failed to fetch YouTube video info. Status: ${response.status}`
+        );
       }
+    }
+    const data = await response.json();
+    if (data) {
+      const { title, thumbnail, sd, hd, audio, author } = data;
+      videoTitleElem.textContent = title;
+      videoThumbnailElem.src = thumbnail;
+      videoThumbnailElem.style.display = "flex";
+      videoInfo.style.display = "flex";
+      handleThumbnailAspectRatio(data.thumbnail);
+
+      if (sd) {
+        createDownloadButton("Download SD", sd, "mp4", "sd");
+      }
+
+      if (hd) {
+        createDownloadButton("Download HD", hd, "mp4", "hd");
+      }
+
+      if (audio) {
+        createDownloadButton("Download MP3", audio, "mp3", "audio");
+      }
+
+      if (author) {
+        authorElem.textContent = `Author: ${author}`;
+        videoInfo.appendChild(authorElem);
+      }
+
+      const videoDetails = {
+        title: title,
+        url: inputUrl,
+        thumbnail: thumbnail,
+      };
+
+      updateVideoHistory(videoDetails);
+    } else {
+      throw new Error("No data received from the server");
+    }
   }
 
   function createFormatButtons(formats, type, url) {
@@ -319,67 +320,67 @@ document.addEventListener("DOMContentLoaded", () => {
     const formatButton = document.createElement("button");
     formatButton.innerHTML = `${label}`;
     formatButton.addEventListener("click", () => {
-      window.open(`/vdl/${url}`)
+      window.open(`/vdl/${url}`);
     });
     formatsBtnsElm.appendChild(formatButton);
   }
 
-// Function to convert an image to a data URL
-function convertImageToDataURL(imagePath, callback) {
-  const img = new Image();
-  img.crossOrigin = "Anonymous"; // Enable cross-origin resource sharing
-  img.onload = function () {
-    const canvas = document.createElement("canvas");
-    const ctx = canvas.getContext("2d");
-    canvas.width = img.width;
-    canvas.height = img.height;
-    ctx.drawImage(img, 0, 0, img.width, img.height);
-    const dataURL = canvas.toDataURL("image/png"); // Change to "image/jpeg" if your thumbnail is in JPEG format
-    callback(dataURL);
+  // Function to convert an image to a data URL
+  function convertImageToDataURL(imagePath, callback) {
+    const img = new Image();
+    img.crossOrigin = "Anonymous"; // Enable cross-origin resource sharing
+    img.onload = function () {
+      const canvas = document.createElement("canvas");
+      const ctx = canvas.getContext("2d");
+      canvas.width = img.width;
+      canvas.height = img.height;
+      ctx.drawImage(img, 0, 0, img.width, img.height);
+      const dataURL = canvas.toDataURL("image/png"); // Change to "image/jpeg" if your thumbnail is in JPEG format
+      callback(dataURL);
+    };
+    img.src = imagePath;
+  }
+
+  // Function to update video history in IndexedDB
+  function updateVideoHistory(videoDetails) {
+    let videoHistory = JSON.parse(localStorage.getItem("videoHistory")) || [];
+    videoHistory.unshift(videoDetails);
+    const maxHistoryItems = 10;
+    videoHistory = videoHistory.slice(0, maxHistoryItems);
+    localStorage.setItem("videoHistory", JSON.stringify(videoHistory));
+  }
+  // Function to render video history in the history menu
+  const renderVideoHistory = () => {
+    const historyMenu = document.querySelector(".history-menu ul");
+    historyMenu.innerHTML = ""; // Clear previous history
+
+    // Retrieve video history from local storage
+    const videoHistory = JSON.parse(localStorage.getItem("videoHistory")) || [];
+
+    // Iterate through video history and create list items with thumbnails and titles
+    videoHistory.forEach((video, index) => {
+      const listItem = document.createElement("li");
+      const anchor = document.createElement("a");
+      const thumbnailImg = document.createElement("img");
+
+      // Set thumbnail source and alt text
+      thumbnailImg.src = video.thumbnail;
+      thumbnailImg.alt = "Thumbnail";
+
+      // Set the anchor href to the video URL
+      anchor.href = video.url;
+
+      // Set the anchor text to the video title
+      anchor.textContent = video.title;
+
+      // Append thumbnail image and anchor to list item
+      listItem.appendChild(thumbnailImg);
+      listItem.appendChild(anchor);
+
+      // Append list item to history menu
+      historyMenu.appendChild(listItem);
+    });
   };
-  img.src = imagePath;
-}
-
-// Function to update video history in IndexedDB
-function updateVideoHistory(videoDetails) {
-  convertImageToDataURL(videoDetails.thumbnail, function (thumbnailDataURL) {
-    videoDetails.thumbnail = thumbnailDataURL;
-
-    // Open IndexedDB
-    const request = indexedDB.open("VideoHistoryDB", 1);
-
-    request.onupgradeneeded = function (event) {
-      const db = event.target.result;
-      const objectStore = db.createObjectStore("videoHistory", {
-        keyPath: "url",
-      });
-    };
-
-    request.onsuccess = function (event) {
-      const db = event.target.result;
-      const transaction = db.transaction(["videoHistory"], "readwrite");
-      const objectStore = transaction.objectStore("videoHistory");
-
-      // Add video details to the object store
-      const addRequest = objectStore.add(videoDetails);
-
-      addRequest.onsuccess = function (event) {
-        console.log("Video details added to IndexedDB");
-      };
-
-      addRequest.onerror = function (event) {
-        console.error(
-          "Error adding video details to IndexedDB",
-          event.target.error
-        );
-      };
-    };
-
-    request.onerror = function (event) {
-      console.error("Error opening IndexedDB", event.target.error);
-    };
-  });
-}
 
   async function handleThumbnailAspectRatio(thumbnailUrl) {
     // Create a new Image element
