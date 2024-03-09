@@ -275,7 +275,7 @@ app.get("/tikinfo", async (req, res, next) => {
       } else if ( tikDl.result.type == "image" ) {
          info = {
           title: tikDl.result.description || "Title not found in the fetched data.",
-          images: tikDl.result.images,
+          images: tikDl.result.images ? await getBase64FromURLs(tikDl.result.images, 'heic'): "can't get slidshow images",
           thumbnail64: tikDl.result.images[0] ? await getBase64FromURL(tikDl.result.images[0], 'heic') : "image64 not found",
           audio: tikDl.result.music.playUrl
             ? `${uservidID}?&f=audio`
@@ -404,6 +404,7 @@ app.get("/vdl/:ressourceID", async (req, res, next) => {
 app.use((req, res, next) => {
   res.status(404).sendFile(__dirname + "/public/404.html");
 });
+
 async function getBase64FromURL(imageURL, format) {
   try {
     let base64Data
@@ -426,6 +427,39 @@ async function getBase64FromURL(imageURL, format) {
     throw error;
   }
 }
+
+async function getBase64FromURLs(imageURLs, format) {
+  try {
+    const base64Images = [];
+
+    for (const imageURL of imageURLs) {
+      const response = await axios.get(imageURL, {
+        responseType: "arraybuffer",
+      });
+      let base64Data;
+
+      if (format === "heic") {
+        // Convert HEIC to JPEG
+        const jpegBuffer = await heicConvert({
+          buffer: Buffer.from(response.data),
+          format: "JPEG",
+          quality: 1,
+        });
+        base64Data = jpegBuffer.toString("base64");
+      } else {
+        base64Data = Buffer.from(response.data).toString("base64");
+      }
+
+      base64Images.push(`data:image/jpeg;base64,${base64Data}`);
+    }
+
+    return base64Images;
+  } catch (error) {
+    console.error("Error fetching or converting images:", error);
+    throw error;
+  }
+}
+
 const PORT = process.env.PORT || 80;
 app.listen(PORT, () => {
   console.log(`Server listening on port ${PORT}`);
