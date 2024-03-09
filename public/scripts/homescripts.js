@@ -1,4 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
+  const slideshow = document.querySelector(".slideshow");
   const mobileNavBar = document.getElementById("mobile-navbar");
   const bartgl = document.getElementById("barToggle");
   const navBarCloser = document.getElementById("navBarCloser");
@@ -141,6 +142,7 @@ document.addEventListener("DOMContentLoaded", () => {
       videoTitleElem.innerHTML = "";
       formatsBtnsElm.innerHTML = "";
       authorElem.innerHTML = "";
+      slideshow.innerHTML = "";
 
       if (urlType === "youtube") {
         await handleYouTubeVideo(inputUrl);
@@ -224,14 +226,17 @@ document.addEventListener("DOMContentLoaded", () => {
       const { title, thumbnail, thumbnail64, sd, hd, audio, author, images } =
         data;
 
-      if (!thumbnail) {
+      if (!thumbnail && images) {
         videoThumbnailElem.style.display = "none";
+        images.forEach(slideimage => {
+          const slideImageElm = document.createElement("img");
+          slideImageElm.setAttribute("src", slideimage);
+          slideshow.appendChild(slideImageElm);
+        });
       } else if (thumbnail) {
         videoThumbnailElem.src = thumbnail;
         videoThumbnailElem.style.display = "flex";
         handleThumbnailAspectRatio(data.thumbnail);
-      } else if (images) {
-        
       }
 
       videoTitleElem.textContent = title;
