@@ -9,7 +9,7 @@ const winston = require("winston");
 const fs = require("fs");
 const { v4: uuidv4 } = require("uuid");
 const { format } = require("date-fns");
-
+const heicConvert = require("heic-convert")
 const app = express();
 
 app.use(express.static(path.join(__dirname, "public")));
@@ -228,7 +228,7 @@ app.get("/tikinfo", async (req, res, next) => {
           vidID: data.vid,
           title: data.desc || "Title not found in the fetched data.",
           thumbnail: data.cover || "Thumbnail not found in the fetched data.",
-          thumbnail64: await getBase64FromURL(data.cover),
+          thumbnail64: await getBase64FromURL(data.cover, 'jpg'),
           sd: tiktok720p
             ? `${uservidID}?&f=720p`
             : "SD link not found in the fetched data.",
@@ -253,11 +253,11 @@ app.get("/tikinfo", async (req, res, next) => {
         })
         if (tikDl.status == 'error' && tikDl.message == 'Failed to find tiktok data. Make sure your tiktok url is correct!') {
           return res.status(500).json("Failed to find tiktok data. Make sure your tiktok url is correct!");
-        }
-        info = {
+        } else if (tikDl.result.type == "video") {
+          info = {
           title: tikDl.result.description || "Title not found in the fetched data.",
           thumbnail: tikDl.result.cover || "Thumbnail not found in the fetched data.",
-          thumbnail64: await getBase64FromURL(tikDl.result.cover),
+          thumbnail64: await getBase64FromURL(tikDl.result.cover, 'jpg'),
           hd: tikDl.result.video
             ? `${uservidID}?&f=1080p`
             : "HD link not found in the fetched data.",
@@ -268,15 +268,33 @@ app.get("/tikinfo", async (req, res, next) => {
           authorName:
             tikDl.result.author.nickname || "Author Name not found in the fetched data.",
         };
+        
         res.json(info);
-        info._1080p = tikDl.result.video[0];
         info.audio = tikDl.result.music.playUrl;
+        info._1080p = tikDl.result.video[0];
+      } else if ( tikDl.result.type == "image" ) {
+         info = {
+          title: tikDl.result.description || "Title not found in the fetched data.",
+          images: tikDl.result.images,
+          thumbnail64: tikDl.result.images[0] ? await getBase64FromURL(tikDl.result.images[0], 'heic') : "image64 not found",
+          audio: tikDl.result.music.playUrl
+            ? `${uservidID}?&f=audio`
+            : "Audio link not found in the fetched data.",
+          author: tikDl.result.author.username || "Author not found in the fetched data.",
+          authorName:
+            tikDl.result.author.nickname || "Author Name not found in the fetched data.",
+        };
+        
+        res.json(info);
+        info.audio = tikDl.result.music.playUrl
+      } else {
+        return res.status(500).json({error: "Unknown error please report the probleme to us"});
       }
-      
-      fs.writeFileSync(uservidIDjsonPath, JSON.stringify(info, null, 2));
-
+    }
+    fs.writeFileSync(uservidIDjsonPath, JSON.stringify(info, null, 2));
     } catch (error) {
       logger.error("Error:", error);
+      res.status(500).json("Internal server error");
     }
   } catch (error) {
     logger.error("Error fetching TikTok data:", error);
@@ -386,15 +404,25 @@ app.get("/vdl/:ressourceID", async (req, res, next) => {
 app.use((req, res, next) => {
   res.status(404).sendFile(__dirname + "/public/404.html");
 });
-
-// Add a function to convert an image URL to base64
-async function getBase64FromURL(imageURL) {
+async function getBase64FromURL(imageURL, format) {
   try {
-    const response = await axios.get(imageURL, { responseType: 'arraybuffer' });
-    const base64Data = Buffer.from(response.data, 'binary').toString('base64');
-    return `data:image/jpg;base64,${base64Data}`;
+    let base64Data
+    const response = await axios.get(imageURL, { responseType: "arraybuffer" });
+    if (format == 'heic') {
+      // Convert HEIC to JPEG
+      jpegBuffer = await heicConvert({
+        buffer: response.data,
+        format: "JPEG", // Convert to JPEG format
+        quality: 1, // Adjust the quality as needed
+      });
+      base64Data = jpegBuffer.toString("base64");
+    } else {
+      base64Data = Buffer.from(response.data, 'binary').toString('base64');
+    }
+
+    return `data:image/jpeg;base64,${base64Data}`;
   } catch (error) {
-    console.error('Error fetching image:', error);
+    console.error("Error fetching or converting image:", error);
     throw error;
   }
 }

@@ -208,7 +208,9 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!response.ok) {
       const responseData = await response.text();
       if (responseData.includes("Make sure your tiktok url is correct!")) {
-        throw new Error(`TikTok video is unavailable.\n Make sure your tiktok url is correct!`);
+        throw new Error(
+          `TikTok video is unavailable.\n Make sure your tiktok url is correct!`
+        );
       } else {
         throw new Error(
           `Failed to fetch TikTok video info. Status: ${response.status}`
@@ -219,12 +221,21 @@ document.addEventListener("DOMContentLoaded", () => {
     const data = await response.json();
 
     if (data) {
-      const { title, thumbnail, thumbnail64, sd, hd, audio, author } = data;
+      const { title, thumbnail, thumbnail64, sd, hd, audio, author, images } =
+        data;
+
+      if (!thumbnail) {
+        videoThumbnailElem.style.display = "none";
+      } else if (thumbnail) {
+        videoThumbnailElem.src = thumbnail;
+        videoThumbnailElem.style.display = "flex";
+        handleThumbnailAspectRatio(data.thumbnail);
+      } else if (images) {
+        
+      }
+
       videoTitleElem.textContent = title;
-      videoThumbnailElem.src = thumbnail;
-      videoThumbnailElem.style.display = "flex";
       videoInfo.style.display = "flex";
-      handleThumbnailAspectRatio(data.thumbnail);
 
       if (sd) {
         createDownloadButton("Download SD<br>720p", sd, "mp4", "720p");
