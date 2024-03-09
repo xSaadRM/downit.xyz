@@ -202,14 +202,13 @@ app.get("/tikinfo", async (req, res, next) => {
         },
         body: `query=${tikUrl}`,
       });
-
-      if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
-      }
-
+      
       const data = await response.json();
-      // Check if the expected properties exist before accessing them
-      if (data.links) {
+      
+      if (!response.ok) {
+        console.log(response.status);
+        return res.status(response.status).json({error: "can't reach the first tiktok server"});
+      } else if (data.links) {
         // Filtering and accessing links array based on format (ft)
         const mp4Links = data.links.filter((link) => link.ft === "1");
         let tiktok1080p;
@@ -252,7 +251,9 @@ app.get("/tikinfo", async (req, res, next) => {
         const tikDl = await TiktokDownloader(tikUrl, {
           version: "v1",
         })
-
+        if (tikDl.status == 'error' && tikDl.message == 'Failed to find tiktok data. Make sure your tiktok url is correct!') {
+          return res.status(500).json("Failed to find tiktok data. Make sure your tiktok url is correct!");
+        }
         info = {
           title: tikDl.result.description || "Title not found in the fetched data.",
           thumbnail: tikDl.result.cover || "Thumbnail not found in the fetched data.",

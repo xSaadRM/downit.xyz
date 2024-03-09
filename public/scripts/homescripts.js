@@ -207,8 +207,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const response = await fetch(`/tikinfo?tikUrl=${inputUrl}`);
     if (!response.ok) {
       const responseData = await response.text();
-      if (responseData.includes("Video unavailable")) {
-        throw new Error(`TikTok video is unavailable`);
+      if (responseData.includes("Make sure your tiktok url is correct!")) {
+        throw new Error(`TikTok video is unavailable.\n Make sure your tiktok url is correct!`);
       } else {
         throw new Error(
           `Failed to fetch TikTok video info. Status: ${response.status}`
@@ -323,22 +323,6 @@ document.addEventListener("DOMContentLoaded", () => {
       window.open(`/vdl/${url}`);
     });
     formatsBtnsElm.appendChild(formatButton);
-  }
-
-  // Function to convert an image to a data URL
-  function convertImageToDataURL(imagePath, callback) {
-    const img = new Image();
-    img.crossOrigin = "Anonymous"; // Enable cross-origin resource sharing
-    img.onload = function () {
-      const canvas = document.createElement("canvas");
-      const ctx = canvas.getContext("2d");
-      canvas.width = img.width;
-      canvas.height = img.height;
-      ctx.drawImage(img, 0, 0, img.width, img.height);
-      const dataURL = canvas.toDataURL("image/png"); // Change to "image/jpeg" if your thumbnail is in JPEG format
-      callback(dataURL);
-    };
-    img.src = imagePath;
   }
 
   // Function to update video history in IndexedDB
