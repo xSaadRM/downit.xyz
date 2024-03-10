@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const slideshow = document.querySelector(".slideshow");
+  const slideshowContainer = document.querySelector(".slideshow-container");
   const mobileNavBar = document.getElementById("mobile-navbar");
   const bartgl = document.getElementById("barToggle");
   const navBarCloser = document.getElementById("navBarCloser");
@@ -142,7 +142,7 @@ document.addEventListener("DOMContentLoaded", () => {
       videoTitleElem.innerHTML = "";
       formatsBtnsElm.innerHTML = "";
       authorElem.innerHTML = "";
-      slideshow.innerHTML = "";
+      slideshowContainer.innerHTML = "";
 
       if (urlType === "youtube") {
         await handleYouTubeVideo(inputUrl);
@@ -229,6 +229,10 @@ document.addEventListener("DOMContentLoaded", () => {
       if (!thumbnail && images) {
         videoThumbnailElem.style.display = "none";
         images.forEach(slideimage => {
+          const slideshow = document.createElement("div");
+          slideshowContainer.appendChild(slideshow);
+          slideshowContainer.style.display = "flex";
+          slideshow.classList.add("slideshow");
           const slideImageElm = document.createElement("img");
           slideImageElm.setAttribute("src", slideimage);
           slideshow.appendChild(slideImageElm);
