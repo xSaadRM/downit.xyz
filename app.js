@@ -1,12 +1,16 @@
 const express = require("express");
+const he = require("he");
+const { promisify } = require("util");
 const rateLimit = require("express-rate-limit");
 const path = require("path");
 const ytdl = require("ytdl-core");
 const { facebook } = require("fy-downloader-new");
+const getFBInfo = require("@xaviabot/fb-downloader");
 const { TiktokDownloader } = require("@tobyg74/tiktok-api-dl")
 const axios = require("axios");
 const winston = require("winston");
 const fs = require("fs");
+const writeFileAsync = promisify(fs.writeFile);
 const { v4: uuidv4 } = require("uuid");
 const { format } = require("date-fns");
 const heicConvert = require("heic-convert")
@@ -302,21 +306,18 @@ app.get("/tikinfo", async (req, res, next) => {
   }
 });
 
+const facebookAsync = promisify(facebook);
+
 app.get("/fbinfo", async (req, res) => {
-  const fbUrl = req.query.fbUrl;
-  if (!fbUrl) {
-    res.send("No url provided");
-  }
   try {
-    facebook(fbUrl, (err, data) => {
-      if (err != null) {
-        if (err.message == "invalid_url") {
-          res.status(500).json({ error: "Video unavailable" });
-        } else {
-          console.log(err);
-        }
-      } else {
-        const info = {
+    const fbUrl = req.query.fbUrl;
+    let info;
+    if (!fbUrl) {
+      return res.status(400).json({ error: "No URL provided" });
+    }
+
+    const data = await facebookAsync(fbUrl);
+        info = {
           title: data.title,
           thumbnail: data.vid.thumbnail,
           author: data.vid.author.name,
@@ -324,17 +325,30 @@ app.get("/fbinfo", async (req, res) => {
           _720p: data.download.mp4Hd,
           audio: data.download.mp3,
         };
-        const uservidID = uuidv4();
-        const uservidIDjsonPath = `data/users/VidIDs/${uservidID}.json`;
-        fs.writeFileSync(uservidIDjsonPath, JSON.stringify(info));
-        info.sd = `${uservidID}?&f=360p`;
-        info.hd = `${uservidID}?&f=720p`;
-        info.audio = `${uservidID}?&f=audio`;
-        res.json(info);
-      }
-    });
+
+    if (!info.thumbnail) {
+      const data2 = await getFBInfo(fbUrl);
+        info.title = he.decode(data2.title);
+        info.thumbnail = data2.thumbnail;
+        info._360p = data2.sd;
+        info._720p = data2.hd;
+    }
+
+
+
+    const uservidID = uuidv4();
+    const uservidIDjsonPath = `data/users/VidIDs/${uservidID}.json`;
+
+    await writeFileAsync(uservidIDjsonPath, JSON.stringify(info));
+
+    info.sd = `${uservidID}?&f=360p`;
+    info.hd = `${uservidID}?&f=720p`;
+    info.audio = `${uservidID}?&f=audio`;
+
+    res.json(info);
   } catch (error) {
     console.error(error);
+    res.status(500).json({ error: "Internal server error" });
   }
 });
 
