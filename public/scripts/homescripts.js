@@ -228,7 +228,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
       if (!thumbnail && images) {
         videoThumbnailElem.style.display = "none";
-        images.forEach(slideimage => {
+        let maxWidth = Infinity;
+        images.forEach((slideimage) => {
           const slideshow = document.createElement("div");
           slideshowContainer.appendChild(slideshow);
           slideshowContainer.style.display = "flex";
@@ -236,7 +237,31 @@ document.addEventListener("DOMContentLoaded", () => {
           const slideImageElm = document.createElement("img");
           slideImageElm.setAttribute("src", slideimage);
           slideshow.appendChild(slideImageElm);
+
+
+          // Get the width of the current image
+          const imageWidth = slideImageElm.width;
+          // Update the maximum width if the current image is wider
+          if (imageWidth < maxWidth) {
+            maxWidth = imageWidth;
+            console.log(maxWidth);
+          }
+          slideImageElm.classList.add("slide-image");
+          const slideDownloadButton = document.createElement("button");
+          slideDownloadButton.textContent = "Download";
+          slideshow.appendChild(slideDownloadButton);
+          slideDownloadButton.addEventListener("click", () => {
+            downloadImage(slideimage);
+          });
         });
+        const allSlideImageClass = document.querySelectorAll(".slide-image");
+        console.log("Number of images:", allSlideImageClass.length);
+        allSlideImageClass.forEach((slideImageClass) => {
+          slideImageClass.style.width = maxWidth + "px";
+        });
+        console.log("The width of the smallest image is:", maxWidth);
+        slideshowContainer.style.width = maxWidth + "px";
+        // The variable 'maxWidth' now contains the width of the biggest image
       } else if (thumbnail) {
         videoThumbnailElem.src = thumbnail;
         videoThumbnailElem.style.display = "flex";
@@ -405,6 +430,34 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
+  // Function to download the image
+  function downloadImage(base64String) {
+    const blob = base64ToBlob(base64String);
+    const url = window.URL.createObjectURL(blob);
+
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = "image.jpg"; // You can customize the filename here
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    window.URL.revokeObjectURL(url);
+  }
+
+  // Function to convert base64 to Blob
+  function base64ToBlob(base64String) {
+    const parts = base64String.split(";base64,");
+    const contentType = parts[0].split(":")[1];
+    const raw = window.atob(parts[1]);
+    const rawLength = raw.length;
+    const uint8Array = new Uint8Array(rawLength);
+
+    for (let i = 0; i < rawLength; ++i) {
+      uint8Array[i] = raw.charCodeAt(i);
+    }
+
+    return new Blob([uint8Array], { type: contentType });
+  }
   // Function to render video history in the history menu
   async function renderVideoHistory() {
     const db = await openDB();

@@ -334,19 +334,23 @@ h2#videoTitle {
   scroll-behavior: smooth;
   scrollbar-width: none;
   background-color: #000;
+  display: none;
+  /* display: flex; */
+  margin: auto;
   width: 100%;
-  /* display: none; */
-  display: flex;
 }
 .slideshow {
-  /* background-color: #000; */
   width: 100%;
   display: flex;
   align-items: center;
+  position: relative;
 }
-
 .slideshow img {
-  width: 100vw;
   scroll-snap-align: start;
   scroll-snap-stop: always;
+}
+.slideshow button {
+  right: 40%;
+  bottom: 5%;
+  position: absolute;
 }
