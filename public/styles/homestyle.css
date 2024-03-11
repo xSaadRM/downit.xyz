@@ -337,7 +337,7 @@ h2#videoTitle {
   display: none;
   /* display: flex; */
   margin: auto;
-  width: 100%;
+  width: 400px;
 }
 .slideshow {
   width: 100%;
@@ -346,6 +346,7 @@ h2#videoTitle {
   position: relative;
 }
 .slideshow img {
+  width: 400px;
   scroll-snap-align: start;
   scroll-snap-stop: always;
 }

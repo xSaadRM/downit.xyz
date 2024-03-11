@@ -228,7 +228,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
       if (!thumbnail && images) {
         videoThumbnailElem.style.display = "none";
-        let maxWidth = Infinity;
         images.forEach((slideimage) => {
           const slideshow = document.createElement("div");
           slideshowContainer.appendChild(slideshow);
@@ -237,15 +236,6 @@ document.addEventListener("DOMContentLoaded", () => {
           const slideImageElm = document.createElement("img");
           slideImageElm.setAttribute("src", slideimage);
           slideshow.appendChild(slideImageElm);
-
-
-          // Get the width of the current image
-          const imageWidth = slideImageElm.width;
-          // Update the maximum width if the current image is wider
-          if (imageWidth < maxWidth) {
-            maxWidth = imageWidth;
-            console.log(maxWidth);
-          }
           slideImageElm.classList.add("slide-image");
           const slideDownloadButton = document.createElement("button");
           slideDownloadButton.textContent = "Download";
@@ -256,12 +246,6 @@ document.addEventListener("DOMContentLoaded", () => {
         });
         const allSlideImageClass = document.querySelectorAll(".slide-image");
         console.log("Number of images:", allSlideImageClass.length);
-        allSlideImageClass.forEach((slideImageClass) => {
-          slideImageClass.style.width = maxWidth + "px";
-        });
-        console.log("The width of the smallest image is:", maxWidth);
-        slideshowContainer.style.width = maxWidth + "px";
-        // The variable 'maxWidth' now contains the width of the biggest image
       } else if (thumbnail) {
         videoThumbnailElem.src = thumbnail;
         videoThumbnailElem.style.display = "flex";
