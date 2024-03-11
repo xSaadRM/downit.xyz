@@ -238,14 +238,29 @@ document.addEventListener("DOMContentLoaded", () => {
           slideshow.appendChild(slideImageElm);
           slideImageElm.classList.add("slide-image");
           const slideDownloadButton = document.createElement("button");
-          slideDownloadButton.textContent = "Download";
+          const iconElement = document.createElement("i");
+          iconElement.className = "fi fi-sr-add-image";
+          slideDownloadButton.appendChild(iconElement);
           slideshow.appendChild(slideDownloadButton);
           slideDownloadButton.addEventListener("click", () => {
-            downloadImage(slideimage);
+            slideDownloadButton.classList.add("active");
+            downloadImage(slideimage, title);
+            setTimeout(() => {
+              slideDownloadButton.classList.remove("active");
+            }, 3000); // 3000 milliseconds = 3 seconds
           });
         });
         const allSlideImageClass = document.querySelectorAll(".slide-image");
         console.log("Number of images:", allSlideImageClass.length);
+        const slideDownloadAllButton = document.createElement("button");
+        slideDownloadAllButton.textContent = "Download All";
+        formatsBtnsElm.appendChild(slideDownloadAllButton);
+        slideDownloadAllButton.classList.add("singleInfoButtons");
+        slideDownloadAllButton.addEventListener("click", () => {
+          images.forEach((image) => {
+            downloadImage(image, title);
+          });
+        });
       } else if (thumbnail) {
         videoThumbnailElem.src = thumbnail;
         videoThumbnailElem.style.display = "flex";
@@ -342,6 +357,7 @@ document.addEventListener("DOMContentLoaded", () => {
         window.open(format.url);
       });
       formatsBtnsElm.appendChild(formatButton);
+      formatButton.classList.add("singleInfoButtons");
     });
   }
 
@@ -352,6 +368,7 @@ document.addEventListener("DOMContentLoaded", () => {
       window.open(`/vdl/${url}`);
     });
     formatsBtnsElm.appendChild(formatButton);
+    formatButton.classList.add("singleInfoButtons");
   }
 
   // Function to update video history in IndexedDB
@@ -415,13 +432,13 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // Function to download the image
-  function downloadImage(base64String) {
+  function downloadImage(base64String, filename) {
     const blob = base64ToBlob(base64String);
     const url = window.URL.createObjectURL(blob);
 
     const link = document.createElement("a");
     link.href = url;
-    link.download = "image.jpg"; // You can customize the filename here
+    link.download = `${filename || "image"}.jpg`; // You can customize the filename here
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
