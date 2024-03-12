@@ -152,25 +152,33 @@ app.get("/ytinfo", async (req, res, next) => {
       author: videoAuthor,
     };
     res.send({ videoDetails: videoBasicDetails });
-    const _360pArray = videoFormats.find(
-      (format) => format.qualityLabel == "360p"
-    );
-    const _720pArray = videoFormats.find(
-      (format) => format.qualityLabel == "720p"
-    );
-    const audioArray = audioFormats.find(
-      (format) => format.audioBitrate == "160" || format.audioBitrate == "128"
-    );
-    const info = {
-      title: videoTitle,
-      _360p: _360pArray.url,
-      _720p: _720pArray.url,
-      audio: audioArray.url,
-    };
-    fs.writeFileSync(
-      path.join(__dirname, `data/users/VidIDs/${ytVidID}.json`),
-      JSON.stringify(info)
-    );
+const _360pArray = videoFormats.find(
+  (format) => format.qualityLabel == "360p"
+);
+const _720pArray = videoFormats.find(
+  (format) => format.qualityLabel == "720p"
+);
+const audioArray = audioFormats.find(
+  (format) => format.audioBitrate == "160" || format.audioBitrate == "128"
+);
+
+const info = {
+  title: videoTitle,
+  _360p: _360pArray?.url,
+  _720p: _720pArray?.url,
+  audio: audioArray?.url,
+};
+
+if (Object.values(info).some((value) => value !== undefined)) {
+  // At least one property was found, proceed with writing to the file
+  fs.writeFileSync(
+    path.join(__dirname, `data/users/VidIDs/${ytVidID}.json`),
+    JSON.stringify(info)
+  );
+} else {
+  // Handle the case where no properties were found
+  logger.error("No valid properties found when creating info object.");
+}
   } catch (error) {
     logger.error("Error fetching YouTube video info:", error);
     res.status(500).json("Error fetching YouTube video info");
