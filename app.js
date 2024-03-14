@@ -265,7 +265,7 @@ app.get("/tikinfo", async (req, res, next) => {
         })
         if (tikDl.status == 'error' && tikDl.message == 'Failed to find tiktok data. Make sure your tiktok url is correct!') {
           return res.status(500).json("Failed to find tiktok data. Make sure your tiktok url is correct!");
-        } else if (tikDl.result.type !== "image") {
+        } else if (tikDl.result.type && tikDl.result.type !== "image") {
           info = {
           title: tikDl.result.description || "Title not found in the fetched data.",
           thumbnail: tikDl.result.cover || "Thumbnail not found in the fetched data.",
