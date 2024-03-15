@@ -195,7 +195,6 @@ app.get("/tikinfo", async (req, res, next) => {
       return res.status(400).json({ error: "Missing TikTok URL" });
     }
     try {
-        logger.error("TikTok: Can't get Video ID from LoveTik");        
         const tikDl = await TiktokDownloader(tikUrl, {
           version: "v1",
         })
