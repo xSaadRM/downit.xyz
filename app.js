@@ -184,69 +184,81 @@ if (Object.values(info).some((value) => value !== undefined)) {
     res.status(500).json("Error fetching YouTube video info");
   }
 });
-
 app.get("/tikinfo", async (req, res, next) => {
   try {
     const tikUrl = req.query.tikUrl;
     const uservidID = uuidv4();
     const uservidIDjsonPath = `data/users/VidIDs/${uservidID}.json`;
-    let info;
+
     if (!tikUrl) {
       return res.status(400).json({ error: "Missing TikTok URL" });
     }
-    try {
-        const tikDl = await TiktokDownloader(tikUrl, {
-          version: "v1",
-        })
-        if (tikDl.status == 'error' && tikDl.message == 'Failed to find tiktok data. Make sure your tiktok url is correct!') {
-          return res.status(500).json("Failed to find tiktok data. Make sure your tiktok url is correct!");
-        } else if (!tikDl.result.type || tikDl.result.type !== "image") {
-          info = {
-          title: tikDl.result.description || "Title not found in the fetched data.",
-          thumbnail: tikDl.result.cover || "Thumbnail not found in the fetched data.",
-          thumbnail64: await getBase64FromURL(tikDl.result.cover, 'jpg'),
-          hd: tikDl.result.video
-            ? `${uservidID}?&f=1080p`
-            : "HD link not found in the fetched data.",
-          audio: tikDl.result.music.playUrl
-            ? `${uservidID}?&f=audio`
-            : "Audio link not found in the fetched data.",
-          author: tikDl.result.author.username || "Author not found in the fetched data.",
-          authorName:
-            tikDl.result.author.nickname || "Author Name not found in the fetched data.",
-        };
-        
-        res.json(info);
-        info.audio = tikDl.result.music.playUrl;
-        info._1080p = tikDl.result.video[0];
-      } else if ( tikDl.result.type == "image" ) {
-         info = {
-          title: tikDl.result.description || "Title not found in the fetched data.",
-          images: tikDl.result.images ? await getBase64FromURLs(tikDl.result.images, 'heic'): "can't get slidshow images",
-          thumbnail64: tikDl.result.images[0] ? await getBase64FromURL(tikDl.result.images[0], 'heic') : "image64 not found",
-          audio: tikDl.result.music.playUrl
-            ? `${uservidID}?&f=audio`
-            : "Audio link not found in the fetched data.",
-          author: tikDl.result.author.username || "Author not found in the fetched data.",
-          authorName:
-            tikDl.result.author.nickname || "Author Name not found in the fetched data.",
-        };
-        
-        res.json(info);
-        info.audio = tikDl.result.music.playUrl
-      } else {
-        return res.status(500).json({error: "Unknown error please report the probleme to us"});
-      }
-    fs.writeFileSync(uservidIDjsonPath, JSON.stringify(info, null, 2));
-    } catch (error) {
-      logger.error("Error:", error);
-      res.status(500).json("Internal server error");
+
+    const tikDl = await TiktokDownloader(tikUrl, {
+      version: "v1",
+    });
+
+    if (
+      tikDl.status === "error" &&
+      tikDl.message ===
+        "Failed to find tiktok data. Make sure your tiktok url is correct!"
+    ) {
+      return res
+        .status(500)
+        .json(
+          "Failed to find tiktok data. Make sure your tiktok url is correct!"
+        );
     }
+
+    let info = {
+      title: tikDl.result.description || "Title not found in the fetched data.",
+      author:
+        tikDl.result.author.username || "Author not found in the fetched data.",
+      authorName:
+        tikDl.result.author.nickname ||
+        "Author Name not found in the fetched data.",
+    };
+
+    if (tikDl.result.type !== "image") {
+      info.thumbnail =
+        tikDl.result.cover || "Thumbnail not found in the fetched data.";
+      info.thumbnail64 = await getBase64FromURL(tikDl.result.cover, "jpg");
+      info.hd = tikDl.result.video
+        ? `${uservidID}?&f=1080p`
+        : "HD link not found in the fetched data.";
+      info.audio = tikDl.result.music.playUrl
+        ? `${uservidID}?&f=audio`
+        : "Audio link not found in the fetched data.";
+
+      res.json(info);
+      info.audio = tikDl.result.music.playUrl;
+      info._1080p = tikDl.result.video[0];
+    } else {
+      info.images = tikDl.result.images
+        ? await getBase64FromURLs(tikDl.result.images, "heic")
+        : "can't get slidshow images";
+      info.thumbnail64 = tikDl.result.images[0]
+        ? await getBase64FromURL(tikDl.result.images[0], "heic")
+        : "image64 not found";
+      info.audio = tikDl.result.music.playUrl
+        ? `${uservidID}?&f=audio`
+        : "Audio link not found in the fetched data.";
+
+      res.json(info);
+      info.audio = tikDl.result.music.playUrl;
+    }
+
+    fs.writeFile(uservidIDjsonPath, JSON.stringify(info, null, 2), (err) => {
+      if (err) {
+        logger.error("Error writing file:", err);
+      }
+    });
   } catch (error) {
     logger.error("Error fetching TikTok data:", error);
-    res.status(500).json("Error fetching TikTok data");
+    res.status(500).json("Internal server error");
   }
 });
+
 
 const facebookAsync = promisify(facebook);
 
