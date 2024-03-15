@@ -11,7 +11,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@tobyg74/tiktok-api-dl": "^1.0.14",
+    "@xSaadRM/tiktok-api-dl": "./modules/@xSaadRM/tiktok-api-dl",
     "@xaviabot/fb-downloader": "^1.0.14",
     "axios": "^1.6.7",
     "date-fns": "^3.3.1",
