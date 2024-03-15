@@ -195,70 +195,6 @@ app.get("/tikinfo", async (req, res, next) => {
       return res.status(400).json({ error: "Missing TikTok URL" });
     }
     try {
-      const response = await fetch("https://lovetik.com/api/ajax/search", {
-        method: "POST",
-        headers: {
-          accept: "*/*",
-          "accept-language": "en-US,en;q=0.9",
-          "content-type": "application/x-www-form-urlencoded; charset=UTF-8",
-          "sec-ch-ua":
-            '"Not A(Brand";v="99", "Microsoft Edge";v="121", "Chromium";v="121"',
-          "sec-ch-ua-mobile": "?0",
-          "sec-ch-ua-platform": '"Windows"',
-          "sec-fetch-dest": "empty",
-          "sec-fetch-mode": "cors",
-          "sec-fetch-site": "same-origin",
-          "x-requested-with": "XMLHttpRequest",
-          Referer: "https://lovetik.com/",
-          "Referrer-Policy": "strict-origin-when-cross-origin",
-        },
-        body: `query=${tikUrl}`,
-      });
-      
-      const data = await response.json();
-      
-      if (!response.ok) {
-        console.log(response.status);
-        return res.status(response.status).json({error: "can't reach the first tiktok server"});
-      } else if (data.links) {
-        // Filtering and accessing links array based on format (ft)
-        const mp4Links = data.links.filter((link) => link.ft === "1");
-        let tiktok1080p;
-        let tiktok720p;
-        if (mp4Links.length > 0) {
-          tiktok1080p = mp4Links[0];
-          if (mp4Links.length > 1) {
-            tiktok720p = mp4Links[1];
-          } else {
-            res.json({ error: "Only one MP4 Link Found" });
-          }
-        } else {
-          res.json({ error: "No MP4 Links Found" });
-        }
-        const mp3Link = data.links.find((link) => link.ft === "3"); // Use find instead of filter for a single element
-        info = {
-          vidID: data.vid,
-          title: data.desc || "Title not found in the fetched data.",
-          thumbnail: data.cover || "Thumbnail not found in the fetched data.",
-          thumbnail64: await getBase64FromURL(data.cover, 'jpg'),
-          sd: tiktok720p
-            ? `${uservidID}?&f=720p`
-            : "SD link not found in the fetched data.",
-          hd: tiktok1080p
-            ? `${uservidID}?&f=1080p`
-            : "HD link not found in the fetched data.",
-          audio: mp3Link
-            ? `${uservidID}?&f=audio`
-            : "Audio link not found in the fetched data.",
-          author: data.author || "Author not found in the fetched data.",
-          authorName:
-            data.author_name || "Author Name not found in the fetched data.",
-        };
-        res.json(info);
-        info._720p = tiktok720p.a;
-        info._1080p = tiktok1080p.a;
-        info.audio = mp3Link.a;
-      } else {
         logger.error("TikTok: Can't get Video ID from LoveTik");        
         const tikDl = await TiktokDownloader(tikUrl, {
           version: "v1",
@@ -302,7 +238,6 @@ app.get("/tikinfo", async (req, res, next) => {
       } else {
         return res.status(500).json({error: "Unknown error please report the probleme to us"});
       }
-    }
     fs.writeFileSync(uservidIDjsonPath, JSON.stringify(info, null, 2));
     } catch (error) {
       logger.error("Error:", error);
