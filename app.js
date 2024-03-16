@@ -54,6 +54,18 @@ app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "public", "index.html"));
 });
 
+app.get("/en", (req, res) => {
+  res.sendFile(path.join(__dirname, "public", "index.html"));
+});
+
+app.get("/ar", (req, res) => {
+  res.sendFile(path.join(__dirname, "public", "index_ar.html"));
+});
+
+app.get("/es", (req, res) => {
+  res.sendFile(path.join(__dirname, "public", "index_es.html"));
+});
+
 app.get("/about", (req, res) => {
   res.sendFile(path.join(__dirname, "public", "about.html"));
 });

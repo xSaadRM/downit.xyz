@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <!-- Metaetiquetas Básicas -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Descarga videos de YouTube, Facebook, TikTok e Instagram. ProDown.net soporta varias calidades y formatos incluyendo mp3, mp4, sd, hd, 1080p, 720p y 360p. Servicio de descarga de videos rápido y gratuito.">
+
+  <!-- Título -->
+  <title>ProDown - Descargador de videos gratuito | Descargar de YouTube, Facebook, TikTok, Instagram</title>
+
+  <!-- Metaetiquetas de Open Graph (para compartir en redes sociales) -->
+  <meta property="og:title" content="ProDown - Descargador de videos gratuito">
+  <meta property="og:description" content="Descarga videos de YouTube, Facebook, TikTok e Instagram. ProDown.net soporta varias calidades y formatos incluyendo mp3, mp4, sd, hd, 1080p, 720p y 360p. Servicio de descarga de videos rápido y gratuito.">
+  <meta property="og:image" content="https://www.prodown.net/favicon.ico">
+  <meta property="og:url" content="https://www.prodown.net/">
+  <meta property="og:type" content="website">
+
+  <!-- Metaetiquetas de Twitter (para compartir en Twitter) -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="ProDown - Descargador de videos gratuito">
+  <meta name="twitter:description" content="Descarga videos de YouTube, Facebook, TikTok e Instagram. ProDown.net soporta varias calidades y formatos incluyendo mp3, mp4, sd, hd, 1080p, 720p y 360p. Servicio de descarga de videos rápido y gratuito.">
+  <meta name="twitter:image" content="https://www.prodown.net/favicon.ico">
+
+  <!-- Metaetiquetas Adicionales -->
+  <meta name="keywords" content="descargador de video, descargador de YouTube, descargador de video de Facebook, descargador de video de TikTok, descargador de video de Instagram, mp3, mp4, sd, hd, 1080p, 720p, 360p, descargar videos, descarga gratuita, descarga rápida, تحميل الفيديو, تنزيل الفيديو, يوتيوب, فيسبوك, تيك توك, إنستغرام, تنزيل مجاني, تحميل سريع, téléchargeur vidéo, téléchargeur YouTube, téléchargeur Facebook, téléchargeur TikTok, téléchargeur Instagram, mp3, mp4, sd, hd, 1080p, 720p, 360p, télécharger des vidéos, téléchargement gratuit, téléchargement rapide">
+  <meta name="robots" content="index, follow"> <!-- Permite a los motores de búsqueda indexar y seguir enlaces en tu página -->
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="/favicon.ico">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8" />
+  <link rel="alternate" hreflang="ar" href="/ar/" />
+  <link rel="alternate" hreflang="en" href="/en/" />
+  <link rel="stylesheet" href="./styles/homestyle.css" />
+  <link rel="stylesheet" href="./styles/styles.css" />
+  <link rel="stylesheet" href="./styles/header.css" />
+  <link rel="stylesheet" href="./styles/resview.css" />
+  <link rel="stylesheet" href="./styles/miscs.css" />
+  <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.1.0/uicons-solid-rounded/css/uicons-solid-rounded.css'>
+  <link rel="stylesheet" href=" https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&amp;display=swap">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="./styles/faq.css" />
+  <link rel="stylesheet" href="./styles/sbar.css" />
+</head>
+<body>
+  <header>
+    <div class="header-container">
+      <div class="logo">
+        <a href="/">
+          <img src="/favicon.ico" style="width: 42px;">
+          <h1>ProDown.net</h1>
+        </a>
+        </div>
+      <nav id="navbar" class="navbar">
+        <a href="/">Inicio</a>
+        <a href="/about">Acerca de</a>
+        <a href="/services">Servicios</a>
+        <a href="/contact">Contacto</a>
+      </nav>
+      <div class="tgls">
+        <div class="dark-mode-toggle-container">
+          <label class="switch">
+            <input type="checkbox" id="darkModeToggle">
+            <span class="slider round"></span>
+          </label>
+        </div>
+        <div class="menu-toggle">
+          <i class="fas fa-clock"></i>
+          <p>Historial</p>
+        </div>
+        <div class="toggle-btn" id="barToggle">
+          <i class="fa fa-bars"></i>
+        </div>
+      </div>
+    </div>
+    <div class="mobile-navbar-container">
+      <i class="fa-solid fa-circle-xmark closeNav hide" id="navBarCloser"></i>
+      <nav id="mobile-navbar" class="navbar mobile-navbar">
+        <a href="/">Inicio</a>
+        <a href="/about">Acerca de</a>
+        <a href="/services">Servicios</a>
+        <a href="/contact">Contacto</a>
+      </nav>
+    </div>
+  </header>
+  <div class="overlay"></div>
+  <div class="toast">
+  
+    <div class="toast-content">
+      <i class="fas fa-regular fa-xmark xmark"></i>
+      <div class="message">
+        <span id="toast-txt1" class="text text-1">Éxito</span>
+        <span id="toast-txt2" class="text text-2">Tus cambios se han guardado</span>
+      </div>
+    </div>
+    <i class="fa-solid fa-xmark close"></i>
+  
+   
+    <div class="progress"></div>
+  </div>  
+  <section class="sect1">
+
+    <div class="sect-hist">
+      <div class="history-menu">
+        <h4>Tus últimas 10 descargas</h4>
+        <ul>
+        </ul>
+      </div>
+  </div>
+  <div class="supported-platforms">
+    <h3>Plataformas Soportadas</h3>
+    <div class="ics-ptfrms">
+    <div class="platform">
+      <img src="/assets/img/tiktok.png" alt="TikTok" class="tiktok-logo" />
+      <h6 class="tiktok-logo-text">TikTok</h6>
+    </div>
+    <div class="platform">
+      <img src="/assets/img/youtube.png" alt="YouTube" class="youtube-logo" />
+      <h6 class="youtube-logo-text">YouTube</h6>
+    </div>
+    <div class="platform">
+      <img src="/assets/img/facebook.png" alt="Facebook" class="facebook-logo" />
+      <h6 class="facebook-logo-text">Facebook</h6>
+    </div>
+  </div>
+  </div>
+</section>
+  <div class="container">
+    <h3>Sencillo, Rápido y Útil</h3>
+    <form>
+      <label for="urlInput">Ingresa un Enlace de Video</label>
+      <input type="text" id="urlInput" name="ytUrl" placeholder="Pega un URL de video aquí" />
+      <button type="submit" id="downloadBtn"><i class="fa-solid fa-cloud-arrow-down"></i>Descargar</button>
+    </form>
+    <h2 id="videoTitle"></h2>
+    <div id="videoInfo" class="hidden">
+      <div class="thumbnail-container">
+        <img src="" id="videoThumbnail" alt="Miniatura del Video" />
+        <div class="infoButtonsContainer">
+          <div id="formatsBtns" class="infoButtons"></div>
+        </div>
+        <p id="vidAuthor" class="hidden"></p>
+      </div>
+    </div>
+    <div class="slideshow-container"></div>
+    <div id="loadingIndicator" class="loading"></div>
+  </div>
+  <section id="faq">
+    <h3>Preguntas Frecuentes</h3>
+    <ol>
+        <li>
+            <h4>¿ProDown.net es un servicio gratuito?</h4>
+            <p>Sí, ProDown.net es un servicio de descarga de videos completamente gratuito. Puedes descargar videos de varias plataformas sin ningún costo.</p>
+        </li>
+        <li>
+            <h4>¿Qué plataformas soporta ProDown.net para la descarga de videos?</h4>
+            <p>ProDown.net soporta la descarga de videos de plataformas populares como YouTube, Facebook, TikTok e Instagram.</p>
+        </li>
+        <li>
+            <h4>¿En qué calidades y formatos de video puedo descargar videos?</h4>
+            <p>ProDown.net soporta varias calidades y formatos, incluyendo mp3, mp4, SD, HD, 1080p, 720p y 360p. Puedes elegir el formato que mejor se adapte a tus necesidades.</p>
+        </li>
+        <li>
+            <h4>¿Es legal descargar videos usando ProDown.net?</h4>
+            <p>Sí, ProDown.net opera dentro de los límites legales y se adhiere a los términos de servicio de las plataformas que soporta. Es esencial utilizar el contenido descargado de manera responsable y respetar las leyes de derechos de autor.</p>
+        </li>
+        <li>
+            <h4>¿Cómo puedo descargar videos usando ProDown.net?</h4>
+            <p>Para descargar un video, simplemente copia el URL del video desde la plataforma soportada y pégalo en el área designada en ProDown.net. Elige el formato y la calidad deseados, luego haz clic en el botón de descarga.</p>
+        </li>
+        <li>
+            <h4>¿Puedo descargar listas de reproducción completas usando ProDown.net?</h4>
+            <p>Sí, ProDown.net soporta la descarga de listas de reproducción completas de plataformas como YouTube. Simplemente pega el URL de la lista de reproducción, selecciona tus ajustes preferidos y haz clic en descargar.</p>
+        </li>
+        <li>
+            <h4>¿Hay alguna limitación en la cantidad de videos que puedo descargar?</h4>
+            <p>ProDown.net no impone ninguna limitación en la cantidad de videos que puedes descargar. Siéntete libre de usar el servicio tantas veces como necesites.</p>
+        </li>
+        <li>
+            <h4>¿Necesito registrarme o iniciar sesión para usar ProDown.net?</h4>
+            <p>No, ProDown.net es un servicio fácil de usar que no requiere registro ni inicio de sesión. Puedes comenzar a descargar videos inmediatamente sin crear una cuenta.</p>
+        </li>
+        <li>
+            <h4>¿Es seguro usar ProDown.net?</h4>
+            <p>Sí, ProDown.net es seguro de usar. El servicio está diseñado para proporcionar una experiencia de descarga de videos segura y confiable. Priorizamos la privacidad del usuario y la seguridad de los datos.</p>
+        </li>
+        <li>
+            <h4>¿Cómo puedo contactar a ProDown.net para obtener soporte o hacer consultas?</h4>
+            <p>Si tienes alguna pregunta, problema o consulta, puedes comunicarte con nuestro equipo de soporte a través de la página de <a href="/contact">Contacto</a> en nuestro sitio web. Estamos aquí para ayudarte.</p>
+        </li>
+        <li>
+            <h4>¿Qué debo hacer si una descarga de video falla o tiene un problema?</h4>
+            <p>Si encuentras algún problema con las descargas de video, verifica tu conexión a Internet y asegúrate de que el video sea accesible en la plataforma original. Si el problema persiste, contacta a nuestro equipo de soporte para obtener ayuda.</p>
+        </li>
+        <!-- Incluye el resto de tus preguntas frecuentes en una estructura similar -->
+    </ol>
+</section>
+
+  <script src="./scripts/homescripts.js"></script>
+  <script src="./scripts/faq.js"></script>
+</body>
+</html>

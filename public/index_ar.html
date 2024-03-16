@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="ar">
+  <head>
+    <!-- Basic Meta Tags -->
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="قم بتنزيل مقاطع الفيديو من يوتيوب، فيسبوك، تيك توك، وإنستغرام. يدعم ProDown.net مختلف الجودات والصيغ بما في ذلك mp3، mp4، sd، hd، 1080p، 720p، و 360p. خدمة تنزيل الفيديو السريعة والمجانية."
+    />
+
+    <!-- Title -->
+    <title>
+      ProDown - منزلق الفيديو المجاني | تنزيل من يوتيوب، فيسبوك، تيك توك،
+      إنستغرام
+    </title>
+
+    <!-- Open Graph Meta Tags (for social media sharing) -->
+    <meta property="og:title" content="ProDown - منزلق الفيديو المجاني" />
+    <meta
+      property="og:description"
+      content="قم بتنزيل مقاطع الفيديو من يوتيوب، فيسبوك، تيك توك، وإنستغرام. يدعم ProDown.net مختلف الجودات والصيغ بما في ذلك mp3، mp4، sd، hd، 1080p، 720p، و 360p. خدمة تنزيل الفيديو السريعة والمجانية."
+    />
+    <meta property="og:image" content="https://prodown.net/favicon.ico" />
+    <meta property="og:url" content="https://prodown.net/" />
+    <meta property="og:type" content="website" />
+
+    <!-- Twitter Meta Tags (for Twitter sharing) -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="ProDown - منزلق الفيديو المجاني" />
+    <meta
+      name="twitter:description"
+      content="قم بتنزيل مقاطع الفيديو من يوتيوب، فيسبوك، تيك توك، وإنستغرام. يدعم ProDown.net مختلف الجودات والصيغ بما في ذلك mp3، mp4، sd، hd، 1080p، 720p، و 360p. خدمة تنزيل الفيديو السريعة والمجانية."
+    />
+    <meta name="twitter:image" content="https://prodown.net/favicon.ico" />
+
+    <!-- Additional Meta Tags -->
+    <meta
+      name="keywords"
+      content="منزلق الفيديو، منزلق يوتيوب، منزلق فيسبوك، منزلق تيك توك، منزلق إنستغرام، mp3، mp4، sd، hd، 1080p، 720p، 360p، تنزيل مقاطع الفيديو، تحميل مجاني، تنزيل سريع"
+    />
+    <meta name="robots" content="index, follow" />
+    <!-- Allows search engines to index and follow links on your page -->
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="https://prodown.us.to/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="UTF-8" />
+    <link rel="alternate" hreflang="en" href="/en/" />
+    <link rel="alternate" hreflang="es" href="/es/" />
+    <link rel="stylesheet" href="./styles/homestyle.css" />
+    <link rel="stylesheet" href="./styles/styles.css" />
+    <link rel="stylesheet" href="./styles/header.css" />
+    <link rel="stylesheet" href="./styles/resview.css" />
+    <link rel="stylesheet" href="./styles/miscs.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdn-uicons.flaticon.com/2.1.0/uicons-solid-rounded/css/uicons-solid-rounded.css"
+    />
+    <link
+      rel="stylesheet"
+      href=" https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&amp;display=swap"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
+    <link rel="stylesheet" href="./styles/faq.css" />
+    <link rel="stylesheet" href="./styles/sbar.css" />
+  </head>
+  <body>
+    <header>
+      <div class="header-container">
+        <div class="logo">
+          <a href="/">
+            <img src="/favicon.ico" style="width: 42px" />
+            <h1>ProDown.net</h1>
+          </a>
+        </div>
+        <nav id="navbar" class="navbar">
+          <a href="/">الرئيسية</a>
+          <a href="/about">حول</a>
+          <a href="/services">الخدمات</a>
+          <a href="/contact">اتصل بنا</a>
+        </nav>
+        <div class="tgls">
+          <div class="dark-mode-toggle-container">
+            <label class="switch">
+              <input type="checkbox" id="darkModeToggle" />
+              <span class="slider round"></span>
+            </label>
+          </div>
+          <div class="menu-toggle">
+            <i class="fas fa-clock"></i>
+            <p>السجل</p>
+          </div>
+          <div class="toggle-btn" id="barToggle">
+            <i class="fa fa-bars"></i>
+          </div>
+        </div>
+      </div>
+      <div class="mobile-navbar-container">
+        <i class="fa-solid fa-circle-xmark closeNav hide" id="navBarCloser"></i>
+        <nav id="mobile-navbar" class="navbar mobile-navbar">
+          <a href="/">الرئيسية</a>
+          <a href="/about">حول</a>
+          <a href="/services">الخدمات</a>
+          <a href="/contact">اتصل بنا</a>
+        </nav>
+      </div>
+    </header>
+    <div class="overlay"></div>
+    <div class="toast">
+      <div class="toast-content">
+        <i class="fas fa-regular fa-xmark xmark"></i>
+        <div class="message">
+          <span id="toast-txt1" class="text text-1">النجاح</span>
+          <span id="toast-txt2" class="text text-2">تم حفظ تغييراتك بنجاح</span>
+        </div>
+      </div>
+      <i class="fa-solid fa-xmark close"></i>
+
+      <div class="progress"></div>
+    </div>
+    <section class="sect1">
+      <div class="sect-hist">
+        <div class="history-menu">
+          <h4>آخر 10 عمليات تنزيل لديك</h4>
+          <ul></ul>
+        </div>
+      </div>
+      <div class="supported-platforms">
+        <h3>المنصات المدعومة</h3>
+        <div class="ics-ptfrms">
+          <div class="platform">
+            <img
+              src="/assets/img/tiktok.png"
+              alt="تيك توك"
+              class="tiktok-logo"
+            />
+            <h6 class="tiktok-logo-text">تيك توك</h6>
+          </div>
+          <div class="platform">
+            <img
+              src="/assets/img/youtube.png"
+              alt="يوتيوب"
+              class="youtube-logo"
+            />
+            <h6 class="youtube-logo-text">يوتيوب</h6>
+          </div>
+          <div class="platform">
+            <img
+              src="/assets/img/facebook.png"
+              alt="فيسبوك"
+              class="facebook-logo"
+            />
+            <h6 class="facebook-logo-text">فيسبوك</h6>
+          </div>
+        </div>
+      </div>
+    </section>
+    <div class="container">
+      <h3>بسيطة، سريعة، ومفيدة</h3>
+      <form>
+        <label for="urlInput">أدخل رابط الفيديو</label>
+        <input
+          type="text"
+          id="urlInput"
+          name="ytUrl"
+          placeholder="ألصق رابط الفيديو هنا"
+        />
+        <button type="submit" id="downloadBtn">
+          <i class="fa-solid fa-cloud-arrow-down"></i>تنزيل
+        </button>
+      </form>
+      <h2 id="videoTitle"></h2>
+      <div id="videoInfo" class="hidden">
+        <div class="thumbnail-container">
+          <img src="" id="videoThumbnail" alt="الصورة المصغرة للفيديو" />
+          <div class="infoButtonsContainer">
+            <div id="formatsBtns" class="infoButtons"></div>
+          </div>
+          <p id="vidAuthor" class="hidden"></p>
+        </div>
+      </div>
+      <div class="slideshow-container"></div>
+      <div id="loadingIndicator" class="loading"></div>
+    </div>
+    <section id="faq">
+      <h3>الأسئلة الشائعة</h3>
+      <ol>
+        <li>
+          <h4>هل ProDown.net خدمة مجانية؟</h4>
+          <p>
+            نعم، ProDown.net هو خدمة تحميل فيديو مجانية تمامًا. يمكنك تحميل
+            .مقاطع الفيديو من مختلف المنصات دون أي تكلفة
+          </p>
+        </li>
+        <li>
+          <h4>ما هي البلاطفورمات التي يدعمها ProDown.net لتحميل الفيديو؟</h4>
+          <p>
+            ProDown.net يدعم تحميل الفيديو من المنصات الشهيرة مثل يوتيوب،
+            .فيسبوك، تيك توك، وإنستجرام
+          </p>
+        </li>
+        <li>
+          <h4>بأي جودات وصيغ يمكنني تحميل الفيديوهات؟</h4>
+          <p>
+            ProDown.net يدعم مجموعة متنوعة من الجودات والصيغ، بما في ذلك mp3،
+            mp4، SD، HD، 1080p، 720p، و 360p. يمكنك اختيار الصيغة التي تناسب
+            .احتياجاتك
+          </p>
+        </li>
+        <li>
+          <h4>هل من القانوني تحميل الفيديوهات باستخدام ProDown.net؟</h4>
+          <p>
+            نعم، ProDown.net يعمل ضمن الحدود القانونية ويلتزم بشروط الخدمة
+            للبلاطفورمات التي يدعمها. من الضروري استخدام المحتوى المحمّل بشكل
+            .مسؤول واحترام قوانين حقوق النشر
+          </p>
+        </li>
+        <li>
+          <h4>كيف يمكنني تحميل الفيديوهات باستخدام ProDown.net؟</h4>
+          <p>
+            لتحميل فيديو، ما عليك سوى نسخ عنوان URL للفيديو من البلاطفورم
+            المدعومة ولصقه في المكان المخصص على ProDown.net. اختر الصيغة
+            .والجودة المطلوبة، ثم انقر فوق زر التحميل
+          </p>
+        </li>
+        <li>
+          <h4>هل يمكنني تحميل قوائم تشغيل كاملة باستخدام ProDown.net؟</h4>
+          <p>
+            نعم، ProDown.net يدعم تحميل قوائم تشغيل كاملة من بلاطفورمات مثل
+            يوتيوب. ما عليك سوى لصق عنوان URL للقائمة، اختيار الإعدادات المفضلة
+            .لديك، ثم النقر على زر التحميل
+          </p>
+        </li>
+        <li>
+          <h4>هل هناك أي قيود على عدد الفيديوهات التي يمكنني تحميلها؟</h4>
+          <p>
+            ProDown.net لا يفرض أي قيود على عدد الفيديوهات التي يمكنك تحميلها.
+            .لا تتردد في استخدام الخدمة بكثافة كما تحتاج
+          </p>
+        </li>
+        <li>
+          <h4>هل يجب علي تسجيل الدخول أو التسجيل لاستخدام ProDown.net؟</h4>
+          <p>
+            لا، ProDown.net هو خدمة سهلة الاستخدام لا تتطلب التسجيل أو تسجيل
+            .الدخول. يمكنك بدء تحميل الفيديوهات على الفور دون إنشاء حساب
+          </p>
+        </li>
+        <li>
+          <h4>هل ProDown.net آمن للاستخدام؟</h4>
+          <p>
+            نعم، ProDown.net آمن للاستخدام. تم تصميم الخدمة لتوفير تجربة تحميل
+            فيديو آمنة وموثوقة. نحن نعطي الأولوية لخصوصية المستخدم وأمان
+            .البيانات
+          </p>
+        </li>
+        <li>
+          <h4>
+            كيف يمكنني الاتصال بـ ProDown.net للحصول على الدعم أو الاستفسارات؟
+          </h4>
+          <p>
+            إذا كان لديك أي أسئلة، أو مشاكل، أو استفسارات، يمكنك التواصل مع فريق
+            الدعم لدينا من خلال صفحة <a href="/contact">اتصل بنا</a> على موقعنا
+            .الإلكتروني. نحن هنا لم ساعدتك
+          </p>
+        </li>
+        <li>
+          <h4>ماذا يجب أن أفعل إذا فشل تنزيل الفيديو أو واجهت مشكلة؟</h4>
+          <p>
+            إذا واجهت أي مشاكل في تنزيل الفيديو، يرجى التحقق من اتصال الإنترنت
+            الخاص بك والتأكد من إمكانية الوصول إلى الفيديو على البلاطفورم
+            الأصلية. إذا استمرت المشكلة، اتصل بفريق الدعم لدينا للحصول على
+            .المساعدة
+          </p>
+        </li>
+      </ol>
+    </section>
+
+    <script src="./scripts/homescripts.js"></script>
+    <script src="./scripts/faq.js"></script>
+  </body>
+</html>
