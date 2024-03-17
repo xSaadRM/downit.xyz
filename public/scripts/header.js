@@ -25,10 +25,10 @@ document.addEventListener("DOMContentLoaded", () => {
     const savedDarkModePreference = localStorage.getItem("darkModePreference");
     if (savedDarkModePreference === "true") {
       body.classList.add("dark-mode");
-      darkModeToggle.checked = true;
+      darkModeToggle ? darkModeToggle.checked = true : "";
     }
   
-    darkModeToggle.addEventListener("click", toggleDarkMode);
+    darkModeToggle ? darkModeToggle.addEventListener("click", toggleDarkMode) : "";
   
     const leftMenu = document.querySelector(".history-menu");
   
@@ -38,8 +38,8 @@ document.addEventListener("DOMContentLoaded", () => {
   
     const handleClickOutsideMenu = (event) => {
       if (
-        !leftMenu.contains(event.target) &&
-        !darkModeToggle.contains(event.target)
+        ( leftMenu ? !leftMenu.contains(event.target) : false ) &&
+        ( darkModeToggle ? !darkModeToggle.contains(event.target) : false )
       ) {
         closeMenu();
       }
