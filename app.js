@@ -320,8 +320,8 @@ app.get("/fbinfo", async (req, res) => {
 
 app.get("/vdl/:ressourceID", async (req, res, next) => {
   try {
-    ressourceID = req.params.ressourceID;
-    requestedFormat = req.query.f;
+    const ressourceID = req.params.ressourceID;
+    const requestedFormat = req.query.f;
     const ressourceIDjsonPath = path.join(
       __dirname,
       `data/users/VidIDs/${ressourceID}.json`
@@ -347,16 +347,14 @@ app.get("/vdl/:ressourceID", async (req, res, next) => {
       throw new Error("TikTok video not found");
     }
     let fileType;
-    if (requestedFormat == "720p" || "1080p" || "360p") {
+    if (requestedFormat === "720p" || requestedFormat === "1080p" || requestedFormat === "360p") {
       fileType = "mp4";
       res.setHeader("Content-Type", "video/mp4");
     } else if (requestedFormat == "audio") {
       fileType = "mp3";
       res.setHeader("Content-Type", "audio/mpeg");
     }
-    const tikFileName = `Downit.xyz - ${requestedFormat} - ${encodeURIComponent(
-      info.title
-    )}.${fileType}`;
+    const tikFileName = `Downit.xyz - ${requestedFormat} - ${encodeURIComponent(info.title)}.${fileType}`;
 
     res.setHeader("Content-Disposition", `attachment; filename=${tikFileName}`);
 
@@ -364,6 +362,7 @@ app.get("/vdl/:ressourceID", async (req, res, next) => {
     res.setHeader("Content-Length", contentLength);
 
     res.status(200);
+     console.log(requestedFormat, fileType);
     // Pipe the TikTok video response to the Express response
     response.data.pipe(res);
     // Optionally, you can handle errors if the download fails
