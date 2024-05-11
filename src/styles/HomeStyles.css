@@ -1,0 +1,26 @@
+.homePage {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.downloadForm form {
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+  gap: 10px;
+}
+.downloadForm form * {
+  font-weight: bolder;
+  font-size: medium;
+  padding: 5px 15px;
+}
+.downloadForm input {
+  border: none;
+  border-radius: 10px;
+}
+.downloadForm button {
+  border: none;
+  border-radius: 10px;
+  background-color: hsl(253, 31%, 49%);
+  color: aliceblue;
+}

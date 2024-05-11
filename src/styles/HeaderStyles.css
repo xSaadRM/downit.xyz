@@ -1,0 +1,13 @@
+.siteLogo {
+  padding: 20px;
+  display: flex;
+  flex-direction: row;
+  justify-content: start;
+  gap: 10px;
+  align-items: center;
+}
+
+.siteLogo img {
+  width: 80px;
+  height: auto;
+}
